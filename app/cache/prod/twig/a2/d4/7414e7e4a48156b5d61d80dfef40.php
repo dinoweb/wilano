@@ -14,16 +14,16 @@ class __TwigTemplate_a2d47414e7e4a48156b5d61d80dfef40 extends Twig_Template
         <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />
         <title>An Error Occurred: ";
         // line 5
-        echo twig_escape_filter($this->env, (isset($context['status_text']) ? $context['status_text'] : null), "html");
+        echo twig_escape_filter($this->env, $this->getContext($context, 'status_text'), "html");
         echo "</title>
     </head>
     <body>
         <h1>Oops! An Error Occurred</h1>
         <h2>The server returned a \"";
         // line 9
-        echo twig_escape_filter($this->env, (isset($context['status_code']) ? $context['status_code'] : null), "html");
+        echo twig_escape_filter($this->env, $this->getContext($context, 'status_code'), "html");
         echo " ";
-        echo twig_escape_filter($this->env, (isset($context['status_text']) ? $context['status_text'] : null), "html");
+        echo twig_escape_filter($this->env, $this->getContext($context, 'status_text'), "html");
         echo "\".</h2>
 
         <div>

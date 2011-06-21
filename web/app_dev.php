@@ -1,9 +1,11 @@
 <?php
+umask(0000); // This will let the permissions be 0777
 
 // this check prevents access to debug front controllers that are deployed by accident to production servers.
 // feel free to remove this, extend it, or make something more sophisticated.
 if (!in_array(@$_SERVER['REMOTE_ADDR'], array(
     '93.34.55.145',
+    '93.62.205.10',
     '::1',
 ))) {
     header('HTTP/1.0 403 Forbidden');

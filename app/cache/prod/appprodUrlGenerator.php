@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Exception\RouteNotFoundException;
 class appprodUrlGenerator extends Symfony\Component\Routing\Generator\UrlGenerator
 {
     static private $declaredRouteNames = array(
-
+       'homepage' => true,
     );
 
     /**
@@ -37,4 +37,8 @@ class appprodUrlGenerator extends Symfony\Component\Routing\Generator\UrlGenerat
         return $this->doGenerate($variables, $defaults, $requirements, $tokens, $parameters, $name, $absolute);
     }
 
+    private function gethomepageRouteInfo()
+    {
+        return array(array (), array (  '_controller' => 'FdT\\PoliticiBundle\\Controller\\DefaultController::indexAction',), array (), array (  0 =>   array (    0 => 'text',    1 => '/admin/',  ),));
+    }
 }
