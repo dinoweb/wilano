@@ -1,0 +1,14 @@
+parameters:
+    manage_menu.class:      FDT\AdminBundle\Services\ManageMenu
+    manage_menu.config: ~
+    
+    bundles_config.class:      FDT\AdminBundle\Services\GetBundlesConfig
+    bundles_config.config: ~
+
+services:
+    manage_menu:
+        class:        %manage_menu.class%
+        arguments:    [%manage_menu.config%]
+    bundles_config:
+        class:        %bundles_config.class%
+        arguments:    [%bundles_config.config%]
