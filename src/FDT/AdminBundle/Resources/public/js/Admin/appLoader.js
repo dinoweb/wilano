@@ -1,4 +1,11 @@
-Ext.Loader.setConfig ({ enabled: true});
+Ext.Loader.setConfig ({
+                        enabled: true,
+                        paths : {'Admin': '/bundles/fdtadmin/js/Admin'}
+                     });
+
+Ext.require ('Admin.model.Paths');
+Ext.require ('Admin.store.Paths');
+
 
 Ext.define('appLoader',
 {
@@ -6,7 +13,7 @@ Ext.define('appLoader',
     setBundlesPath: function()
     {
         
-        var store = Ext.create ('appLoaderStore');
+        var store = Ext.create ('Admin.store.Paths');
         //store.each (this.aggiungiPath);
         store.load({
                         scope   : this,
@@ -15,6 +22,9 @@ Ext.define('appLoader',
                            if (success == true)
                            {
                             store.each (this.aggiungiPath);
+                            
+                            Ext.create('Admin.app');
+
                            } 
                             
                                                         
@@ -28,44 +38,16 @@ Ext.define('appLoader',
     {
         Ext.Loader.setPath (Record.get('name'), Record.get('path'));
             
-    },
+    }
+    
+    
     
 });
 
-Ext.define('appLoaderModel',
-{
-    extend: 'Ext.data.Model',
-    fields: ['name', 'path']
-});
-
-Ext.define('appLoaderStore',
-{
-    extend: 'Ext.data.Store',
-    model: 'appLoaderModel',
-    storeId: 'bundlesStore',
-	proxy:
-	{
-            type:'ajax',            
-            url:'getBundlesConfig',
-            reader: {
-            			type: 'json',
-            			root: 'paths'
-                    }
-    }
-});
-
-   
-   Ext.create ('appLoader').setBundlesPath();
-   
-   //sleep (100);
-   
-   function sleep(milliSeconds)
-   {
-        var startTime = new Date().getTime(); // get the current time
-        while (new Date().getTime() < startTime + milliSeconds); // hog cpu
-    }
-   
-    
-
-
-//Ext.onReady(Ext.application.init, Ext.application);
+Ext.onReady (function ()
+             {
+             
+                Ext.create ('appLoader').setBundlesPath();
+             
+             }   
+            )

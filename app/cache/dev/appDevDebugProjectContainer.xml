@@ -18,6 +18,7 @@
       <parameter key="SensioFrameworkExtraBundle">Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle</parameter>
       <parameter key="JMSSecurityExtraBundle">JMS\SecurityExtraBundle\JMSSecurityExtraBundle</parameter>
       <parameter key="FDTAdminBundle">FDT\AdminBundle\FDTAdminBundle</parameter>
+      <parameter key="FDTPartiesBundle">FDT\PartiesBundle\FDTPartiesBundle</parameter>
       <parameter key="AcmeDemoBundle">Acme\DemoBundle\AcmeDemoBundle</parameter>
       <parameter key="WebProfilerBundle">Symfony\Bundle\WebProfilerBundle\WebProfilerBundle</parameter>
       <parameter key="SensioDistributionBundle">Sensio\Bundle\DistributionBundle\SensioDistributionBundle</parameter>
@@ -371,18 +372,6 @@
             <parameter key="name">Parties</parameter>
             <parameter key="path">/bundles/fdtparties/js/Parties</parameter>
           </parameter>
-          <parameter type="collection">
-            <parameter key="name">Parties2</parameter>
-            <parameter key="path">/bundles/fdtparties/js/Parties2</parameter>
-          </parameter>
-          <parameter type="collection">
-            <parameter key="name">Admin</parameter>
-            <parameter key="path">/bundles/fdtadmin/js/Admin</parameter>
-          </parameter>
-          <parameter type="collection">
-            <parameter key="name">Test</parameter>
-            <parameter key="path">/bundles/fdtadmin/js/Admin</parameter>
-          </parameter>
         </parameter>
       </parameter>
     </parameter>
@@ -393,23 +382,11 @@
           <parameter key="name">Parties</parameter>
           <parameter key="path">/bundles/fdtparties/js/Parties</parameter>
         </parameter>
-        <parameter type="collection">
-          <parameter key="name">Parties2</parameter>
-          <parameter key="path">/bundles/fdtparties/js/Parties2</parameter>
-        </parameter>
-        <parameter type="collection">
-          <parameter key="name">Admin</parameter>
-          <parameter key="path">/bundles/fdtadmin/js/Admin</parameter>
-        </parameter>
-        <parameter type="collection">
-          <parameter key="name">Test</parameter>
-          <parameter key="path">/bundles/fdtadmin/js/Admin</parameter>
-        </parameter>
       </parameter>
     </parameter>
     <parameter key="web_profiler.debug_toolbar.class">Symfony\Bundle\WebProfilerBundle\EventListener\WebDebugToolbarListener</parameter>
     <parameter key="web_profiler.debug_toolbar.intercept_redirects">false</parameter>
-    <parameter key="web_profiler.debug_toolbar.verbose">true</parameter>
+    <parameter key="web_profiler.debug_toolbar.mode">2</parameter>
     <parameter key="sensio.distribution.webconfigurator.class">Sensio\Bundle\DistributionBundle\Configurator\Configurator</parameter>
     <parameter key="symfony.webconfigurator.class">Symfony\Bundle\WebConfiguratorBundle\Configurator</parameter>
     <parameter key="data_collector.templates" type="collection">
@@ -2085,6 +2062,33 @@
               <argument type="service">
                 <service class="%assetic.directory_resource.class%" public="false">
                   <argument type="service" id="templating.loader"/>
+                  <argument>FDTPartiesBundle</argument>
+                  <argument>/vol/www/domini/wilano/app/Resources/FDTPartiesBundle/views</argument>
+                  <argument>/^[^.]+\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>FDTPartiesBundle</argument>
+                  <argument>/vol/www/domini/wilano/src/FDT/PartiesBundle/Resources/views</argument>
+                  <argument>/^[^.]+\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+            </argument>
+          </service>
+        </argument>
+        <argument>twig</argument>
+      </call>
+      <call method="addResource">
+        <argument type="service">
+          <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource" public="false">
+            <tag name="assetic.templating.twig"/>
+            <tag name="assetic.formula_resource" loader="twig"/>
+            <argument type="collection">
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
                   <argument>AcmeDemoBundle</argument>
                   <argument>/vol/www/domini/wilano/app/Resources/AcmeDemoBundle/views</argument>
                   <argument>/^[^.]+\.[^.]+\.twig$/</argument>
@@ -2316,18 +2320,6 @@
               <argument key="name">Parties</argument>
               <argument key="path">/bundles/fdtparties/js/Parties</argument>
             </argument>
-            <argument type="collection">
-              <argument key="name">Parties2</argument>
-              <argument key="path">/bundles/fdtparties/js/Parties2</argument>
-            </argument>
-            <argument type="collection">
-              <argument key="name">Admin</argument>
-              <argument key="path">/bundles/fdtadmin/js/Admin</argument>
-            </argument>
-            <argument type="collection">
-              <argument key="name">Test</argument>
-              <argument key="path">/bundles/fdtadmin/js/Admin</argument>
-            </argument>
           </argument>
         </argument>
       </argument>
@@ -2338,18 +2330,6 @@
           <argument type="collection">
             <argument key="name">Parties</argument>
             <argument key="path">/bundles/fdtparties/js/Parties</argument>
-          </argument>
-          <argument type="collection">
-            <argument key="name">Parties2</argument>
-            <argument key="path">/bundles/fdtparties/js/Parties2</argument>
-          </argument>
-          <argument type="collection">
-            <argument key="name">Admin</argument>
-            <argument key="path">/bundles/fdtadmin/js/Admin</argument>
-          </argument>
-          <argument type="collection">
-            <argument key="name">Test</argument>
-            <argument key="path">/bundles/fdtadmin/js/Admin</argument>
           </argument>
         </argument>
       </argument>
@@ -2366,7 +2346,7 @@
       <tag name="kernel.event_listener" event="kernel.response" method="onKernelResponse" priority="-128"/>
       <argument type="service" id="templating"/>
       <argument>false</argument>
-      <argument>true</argument>
+      <argument>2</argument>
     </service>
     <service id="sensio.distribution.webconfigurator" class="Sensio\Bundle\DistributionBundle\Configurator\Configurator">
       <argument>/vol/www/domini/wilano/app</argument>

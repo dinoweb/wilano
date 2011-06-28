@@ -85,6 +85,7 @@ class appDevDebugProjectContainer extends Container
         $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'SensioFrameworkExtraBundle', '/vol/www/domini/wilano/app/Resources/SensioFrameworkExtraBundle/views', '/^[^.]+\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'SensioFrameworkExtraBundle', '/vol/www/domini/wilano/vendor/bundles/Sensio/Bundle/FrameworkExtraBundle/Resources/views', '/^[^.]+\\.[^.]+\\.twig$/'))), 'twig');
         $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'JMSSecurityExtraBundle', '/vol/www/domini/wilano/app/Resources/JMSSecurityExtraBundle/views', '/^[^.]+\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'JMSSecurityExtraBundle', '/vol/www/domini/wilano/vendor/bundles/JMS/SecurityExtraBundle/Resources/views', '/^[^.]+\\.[^.]+\\.twig$/'))), 'twig');
         $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'FDTAdminBundle', '/vol/www/domini/wilano/app/Resources/FDTAdminBundle/views', '/^[^.]+\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'FDTAdminBundle', '/vol/www/domini/wilano/src/FDT/AdminBundle/Resources/views', '/^[^.]+\\.[^.]+\\.twig$/'))), 'twig');
+        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'FDTPartiesBundle', '/vol/www/domini/wilano/app/Resources/FDTPartiesBundle/views', '/^[^.]+\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'FDTPartiesBundle', '/vol/www/domini/wilano/src/FDT/PartiesBundle/Resources/views', '/^[^.]+\\.[^.]+\\.twig$/'))), 'twig');
         $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'AcmeDemoBundle', '/vol/www/domini/wilano/app/Resources/AcmeDemoBundle/views', '/^[^.]+\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'AcmeDemoBundle', '/vol/www/domini/wilano/src/Acme/DemoBundle/Resources/views', '/^[^.]+\\.[^.]+\\.twig$/'))), 'twig');
         $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'WebProfilerBundle', '/vol/www/domini/wilano/app/Resources/WebProfilerBundle/views', '/^[^.]+\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'WebProfilerBundle', '/vol/www/domini/wilano/vendor/symfony/src/Symfony/Bundle/WebProfilerBundle/Resources/views', '/^[^.]+\\.[^.]+\\.twig$/'))), 'twig');
         $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'SensioDistributionBundle', '/vol/www/domini/wilano/app/Resources/SensioDistributionBundle/views', '/^[^.]+\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'SensioDistributionBundle', '/vol/www/domini/wilano/vendor/bundles/Sensio/Bundle/DistributionBundle/Resources/views', '/^[^.]+\\.[^.]+\\.twig$/'))), 'twig');
@@ -154,7 +155,7 @@ class appDevDebugProjectContainer extends Container
      */
     protected function getBundlesConfigService()
     {
-        return $this->services['bundles_config'] = new \FDT\AdminBundle\Services\GetBundlesConfig(array('paths' => array(0 => array('name' => 'Parties', 'path' => '/bundles/fdtparties/js/Parties'), 1 => array('name' => 'Parties2', 'path' => '/bundles/fdtparties/js/Parties2'), 2 => array('name' => 'Admin', 'path' => '/bundles/fdtadmin/js/Admin'), 3 => array('name' => 'Test', 'path' => '/bundles/fdtadmin/js/Admin'))));
+        return $this->services['bundles_config'] = new \FDT\AdminBundle\Services\GetBundlesConfig(array('paths' => array(0 => array('name' => 'Parties', 'path' => '/bundles/fdtparties/js/Parties'))));
     }
 
     /**
@@ -876,7 +877,7 @@ class appDevDebugProjectContainer extends Container
      */
     protected function getManageMenuService()
     {
-        return $this->services['manage_menu'] = new \FDT\AdminBundle\Services\ManageMenu(array('bundlesConfig' => array('paths' => array(0 => array('name' => 'Parties', 'path' => '/bundles/fdtparties/js/Parties'), 1 => array('name' => 'Parties2', 'path' => '/bundles/fdtparties/js/Parties2'), 2 => array('name' => 'Admin', 'path' => '/bundles/fdtadmin/js/Admin'), 3 => array('name' => 'Test', 'path' => '/bundles/fdtadmin/js/Admin')))));
+        return $this->services['manage_menu'] = new \FDT\AdminBundle\Services\ManageMenu(array('bundlesConfig' => array('paths' => array(0 => array('name' => 'Parties', 'path' => '/bundles/fdtparties/js/Parties')))));
     }
 
     /**
@@ -1859,7 +1860,7 @@ class appDevDebugProjectContainer extends Container
      */
     protected function getWebProfiler_DebugToolbarService()
     {
-        return $this->services['web_profiler.debug_toolbar'] = new \Symfony\Bundle\WebProfilerBundle\EventListener\WebDebugToolbarListener($this->get('templating'), false, true);
+        return $this->services['web_profiler.debug_toolbar'] = new \Symfony\Bundle\WebProfilerBundle\EventListener\WebDebugToolbarListener($this->get('templating'), false, 2);
     }
 
     /**
@@ -2159,6 +2160,7 @@ class appDevDebugProjectContainer extends Container
                 'SensioFrameworkExtraBundle' => 'Sensio\\Bundle\\FrameworkExtraBundle\\SensioFrameworkExtraBundle',
                 'JMSSecurityExtraBundle' => 'JMS\\SecurityExtraBundle\\JMSSecurityExtraBundle',
                 'FDTAdminBundle' => 'FDT\\AdminBundle\\FDTAdminBundle',
+                'FDTPartiesBundle' => 'FDT\\PartiesBundle\\FDTPartiesBundle',
                 'AcmeDemoBundle' => 'Acme\\DemoBundle\\AcmeDemoBundle',
                 'WebProfilerBundle' => 'Symfony\\Bundle\\WebProfilerBundle\\WebProfilerBundle',
                 'SensioDistributionBundle' => 'Sensio\\Bundle\\DistributionBundle\\SensioDistributionBundle',
@@ -2524,18 +2526,6 @@ class appDevDebugProjectContainer extends Container
                             'name' => 'Parties',
                             'path' => '/bundles/fdtparties/js/Parties',
                         ),
-                        1 => array(
-                            'name' => 'Parties2',
-                            'path' => '/bundles/fdtparties/js/Parties2',
-                        ),
-                        2 => array(
-                            'name' => 'Admin',
-                            'path' => '/bundles/fdtadmin/js/Admin',
-                        ),
-                        3 => array(
-                            'name' => 'Test',
-                            'path' => '/bundles/fdtadmin/js/Admin',
-                        ),
                     ),
                 ),
             ),
@@ -2546,23 +2536,11 @@ class appDevDebugProjectContainer extends Container
                         'name' => 'Parties',
                         'path' => '/bundles/fdtparties/js/Parties',
                     ),
-                    1 => array(
-                        'name' => 'Parties2',
-                        'path' => '/bundles/fdtparties/js/Parties2',
-                    ),
-                    2 => array(
-                        'name' => 'Admin',
-                        'path' => '/bundles/fdtadmin/js/Admin',
-                    ),
-                    3 => array(
-                        'name' => 'Test',
-                        'path' => '/bundles/fdtadmin/js/Admin',
-                    ),
                 ),
             ),
             'web_profiler.debug_toolbar.class' => 'Symfony\\Bundle\\WebProfilerBundle\\EventListener\\WebDebugToolbarListener',
             'web_profiler.debug_toolbar.intercept_redirects' => false,
-            'web_profiler.debug_toolbar.verbose' => true,
+            'web_profiler.debug_toolbar.mode' => 2,
             'sensio.distribution.webconfigurator.class' => 'Sensio\\Bundle\\DistributionBundle\\Configurator\\Configurator',
             'symfony.webconfigurator.class' => 'Symfony\\Bundle\\WebConfiguratorBundle\\Configurator',
             'data_collector.templates' => array(

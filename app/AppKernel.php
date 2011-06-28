@@ -20,6 +20,7 @@ class AppKernel extends Kernel
             
             //MY BUNDLES
             new FDT\AdminBundle\FDTAdminBundle(),
+            new FDT\PartiesBundle\FDTPartiesBundle(),
             
         );
 

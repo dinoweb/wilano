@@ -5,5 +5,5 @@ Ext.define('Admin.view.servizio.Menu',
 
     title : 'Servizio',
     
-    store: 'Menu'
+    store: 'Admin.store.Menu'
 });

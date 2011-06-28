@@ -36,6 +36,7 @@ class appdevUrlGenerator extends Symfony\Component\Routing\Generator\UrlGenerato
        'homepage' => true,
        'admin_menu' => true,
        'admin_bundlesConfig' => true,
+       'FDTPartiesBundle_getMenu' => true,
     );
 
     /**
@@ -172,5 +173,10 @@ class appdevUrlGenerator extends Symfony\Component\Routing\Generator\UrlGenerato
     private function getadmin_bundlesConfigRouteInfo()
     {
         return array(array (), array (  '_controller' => 'FDT\\AdminBundle\\Controller\\GetBundlesConfigController::indexAction',), array (), array (  0 =>   array (    0 => 'text',    1 => '/admin/getBundlesConfig/',  ),));
+    }
+
+    private function getFDTPartiesBundle_getMenuRouteInfo()
+    {
+        return array(array (), array (  '_controller' => 'FDTPartiesBundle:GetMenu:index',), array (), array (  0 =>   array (    0 => 'text',    1 => '/admin/parties/getMenu',  ),));
     }
 }

@@ -1,13 +1,6 @@
-Ext.application
-({
-    name: 'Admin',
-
-    appFolder: '/bundles/fdtadmin/js/Admin',
-    
-    controllers: 
-   	[
-        'Admin.controller.Menu'
-    ],
+Ext.define('Admin.app',
+{
+    extend: 'Ext.app.Application',
     
     
     requires:
@@ -15,23 +8,66 @@ Ext.application
 		'Admin.view.Viewport'
     ],
     
+    stores:
+    [
+        'Admin.store.Paths'
+    ],
     
+    models:
+    [
+    	'Admin.model.Paths'
+    ],
+    
+    createAppBundles : function ()
+    {
+        var pathStore = this.getStore ('Admin.store.Paths');
+        
+        pathStore.load({
+                        scope   : this,
+                        callback: function (records, operation, success)
+                        {
+                           if (success == true)
+                           {
+                                pathStore.each (this.aggiungiAppBundles);
+                           } 
+                            
+                                                        
+                        }
+                  
+                  });
+    },
+    
+    aggiungiAppBundles : function (Record)
+    {
+        var appBundleName = Record.get('name')+'.app';
 
+        Ext.create(appBundleName);
+          
+    
+    },
+    
+    addController : function (controllerName)
+    {
+    
+        var myController = Ext.create(controllerName,
+                	       {
+                                application: this
+                           });
+        myController.init(this);
+        
+        this.controllers.add (controllerName, myController);
+    
+    
+    },
     
     launch : function ()
 	 {
-	    console.log (Ext.Loader.getPath ('Test'));
-	    
-	    var myController = Ext.create('Test.controller.Palla',
-	        {
-                application: this
-            });
-        myController.init(this);
-        
-        this.controllers.add ('Test.controller.Palla', myController);
+	    	    
 	 	
 	 	Ext.create('Admin.view.Viewport');
 	 	
+	 	this.createAppBundles ();
+	 		 	
 	 	
 
 	 	

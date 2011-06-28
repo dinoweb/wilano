@@ -166,6 +166,11 @@ class appdevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
             return array (  '_controller' => 'FDTAdminBundle:GetBundlesConfig:index',  '_route' => 'admin_bundlesConfig',);
         }
 
+        // FDTPartiesBundle_getMenu
+        if ($pathinfo === '/admin/parties/getMenu') {
+            return array (  '_controller' => 'FDTPartiesBundle:GetMenu:index',  '_route' => 'FDTPartiesBundle_getMenu',);
+        }
+
         // homepage
         if (rtrim($pathinfo, '/') === '/admin') {
             if (substr($pathinfo, -1) !== '/') {
@@ -188,6 +193,11 @@ class appdevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
                 return $this->redirect($pathinfo.'/', 'admin_bundlesConfig');
             }
             return array (  '_controller' => 'FDT\\AdminBundle\\Controller\\GetBundlesConfigController::indexAction',  '_route' => 'admin_bundlesConfig',);
+        }
+
+        // FDTPartiesBundle_getMenu
+        if ($pathinfo === '/admin/parties/getMenu') {
+            return array (  '_controller' => 'FDTPartiesBundle:GetMenu:index',  '_route' => 'FDTPartiesBundle_getMenu',);
         }
 
         throw 0 < count($allow) ? new MethodNotAllowedException(array_unique($allow)) : new ResourceNotFoundException();

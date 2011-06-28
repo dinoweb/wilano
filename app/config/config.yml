@@ -62,12 +62,3 @@ fdt_admin:
         0:
           name: Parties
           path: /bundles/fdtparties/js/Parties
-        1:
-          name: Parties2
-          path: /bundles/fdtparties/js/Parties2
-        2:
-          name: Admin
-          path: /bundles/fdtadmin/js/Admin
-        3:
-          name: Test
-          path: /bundles/fdtadmin/js/Admin
