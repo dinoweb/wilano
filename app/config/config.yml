@@ -1,7 +1,7 @@
 imports:
     - { resource: parameters.ini }
     - { resource: security.yml }
-
+    
 framework:
     secret:          %secret%
     charset:         UTF-8
@@ -54,3 +54,20 @@ swiftmailer:
 jms_security_extra:
     secure_controllers:  true
     secure_all_services: false
+    
+
+fdt_admin:
+    bundlesConfig:
+      paths:
+        0:
+          name: Parties
+          path: /bundles/fdtparties/js/Parties
+        1:
+          name: Parties2
+          path: /bundles/fdtparties/js/Parties2
+        2:
+          name: Admin
+          path: /bundles/fdtadmin/js/Admin
+        3:
+          name: Test
+          path: /bundles/fdtadmin/js/Admin

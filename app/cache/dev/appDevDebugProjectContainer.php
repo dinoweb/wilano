@@ -55,7 +55,10 @@ class appDevDebugProjectContainer extends Container
      */
     protected function getAnnotationReaderService()
     {
-        return $this->services['annotation_reader'] = new \Doctrine\Common\Annotations\FileCacheReader(new \Doctrine\Common\Annotations\AnnotationReader(), '/vol/www/domini/wilano/app/cache/dev/annotations', true);
+        $a = new \Doctrine\Common\Annotations\AnnotationReader();
+        $a->setAutoloadAnnotations(true);
+
+        return $this->services['annotation_reader'] = new \Doctrine\Common\Annotations\FileCacheReader($a, '/vol/www/domini/wilano/app/cache/dev/annotations', true);
     }
 
     /**
@@ -81,9 +84,11 @@ class appDevDebugProjectContainer extends Container
         $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'AsseticBundle', '/vol/www/domini/wilano/app/Resources/AsseticBundle/views', '/^[^.]+\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'AsseticBundle', '/vol/www/domini/wilano/vendor/bundles/Symfony/Bundle/AsseticBundle/Resources/views', '/^[^.]+\\.[^.]+\\.twig$/'))), 'twig');
         $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'SensioFrameworkExtraBundle', '/vol/www/domini/wilano/app/Resources/SensioFrameworkExtraBundle/views', '/^[^.]+\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'SensioFrameworkExtraBundle', '/vol/www/domini/wilano/vendor/bundles/Sensio/Bundle/FrameworkExtraBundle/Resources/views', '/^[^.]+\\.[^.]+\\.twig$/'))), 'twig');
         $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'JMSSecurityExtraBundle', '/vol/www/domini/wilano/app/Resources/JMSSecurityExtraBundle/views', '/^[^.]+\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'JMSSecurityExtraBundle', '/vol/www/domini/wilano/vendor/bundles/JMS/SecurityExtraBundle/Resources/views', '/^[^.]+\\.[^.]+\\.twig$/'))), 'twig');
-        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'FdTPoliticiBundle', '/vol/www/domini/wilano/app/Resources/FdTPoliticiBundle/views', '/^[^.]+\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'FdTPoliticiBundle', '/vol/www/domini/wilano/src/FdT/PoliticiBundle/Resources/views', '/^[^.]+\\.[^.]+\\.twig$/'))), 'twig');
+        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'FDTAdminBundle', '/vol/www/domini/wilano/app/Resources/FDTAdminBundle/views', '/^[^.]+\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'FDTAdminBundle', '/vol/www/domini/wilano/src/FDT/AdminBundle/Resources/views', '/^[^.]+\\.[^.]+\\.twig$/'))), 'twig');
         $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'AcmeDemoBundle', '/vol/www/domini/wilano/app/Resources/AcmeDemoBundle/views', '/^[^.]+\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'AcmeDemoBundle', '/vol/www/domini/wilano/src/Acme/DemoBundle/Resources/views', '/^[^.]+\\.[^.]+\\.twig$/'))), 'twig');
         $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'WebProfilerBundle', '/vol/www/domini/wilano/app/Resources/WebProfilerBundle/views', '/^[^.]+\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'WebProfilerBundle', '/vol/www/domini/wilano/vendor/symfony/src/Symfony/Bundle/WebProfilerBundle/Resources/views', '/^[^.]+\\.[^.]+\\.twig$/'))), 'twig');
+        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'SensioDistributionBundle', '/vol/www/domini/wilano/app/Resources/SensioDistributionBundle/views', '/^[^.]+\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'SensioDistributionBundle', '/vol/www/domini/wilano/vendor/bundles/Sensio/Bundle/DistributionBundle/Resources/views', '/^[^.]+\\.[^.]+\\.twig$/'))), 'twig');
+        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'SensioGeneratorBundle', '/vol/www/domini/wilano/app/Resources/SensioGeneratorBundle/views', '/^[^.]+\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'SensioGeneratorBundle', '/vol/www/domini/wilano/vendor/bundles/Sensio/Bundle/GeneratorBundle/Resources/views', '/^[^.]+\\.[^.]+\\.twig$/'))), 'twig');
         $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'SymfonyWebConfiguratorBundle', '/vol/www/domini/wilano/app/Resources/SymfonyWebConfiguratorBundle/views', '/^[^.]+\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'SymfonyWebConfiguratorBundle', '/vol/www/domini/wilano/vendor/bundles/Symfony/Bundle/WebConfiguratorBundle/Resources/views', '/^[^.]+\\.[^.]+\\.twig$/'))), 'twig');
         $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, '', '/vol/www/domini/wilano/app/Resources/views', '/^[^.]+\\.[^.]+\\.twig$/'), 'twig');
 
@@ -137,6 +142,19 @@ class appDevDebugProjectContainer extends Container
     protected function getAssetic_RequestListenerService()
     {
         return $this->services['assetic.request_listener'] = new \Symfony\Bundle\AsseticBundle\EventListener\RequestListener();
+    }
+
+    /**
+     * Gets the 'bundles_config' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return FDT\AdminBundle\Services\GetBundlesConfig A FDT\AdminBundle\Services\GetBundlesConfig instance.
+     */
+    protected function getBundlesConfigService()
+    {
+        return $this->services['bundles_config'] = new \FDT\AdminBundle\Services\GetBundlesConfig(array('paths' => array(0 => array('name' => 'Parties', 'path' => '/bundles/fdtparties/js/Parties'), 1 => array('name' => 'Parties2', 'path' => '/bundles/fdtparties/js/Parties2'), 2 => array('name' => 'Admin', 'path' => '/bundles/fdtadmin/js/Admin'), 3 => array('name' => 'Test', 'path' => '/bundles/fdtadmin/js/Admin'))));
     }
 
     /**
@@ -212,7 +230,7 @@ class appDevDebugProjectContainer extends Container
         $b = new \Doctrine\Common\EventManager();
         $b->addEventSubscriber(new \Doctrine\DBAL\Event\Listeners\MysqlSessionInit('UTF8'));
 
-        return $this->services['doctrine.dbal.default_connection'] = $this->get('doctrine.dbal.connection_factory')->createConnection(array('dbname' => 'symfony', 'host' => 'localhost', 'user' => 'root', 'password' => '', 'driver' => 'pdo_mysql', 'port' => NULL, 'driverOptions' => array()), $a, $b);
+        return $this->services['doctrine.dbal.default_connection'] = $this->get('doctrine.dbal.connection_factory')->createConnection(array('dbname' => 'symfony', 'host' => 'localhost', 'user' => 'root', 'password' => '', 'driver' => 'pdo_mysql', 'port' => NULL, 'driverOptions' => array()), $a, $b, array());
     }
 
     /**
@@ -273,26 +291,25 @@ class appDevDebugProjectContainer extends Container
     {
         $this->services['event_dispatcher'] = $instance = new \Symfony\Bundle\FrameworkBundle\Debug\TraceableEventDispatcher($this, $this->get('monolog.logger.event'));
 
-        $instance->addListenerService('core.request', array(0 => 'router_listener', 1 => 'onEarlyCoreRequest'), 255);
-        $instance->addListenerService('core.request', array(0 => 'router_listener', 1 => 'onCoreRequest'), 0);
-        $instance->addListenerService('core.request', array(0 => 'session_listener', 1 => 'onCoreRequest'), 128);
-        $instance->addListenerService('core.response', array(0 => 'response_listener', 1 => 'onCoreResponse'), 0);
-        $instance->addListenerService('core.exception', array(0 => 'exception_listener', 1 => 'onCoreException'), -128);
-        $instance->addListenerService('core.response', array(0 => 'profiler_listener', 1 => 'onCoreResponse'), -100);
-        $instance->addListenerService('core.exception', array(0 => 'profiler_listener', 1 => 'onCoreException'), 0);
-        $instance->addListenerService('core.controller', array(0 => 'data_collector.request', 1 => 'onCoreController'), 0);
-        $instance->addListenerService('core.request', array(0 => 'security.firewall', 1 => 'onCoreRequest'), 64);
-        $instance->addListenerService('core.response', array(0 => 'security.rememberme.response_listener', 1 => 'onCoreResponse'), 0);
-        $instance->addListenerService('core.response', array(0 => 'monolog.handler.firephp', 1 => 'onCoreResponse'), 0);
-        $instance->addListenerService('core.request', array(0 => 'assetic.request_listener', 1 => 'onCoreRequest'), 0);
-        $instance->addListenerService('core.controller', array(0 => 'sensio_framework_extra.controller.listener', 1 => 'onCoreController'), 0);
-        $instance->addListenerService('core.controller', array(0 => 'sensio_framework_extra.converter.listener', 1 => 'onCoreController'), 0);
-        $instance->addListenerService('core.controller', array(0 => 'sensio_framework_extra.view.listener', 1 => 'onCoreController'), 0);
-        $instance->addListenerService('core.view', array(0 => 'sensio_framework_extra.view.listener', 1 => 'onCoreView'), 0);
-        $instance->addListenerService('core.response', array(0 => 'sensio_framework_extra.cache.listener', 1 => 'onCoreResponse'), 0);
-        $instance->addListenerService('core.controller', array(0 => 'security.extra.controller_listener', 1 => 'onCoreController'), -255);
-        $instance->addListenerService('core.controller', array(0 => 'acme.demo.listener', 1 => 'onCoreController'), 0);
-        $instance->addListenerService('core.response', array(0 => 'web_profiler.debug_toolbar', 1 => 'onCoreResponse'), -128);
+        $instance->addListenerService('kernel.request', array(0 => 'router_listener', 1 => 'onEarlyKernelRequest'), 255);
+        $instance->addListenerService('kernel.request', array(0 => 'router_listener', 1 => 'onKernelRequest'), 0);
+        $instance->addListenerService('kernel.request', array(0 => 'session_listener', 1 => 'onKernelRequest'), 128);
+        $instance->addListenerService('kernel.response', array(0 => 'response_listener', 1 => 'onKernelResponse'), 0);
+        $instance->addListenerService('kernel.exception', array(0 => 'exception_listener', 1 => 'onKernelException'), -128);
+        $instance->addListenerService('kernel.response', array(0 => 'profiler_listener', 1 => 'onKernelResponse'), -100);
+        $instance->addListenerService('kernel.exception', array(0 => 'profiler_listener', 1 => 'onKernelException'), 0);
+        $instance->addListenerService('kernel.controller', array(0 => 'data_collector.request', 1 => 'onKernelController'), 0);
+        $instance->addListenerService('kernel.request', array(0 => 'security.firewall', 1 => 'onKernelRequest'), 64);
+        $instance->addListenerService('kernel.response', array(0 => 'security.rememberme.response_listener', 1 => 'onKernelResponse'), 0);
+        $instance->addListenerService('kernel.response', array(0 => 'monolog.handler.firephp', 1 => 'onKernelResponse'), 0);
+        $instance->addListenerService('kernel.request', array(0 => 'assetic.request_listener', 1 => 'onKernelRequest'), 0);
+        $instance->addListenerService('kernel.controller', array(0 => 'sensio_framework_extra.controller.listener', 1 => 'onKernelController'), 0);
+        $instance->addListenerService('kernel.controller', array(0 => 'sensio_framework_extra.converter.listener', 1 => 'onKernelController'), 0);
+        $instance->addListenerService('kernel.controller', array(0 => 'sensio_framework_extra.view.listener', 1 => 'onKernelController'), 0);
+        $instance->addListenerService('kernel.view', array(0 => 'sensio_framework_extra.view.listener', 1 => 'onKernelView'), 0);
+        $instance->addListenerService('kernel.response', array(0 => 'sensio_framework_extra.cache.listener', 1 => 'onKernelResponse'), 0);
+        $instance->addListenerService('kernel.controller', array(0 => 'security.extra.controller_listener', 1 => 'onCoreController'), -255);
+        $instance->addListenerService('kernel.response', array(0 => 'web_profiler.debug_toolbar', 1 => 'onKernelResponse'), -128);
 
         return $instance;
     }
@@ -850,6 +867,19 @@ class appDevDebugProjectContainer extends Container
     }
 
     /**
+     * Gets the 'manage_menu' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return FDT\AdminBundle\Services\ManageMenu A FDT\AdminBundle\Services\ManageMenu instance.
+     */
+    protected function getManageMenuService()
+    {
+        return $this->services['manage_menu'] = new \FDT\AdminBundle\Services\ManageMenu(array('bundlesConfig' => array('paths' => array(0 => array('name' => 'Parties', 'path' => '/bundles/fdtparties/js/Parties'), 1 => array('name' => 'Parties2', 'path' => '/bundles/fdtparties/js/Parties2'), 2 => array('name' => 'Admin', 'path' => '/bundles/fdtadmin/js/Admin'), 3 => array('name' => 'Test', 'path' => '/bundles/fdtadmin/js/Admin')))));
+    }
+
+    /**
      * Gets the 'monolog.handler.debug' service.
      *
      * This service is shared.
@@ -1063,7 +1093,10 @@ class appDevDebugProjectContainer extends Container
      */
     protected function getProfilerListenerService()
     {
-        return $this->services['profiler_listener'] = new \Symfony\Component\HttpKernel\EventListener\ProfilerListener($this->get('profiler'), NULL, false, false);
+        $a = new \Symfony\Component\HttpFoundation\RequestMatcher();
+        $a->matchPath('^/(?!admin)');
+
+        return $this->services['profiler_listener'] = new \Symfony\Component\HttpKernel\EventListener\ProfilerListener($this->get('profiler'), $a, false, false);
     }
 
     /**
@@ -1142,7 +1175,6 @@ class appDevDebugProjectContainer extends Container
         $d->addLoader(new \Symfony\Component\Routing\Loader\YamlFileLoader($a));
         $d->addLoader(new \Symfony\Component\Routing\Loader\PhpFileLoader($a));
         $d->addLoader(new \Symfony\Bundle\AsseticBundle\Routing\AsseticLoader($this->get('assetic.asset_manager')));
-        $d->addLoader(new \Symfony\Component\Routing\Loader\AnnotationGlobLoader($a, $c));
         $d->addLoader(new \Symfony\Component\Routing\Loader\AnnotationDirectoryLoader($a, $c));
         $d->addLoader(new \Symfony\Component\Routing\Loader\AnnotationFileLoader($a, $c));
         $d->addLoader($c);
@@ -1254,14 +1286,17 @@ class appDevDebugProjectContainer extends Container
         $a = $this->get('monolog.logger.security');
         $b = $this->get('security.context');
         $c = $this->get('event_dispatcher');
-        $d = $this->get('security.authentication.manager');
+        $d = $this->get('router');
+        $e = $this->get('security.authentication.manager');
 
-        $e = new \Symfony\Component\Security\Http\AccessMap();
+        $f = new \Symfony\Component\Security\Http\AccessMap();
 
-        $f = new \Symfony\Component\Security\Http\Firewall\LogoutListener($b, '/demo/secured/logout', '/demo/', NULL);
-        $f->addHandler(new \Symfony\Component\Security\Http\Logout\SessionLogoutHandler());
+        $g = new \Symfony\Component\Security\Http\HttpUtils($d);
 
-        return $this->services['security.firewall.map.context.secured_area'] = new \Symfony\Bundle\SecurityBundle\Security\FirewallContext(array(0 => new \Symfony\Component\Security\Http\Firewall\ChannelListener($e, new \Symfony\Component\Security\Http\EntryPoint\RetryAuthenticationEntryPoint(), $a), 1 => new \Symfony\Component\Security\Http\Firewall\ContextListener($b, array(0 => $this->get('security.user.provider.concrete.in_memory')), 'secured_area', $a, $c), 2 => $f, 3 => new \Symfony\Component\Security\Http\Firewall\UsernamePasswordFormAuthenticationListener($b, $d, new \Symfony\Component\Security\Http\Session\SessionAuthenticationStrategy('migrate'), 'secured_area', array('check_path' => '/demo/secured/login_check', 'login_path' => '/demo/secured/login', 'use_forward' => false, 'always_use_default_target_path' => false, 'default_target_path' => '/', 'target_path_parameter' => '_target_path', 'use_referer' => false, 'failure_path' => NULL, 'failure_forward' => false, 'username_parameter' => '_username', 'password_parameter' => '_password', 'csrf_parameter' => '_csrf_token', 'intention' => 'authenticate', 'post_only' => true), NULL, NULL, $a, $c), 4 => new \Symfony\Component\Security\Http\Firewall\AccessListener($b, $this->get('security.access.decision_manager'), $e, $d, $a)), new \Symfony\Component\Security\Http\Firewall\ExceptionListener($b, $this->get('security.authentication.trust_resolver'), new \Symfony\Component\Security\Http\EntryPoint\FormAuthenticationEntryPoint($this->get('http_kernel'), '/demo/secured/login', false), NULL, NULL, $a));
+        $h = new \Symfony\Component\Security\Http\Firewall\LogoutListener($b, $g, '/demo/secured/logout', '/demo/', NULL);
+        $h->addHandler(new \Symfony\Component\Security\Http\Logout\SessionLogoutHandler());
+
+        return $this->services['security.firewall.map.context.secured_area'] = new \Symfony\Bundle\SecurityBundle\Security\FirewallContext(array(0 => new \Symfony\Component\Security\Http\Firewall\ChannelListener($f, new \Symfony\Component\Security\Http\EntryPoint\RetryAuthenticationEntryPoint(), $a), 1 => new \Symfony\Component\Security\Http\Firewall\ContextListener($b, array(0 => $this->get('security.user.provider.concrete.in_memory')), 'secured_area', $a, $c), 2 => $h, 3 => new \Symfony\Component\Security\Http\Firewall\UsernamePasswordFormAuthenticationListener($b, $e, new \Symfony\Component\Security\Http\Session\SessionAuthenticationStrategy('migrate'), $g, 'secured_area', array('check_path' => '/demo/secured/login_check', 'login_path' => '/demo/secured/login', 'use_forward' => false, 'always_use_default_target_path' => false, 'default_target_path' => '/', 'target_path_parameter' => '_target_path', 'use_referer' => false, 'failure_path' => NULL, 'failure_forward' => false, 'username_parameter' => '_username', 'password_parameter' => '_password', 'csrf_parameter' => '_csrf_token', 'intention' => 'authenticate', 'post_only' => true), NULL, NULL, $a, $c), 4 => new \Symfony\Component\Security\Http\Firewall\AccessListener($b, $this->get('security.access.decision_manager'), $f, $e, $a)), new \Symfony\Component\Security\Http\Firewall\ExceptionListener($b, $this->get('security.authentication.trust_resolver'), $g, new \Symfony\Component\Security\Http\EntryPoint\FormAuthenticationEntryPoint($this->get('http_kernel'), $g, '/demo/secured/login', false), NULL, NULL, $a));
     }
 
     /**
@@ -1288,6 +1323,19 @@ class appDevDebugProjectContainer extends Container
     protected function getSecurity_Rememberme_ResponseListenerService()
     {
         return $this->services['security.rememberme.response_listener'] = new \Symfony\Bundle\SecurityBundle\EventListener\ResponseListener();
+    }
+
+    /**
+     * Gets the 'sensio.distribution.webconfigurator' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return Sensio\Bundle\DistributionBundle\Configurator\Configurator A Sensio\Bundle\DistributionBundle\Configurator\Configurator instance.
+     */
+    protected function getSensio_Distribution_WebconfiguratorService()
+    {
+        return $this->services['sensio.distribution.webconfigurator'] = new \Sensio\Bundle\DistributionBundle\Configurator\Configurator('/vol/www/domini/wilano/app');
     }
 
     /**
@@ -1573,7 +1621,7 @@ class appDevDebugProjectContainer extends Container
         $a->setCharset('UTF-8');
         $a->setHelpers(array('slots' => 'templating.helper.slots', 'assets' => 'templating.helper.assets', 'request' => 'templating.helper.request', 'session' => 'templating.helper.session', 'router' => 'templating.helper.router', 'actions' => 'templating.helper.actions', 'code' => 'templating.helper.code', 'translator' => 'templating.helper.translator', 'form' => 'templating.helper.form', 'security' => 'templating.helper.security', 'assetic' => 'assetic.helper.dynamic'));
 
-        return $this->services['templating.helper.form'] = new \Symfony\Bundle\FrameworkBundle\Templating\Helper\FormHelper($a);
+        return $this->services['templating.helper.form'] = new \Symfony\Bundle\FrameworkBundle\Templating\Helper\FormHelper($a, array(0 => 'FrameworkBundle:Form'));
     }
 
     /**
@@ -2110,9 +2158,11 @@ class appDevDebugProjectContainer extends Container
                 'AsseticBundle' => 'Symfony\\Bundle\\AsseticBundle\\AsseticBundle',
                 'SensioFrameworkExtraBundle' => 'Sensio\\Bundle\\FrameworkExtraBundle\\SensioFrameworkExtraBundle',
                 'JMSSecurityExtraBundle' => 'JMS\\SecurityExtraBundle\\JMSSecurityExtraBundle',
-                'FdTPoliticiBundle' => 'FdT\\PoliticiBundle\\FdTPoliticiBundle',
+                'FDTAdminBundle' => 'FDT\\AdminBundle\\FDTAdminBundle',
                 'AcmeDemoBundle' => 'Acme\\DemoBundle\\AcmeDemoBundle',
                 'WebProfilerBundle' => 'Symfony\\Bundle\\WebProfilerBundle\\WebProfilerBundle',
+                'SensioDistributionBundle' => 'Sensio\\Bundle\\DistributionBundle\\SensioDistributionBundle',
+                'SensioGeneratorBundle' => 'Sensio\\Bundle\\GeneratorBundle\\SensioGeneratorBundle',
                 'SymfonyWebConfiguratorBundle' => 'Symfony\\Bundle\\WebConfiguratorBundle\\SymfonyWebConfiguratorBundle',
             ),
             'kernel.charset' => 'UTF-8',
@@ -2234,6 +2284,9 @@ class appDevDebugProjectContainer extends Container
             'templating.asset.url_package.class' => 'Symfony\\Component\\Templating\\Asset\\UrlPackage',
             'templating.asset.package_factory.class' => 'Symfony\\Bundle\\FrameworkBundle\\Templating\\Asset\\PackageFactory',
             'templating.helper.code.file_link_format' => '',
+            'templating.helper.form.resources' => array(
+                0 => 'FrameworkBundle:Form',
+            ),
             'templating.debugger.class' => 'Symfony\\Bundle\\FrameworkBundle\\Templating\\Debugger',
             'templating.loader.cache.path' => NULL,
             'templating.engines' => array(
@@ -2265,6 +2318,7 @@ class appDevDebugProjectContainer extends Container
             'security.firewall.context.class' => 'Symfony\\Bundle\\SecurityBundle\\Security\\FirewallContext',
             'security.matcher.class' => 'Symfony\\Component\\HttpFoundation\\RequestMatcher',
             'security.role_hierarchy.class' => 'Symfony\\Component\\Security\\Core\\Role\\RoleHierarchy',
+            'security.http_utils.class' => 'Symfony\\Component\\Security\\Http\\HttpUtils',
             'security.authentication.retry_entry_point.class' => 'Symfony\\Component\\Security\\Http\\EntryPoint\\RetryAuthenticationEntryPoint',
             'security.channel_listener.class' => 'Symfony\\Component\\Security\\Http\\Firewall\\ChannelListener',
             'security.authentication.form_entry_point.class' => 'Symfony\\Component\\Security\\Http\\EntryPoint\\FormAuthenticationEntryPoint',
@@ -2442,7 +2496,6 @@ class appDevDebugProjectContainer extends Container
             'assetic.use_controller_worker.class' => 'Symfony\\Bundle\\AsseticBundle\\Factory\\Worker\\UseControllerWorker',
             'assetic.request_listener.class' => 'Symfony\\Bundle\\AsseticBundle\\EventListener\\RequestListener',
             'sensio_framework_extra.controller.listener.class' => 'Sensio\\Bundle\\FrameworkExtraBundle\\EventListener\\ControllerListener',
-            'sensio_framework_extra.routing.loader.annot_glob.class' => 'Symfony\\Component\\Routing\\Loader\\AnnotationGlobLoader',
             'sensio_framework_extra.routing.loader.annot_dir.class' => 'Symfony\\Component\\Routing\\Loader\\AnnotationDirectoryLoader',
             'sensio_framework_extra.routing.loader.annot_file.class' => 'Symfony\\Component\\Routing\\Loader\\AnnotationFileLoader',
             'sensio_framework_extra.routing.loader.annot_class.class' => 'Sensio\\Bundle\\FrameworkExtraBundle\\Routing\\AnnotatedRouteControllerLoader',
@@ -2463,9 +2516,54 @@ class appDevDebugProjectContainer extends Container
             'security.extra.controller_listener.class' => 'JMS\\SecurityExtraBundle\\Controller\\ControllerListener',
             'security.access.iddqd_voter.class' => 'JMS\\SecurityExtraBundle\\Security\\Authorization\\Voter\\IddqdVoter',
             'security.extra.secure_all_services' => false,
+            'manage_menu.class' => 'FDT\\AdminBundle\\Services\\ManageMenu',
+            'manage_menu.config' => array(
+                'bundlesConfig' => array(
+                    'paths' => array(
+                        0 => array(
+                            'name' => 'Parties',
+                            'path' => '/bundles/fdtparties/js/Parties',
+                        ),
+                        1 => array(
+                            'name' => 'Parties2',
+                            'path' => '/bundles/fdtparties/js/Parties2',
+                        ),
+                        2 => array(
+                            'name' => 'Admin',
+                            'path' => '/bundles/fdtadmin/js/Admin',
+                        ),
+                        3 => array(
+                            'name' => 'Test',
+                            'path' => '/bundles/fdtadmin/js/Admin',
+                        ),
+                    ),
+                ),
+            ),
+            'bundles_config.class' => 'FDT\\AdminBundle\\Services\\GetBundlesConfig',
+            'bundles_config.config' => array(
+                'paths' => array(
+                    0 => array(
+                        'name' => 'Parties',
+                        'path' => '/bundles/fdtparties/js/Parties',
+                    ),
+                    1 => array(
+                        'name' => 'Parties2',
+                        'path' => '/bundles/fdtparties/js/Parties2',
+                    ),
+                    2 => array(
+                        'name' => 'Admin',
+                        'path' => '/bundles/fdtadmin/js/Admin',
+                    ),
+                    3 => array(
+                        'name' => 'Test',
+                        'path' => '/bundles/fdtadmin/js/Admin',
+                    ),
+                ),
+            ),
             'web_profiler.debug_toolbar.class' => 'Symfony\\Bundle\\WebProfilerBundle\\EventListener\\WebDebugToolbarListener',
             'web_profiler.debug_toolbar.intercept_redirects' => false,
             'web_profiler.debug_toolbar.verbose' => true,
+            'sensio.distribution.webconfigurator.class' => 'Sensio\\Bundle\\DistributionBundle\\Configurator\\Configurator',
             'symfony.webconfigurator.class' => 'Symfony\\Bundle\\WebConfiguratorBundle\\Configurator',
             'data_collector.templates' => array(
                 'data_collector.config' => array(
@@ -2549,7 +2647,7 @@ class appDevDebugProjectContainer extends Container
                 36 => 'Symfony\\Component\\HttpKernel\\Event\\GetResponseEvent',
                 37 => 'Symfony\\Component\\HttpKernel\\Event\\GetResponseForControllerResultEvent',
                 38 => 'Symfony\\Component\\HttpKernel\\Event\\GetResponseForExceptionEvent',
-                39 => 'Symfony\\Component\\HttpKernel\\CoreEvents',
+                39 => 'Symfony\\Component\\HttpKernel\\KernelEvents',
                 40 => 'Symfony\\Bundle\\FrameworkBundle\\EventListener\\RouterListener',
                 41 => 'Symfony\\Bundle\\FrameworkBundle\\Controller\\ControllerNameParser',
                 42 => 'Symfony\\Bundle\\FrameworkBundle\\Controller\\ControllerResolver',

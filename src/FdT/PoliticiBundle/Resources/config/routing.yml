@@ -1,3 +1,0 @@
-homepage:
-    pattern:  /admin/
-    defaults: { _controller: FdTPoliticiBundle:Default:index }

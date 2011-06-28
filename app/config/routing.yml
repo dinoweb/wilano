@@ -1,2 +1,2 @@
 FdTPolitici:
-    resource: "@FdTPoliticiBundle/Resources/config/routing.yml"
+    resource: "@FDTAdminBundle/Resources/config/routing.yml"

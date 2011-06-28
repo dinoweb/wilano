@@ -81,7 +81,6 @@ class appdevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
                 return array (  '_controller' => 'Acme\\DemoBundle\\Controller\\DemoController::contactAction',  '_route' => '_demo_contact',);
             }
     
-            throw 0 < count($allow) ? new MethodNotAllowedException(array_unique($allow)) : new ResourceNotFoundException();
         }
 
         // _wdt
@@ -120,7 +119,6 @@ class appdevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
                 return array_merge($this->mergeDefaults($matches, array (  '_controller' => 'Symfony\\Bundle\\WebProfilerBundle\\Controller\\ProfilerController::panelAction',)), array('_route' => '_profiler'));
             }
     
-            throw 0 < count($allow) ? new MethodNotAllowedException(array_unique($allow)) : new ResourceNotFoundException();
         }
 
         if (0 === strpos($pathinfo, '/_configurator')) {
@@ -142,7 +140,6 @@ class appdevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
                 return array (  '_controller' => 'Symfony\\Bundle\\WebConfiguratorBundle\\Controller\\ConfiguratorController::finalAction',  '_route' => '_configurator_final',);
             }
     
-            throw 0 < count($allow) ? new MethodNotAllowedException(array_unique($allow)) : new ResourceNotFoundException();
         }
 
         // homepage
@@ -150,7 +147,23 @@ class appdevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
             if (substr($pathinfo, -1) !== '/') {
                 return $this->redirect($pathinfo.'/', 'homepage');
             }
-            return array (  '_controller' => 'FdTPoliticiBundle:Default:index',  '_route' => 'homepage',);
+            return array (  '_controller' => 'FDTAdminBundle:Default:index',  '_route' => 'homepage',);
+        }
+
+        // admin_menu
+        if (rtrim($pathinfo, '/') === '/admin/getMenu') {
+            if (substr($pathinfo, -1) !== '/') {
+                return $this->redirect($pathinfo.'/', 'admin_menu');
+            }
+            return array (  '_controller' => 'FDTAdminBundle:GetMenu:index',  '_route' => 'admin_menu',);
+        }
+
+        // admin_bundlesConfig
+        if (rtrim($pathinfo, '/') === '/admin/getBundlesConfig') {
+            if (substr($pathinfo, -1) !== '/') {
+                return $this->redirect($pathinfo.'/', 'admin_bundlesConfig');
+            }
+            return array (  '_controller' => 'FDTAdminBundle:GetBundlesConfig:index',  '_route' => 'admin_bundlesConfig',);
         }
 
         // homepage
@@ -158,7 +171,23 @@ class appdevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
             if (substr($pathinfo, -1) !== '/') {
                 return $this->redirect($pathinfo.'/', 'homepage');
             }
-            return array (  '_controller' => 'FdT\\PoliticiBundle\\Controller\\DefaultController::indexAction',  '_route' => 'homepage',);
+            return array (  '_controller' => 'FDT\\AdminBundle\\Controller\\DefaultController::indexAction',  '_route' => 'homepage',);
+        }
+
+        // admin_menu
+        if (rtrim($pathinfo, '/') === '/admin/getMenu') {
+            if (substr($pathinfo, -1) !== '/') {
+                return $this->redirect($pathinfo.'/', 'admin_menu');
+            }
+            return array (  '_controller' => 'FDT\\AdminBundle\\Controller\\GetMenuController::indexAction',  '_route' => 'admin_menu',);
+        }
+
+        // admin_bundlesConfig
+        if (rtrim($pathinfo, '/') === '/admin/getBundlesConfig') {
+            if (substr($pathinfo, -1) !== '/') {
+                return $this->redirect($pathinfo.'/', 'admin_bundlesConfig');
+            }
+            return array (  '_controller' => 'FDT\\AdminBundle\\Controller\\GetBundlesConfigController::indexAction',  '_route' => 'admin_bundlesConfig',);
         }
 
         throw 0 < count($allow) ? new MethodNotAllowedException(array_unique($allow)) : new ResourceNotFoundException();

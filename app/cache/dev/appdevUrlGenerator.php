@@ -34,6 +34,8 @@ class appdevUrlGenerator extends Symfony\Component\Routing\Generator\UrlGenerato
        '_configurator_step' => true,
        '_configurator_final' => true,
        'homepage' => true,
+       'admin_menu' => true,
+       'admin_bundlesConfig' => true,
     );
 
     /**
@@ -159,6 +161,16 @@ class appdevUrlGenerator extends Symfony\Component\Routing\Generator\UrlGenerato
 
     private function gethomepageRouteInfo()
     {
-        return array(array (), array (  '_controller' => 'FdT\\PoliticiBundle\\Controller\\DefaultController::indexAction',), array (), array (  0 =>   array (    0 => 'text',    1 => '/admin/',  ),));
+        return array(array (), array (  '_controller' => 'FDT\\AdminBundle\\Controller\\DefaultController::indexAction',), array (), array (  0 =>   array (    0 => 'text',    1 => '/admin/',  ),));
+    }
+
+    private function getadmin_menuRouteInfo()
+    {
+        return array(array (), array (  '_controller' => 'FDT\\AdminBundle\\Controller\\GetMenuController::indexAction',), array (), array (  0 =>   array (    0 => 'text',    1 => '/admin/getMenu/',  ),));
+    }
+
+    private function getadmin_bundlesConfigRouteInfo()
+    {
+        return array(array (), array (  '_controller' => 'FDT\\AdminBundle\\Controller\\GetBundlesConfigController::indexAction',), array (), array (  0 =>   array (    0 => 'text',    1 => '/admin/getBundlesConfig/',  ),));
     }
 }

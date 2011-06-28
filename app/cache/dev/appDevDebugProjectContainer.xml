@@ -17,9 +17,11 @@
       <parameter key="AsseticBundle">Symfony\Bundle\AsseticBundle\AsseticBundle</parameter>
       <parameter key="SensioFrameworkExtraBundle">Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle</parameter>
       <parameter key="JMSSecurityExtraBundle">JMS\SecurityExtraBundle\JMSSecurityExtraBundle</parameter>
-      <parameter key="FdTPoliticiBundle">FdT\PoliticiBundle\FdTPoliticiBundle</parameter>
+      <parameter key="FDTAdminBundle">FDT\AdminBundle\FDTAdminBundle</parameter>
       <parameter key="AcmeDemoBundle">Acme\DemoBundle\AcmeDemoBundle</parameter>
       <parameter key="WebProfilerBundle">Symfony\Bundle\WebProfilerBundle\WebProfilerBundle</parameter>
+      <parameter key="SensioDistributionBundle">Sensio\Bundle\DistributionBundle\SensioDistributionBundle</parameter>
+      <parameter key="SensioGeneratorBundle">Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle</parameter>
       <parameter key="SymfonyWebConfiguratorBundle">Symfony\Bundle\WebConfiguratorBundle\SymfonyWebConfiguratorBundle</parameter>
     </parameter>
     <parameter key="kernel.charset">UTF-8</parameter>
@@ -137,6 +139,9 @@
     <parameter key="templating.asset.url_package.class">Symfony\Component\Templating\Asset\UrlPackage</parameter>
     <parameter key="templating.asset.package_factory.class">Symfony\Bundle\FrameworkBundle\Templating\Asset\PackageFactory</parameter>
     <parameter key="templating.helper.code.file_link_format"></parameter>
+    <parameter key="templating.helper.form.resources" type="collection">
+      <parameter>FrameworkBundle:Form</parameter>
+    </parameter>
     <parameter key="templating.debugger.class">Symfony\Bundle\FrameworkBundle\Templating\Debugger</parameter>
     <parameter key="templating.loader.cache.path">null</parameter>
     <parameter key="templating.engines" type="collection">
@@ -168,6 +173,7 @@
     <parameter key="security.firewall.context.class">Symfony\Bundle\SecurityBundle\Security\FirewallContext</parameter>
     <parameter key="security.matcher.class">Symfony\Component\HttpFoundation\RequestMatcher</parameter>
     <parameter key="security.role_hierarchy.class">Symfony\Component\Security\Core\Role\RoleHierarchy</parameter>
+    <parameter key="security.http_utils.class">Symfony\Component\Security\Http\HttpUtils</parameter>
     <parameter key="security.authentication.retry_entry_point.class">Symfony\Component\Security\Http\EntryPoint\RetryAuthenticationEntryPoint</parameter>
     <parameter key="security.channel_listener.class">Symfony\Component\Security\Http\Firewall\ChannelListener</parameter>
     <parameter key="security.authentication.form_entry_point.class">Symfony\Component\Security\Http\EntryPoint\FormAuthenticationEntryPoint</parameter>
@@ -339,7 +345,6 @@
     <parameter key="assetic.use_controller_worker.class">Symfony\Bundle\AsseticBundle\Factory\Worker\UseControllerWorker</parameter>
     <parameter key="assetic.request_listener.class">Symfony\Bundle\AsseticBundle\EventListener\RequestListener</parameter>
     <parameter key="sensio_framework_extra.controller.listener.class">Sensio\Bundle\FrameworkExtraBundle\EventListener\ControllerListener</parameter>
-    <parameter key="sensio_framework_extra.routing.loader.annot_glob.class">Symfony\Component\Routing\Loader\AnnotationGlobLoader</parameter>
     <parameter key="sensio_framework_extra.routing.loader.annot_dir.class">Symfony\Component\Routing\Loader\AnnotationDirectoryLoader</parameter>
     <parameter key="sensio_framework_extra.routing.loader.annot_file.class">Symfony\Component\Routing\Loader\AnnotationFileLoader</parameter>
     <parameter key="sensio_framework_extra.routing.loader.annot_class.class">Sensio\Bundle\FrameworkExtraBundle\Routing\AnnotatedRouteControllerLoader</parameter>
@@ -358,9 +363,54 @@
     <parameter key="security.extra.controller_listener.class">JMS\SecurityExtraBundle\Controller\ControllerListener</parameter>
     <parameter key="security.access.iddqd_voter.class">JMS\SecurityExtraBundle\Security\Authorization\Voter\IddqdVoter</parameter>
     <parameter key="security.extra.secure_all_services">false</parameter>
+    <parameter key="manage_menu.class">FDT\AdminBundle\Services\ManageMenu</parameter>
+    <parameter key="manage_menu.config" type="collection">
+      <parameter key="bundlesConfig" type="collection">
+        <parameter key="paths" type="collection">
+          <parameter type="collection">
+            <parameter key="name">Parties</parameter>
+            <parameter key="path">/bundles/fdtparties/js/Parties</parameter>
+          </parameter>
+          <parameter type="collection">
+            <parameter key="name">Parties2</parameter>
+            <parameter key="path">/bundles/fdtparties/js/Parties2</parameter>
+          </parameter>
+          <parameter type="collection">
+            <parameter key="name">Admin</parameter>
+            <parameter key="path">/bundles/fdtadmin/js/Admin</parameter>
+          </parameter>
+          <parameter type="collection">
+            <parameter key="name">Test</parameter>
+            <parameter key="path">/bundles/fdtadmin/js/Admin</parameter>
+          </parameter>
+        </parameter>
+      </parameter>
+    </parameter>
+    <parameter key="bundles_config.class">FDT\AdminBundle\Services\GetBundlesConfig</parameter>
+    <parameter key="bundles_config.config" type="collection">
+      <parameter key="paths" type="collection">
+        <parameter type="collection">
+          <parameter key="name">Parties</parameter>
+          <parameter key="path">/bundles/fdtparties/js/Parties</parameter>
+        </parameter>
+        <parameter type="collection">
+          <parameter key="name">Parties2</parameter>
+          <parameter key="path">/bundles/fdtparties/js/Parties2</parameter>
+        </parameter>
+        <parameter type="collection">
+          <parameter key="name">Admin</parameter>
+          <parameter key="path">/bundles/fdtadmin/js/Admin</parameter>
+        </parameter>
+        <parameter type="collection">
+          <parameter key="name">Test</parameter>
+          <parameter key="path">/bundles/fdtadmin/js/Admin</parameter>
+        </parameter>
+      </parameter>
+    </parameter>
     <parameter key="web_profiler.debug_toolbar.class">Symfony\Bundle\WebProfilerBundle\EventListener\WebDebugToolbarListener</parameter>
     <parameter key="web_profiler.debug_toolbar.intercept_redirects">false</parameter>
     <parameter key="web_profiler.debug_toolbar.verbose">true</parameter>
+    <parameter key="sensio.distribution.webconfigurator.class">Sensio\Bundle\DistributionBundle\Configurator\Configurator</parameter>
     <parameter key="symfony.webconfigurator.class">Symfony\Bundle\WebConfiguratorBundle\Configurator</parameter>
     <parameter key="data_collector.templates" type="collection">
       <parameter key="data_collector.config" type="collection">
@@ -444,7 +494,7 @@
       <parameter>Symfony\Component\HttpKernel\Event\GetResponseEvent</parameter>
       <parameter>Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent</parameter>
       <parameter>Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent</parameter>
-      <parameter>Symfony\Component\HttpKernel\CoreEvents</parameter>
+      <parameter>Symfony\Component\HttpKernel\KernelEvents</parameter>
       <parameter>Symfony\Bundle\FrameworkBundle\EventListener\RouterListener</parameter>
       <parameter>Symfony\Bundle\FrameworkBundle\Controller\ControllerNameParser</parameter>
       <parameter>Symfony\Bundle\FrameworkBundle\Controller\ControllerResolver</parameter>
@@ -495,8 +545,8 @@
       <argument type="service" id="kernel"/>
     </service>
     <service id="router_listener" class="Symfony\Bundle\FrameworkBundle\EventListener\RouterListener">
-      <tag name="kernel.listener" event="core.request" method="onEarlyCoreRequest" priority="255"/>
-      <tag name="kernel.listener" event="core.request" method="onCoreRequest"/>
+      <tag name="kernel.event_listener" event="kernel.request" method="onEarlyKernelRequest" priority="255"/>
+      <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest"/>
       <tag name="monolog.logger" channel="request"/>
       <argument type="service" id="router"/>
       <argument>80</argument>
@@ -504,15 +554,15 @@
       <argument type="service" id="monolog.logger.request"/>
     </service>
     <service id="session_listener" class="Symfony\Bundle\FrameworkBundle\EventListener\SessionListener">
-      <tag name="kernel.listener" event="core.request" method="onCoreRequest" priority="128"/>
+      <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest" priority="128"/>
       <argument type="service" id="service_container"/>
     </service>
     <service id="response_listener" class="Symfony\Component\HttpKernel\EventListener\ResponseListener">
-      <tag name="kernel.listener" event="core.response" method="onCoreResponse"/>
+      <tag name="kernel.event_listener" event="kernel.response" method="onKernelResponse"/>
       <argument>UTF-8</argument>
     </service>
     <service id="exception_listener" class="Symfony\Component\HttpKernel\EventListener\ExceptionListener">
-      <tag name="kernel.listener" event="core.exception" method="onCoreException" priority="-128"/>
+      <tag name="kernel.event_listener" event="kernel.exception" method="onKernelException" priority="-128"/>
       <tag name="monolog.logger" channel="request"/>
       <argument>Symfony\Bundle\FrameworkBundle\Controller\ExceptionController::showAction</argument>
       <argument type="service" id="monolog.logger.request"/>
@@ -522,143 +572,143 @@
       <argument type="service" id="service_container"/>
       <argument type="service" id="monolog.logger.event"/>
       <call method="addListenerService">
-        <argument>core.request</argument>
+        <argument>kernel.request</argument>
         <argument type="collection">
           <argument>router_listener</argument>
-          <argument>onEarlyCoreRequest</argument>
+          <argument>onEarlyKernelRequest</argument>
         </argument>
         <argument>255</argument>
       </call>
       <call method="addListenerService">
-        <argument>core.request</argument>
+        <argument>kernel.request</argument>
         <argument type="collection">
           <argument>router_listener</argument>
-          <argument>onCoreRequest</argument>
+          <argument>onKernelRequest</argument>
         </argument>
         <argument>0</argument>
       </call>
       <call method="addListenerService">
-        <argument>core.request</argument>
+        <argument>kernel.request</argument>
         <argument type="collection">
           <argument>session_listener</argument>
-          <argument>onCoreRequest</argument>
+          <argument>onKernelRequest</argument>
         </argument>
         <argument>128</argument>
       </call>
       <call method="addListenerService">
-        <argument>core.response</argument>
+        <argument>kernel.response</argument>
         <argument type="collection">
           <argument>response_listener</argument>
-          <argument>onCoreResponse</argument>
+          <argument>onKernelResponse</argument>
         </argument>
         <argument>0</argument>
       </call>
       <call method="addListenerService">
-        <argument>core.exception</argument>
+        <argument>kernel.exception</argument>
         <argument type="collection">
           <argument>exception_listener</argument>
-          <argument>onCoreException</argument>
+          <argument>onKernelException</argument>
         </argument>
         <argument>-128</argument>
       </call>
       <call method="addListenerService">
-        <argument>core.response</argument>
+        <argument>kernel.response</argument>
         <argument type="collection">
           <argument>profiler_listener</argument>
-          <argument>onCoreResponse</argument>
+          <argument>onKernelResponse</argument>
         </argument>
         <argument>-100</argument>
       </call>
       <call method="addListenerService">
-        <argument>core.exception</argument>
+        <argument>kernel.exception</argument>
         <argument type="collection">
           <argument>profiler_listener</argument>
-          <argument>onCoreException</argument>
+          <argument>onKernelException</argument>
         </argument>
         <argument>0</argument>
       </call>
       <call method="addListenerService">
-        <argument>core.controller</argument>
+        <argument>kernel.controller</argument>
         <argument type="collection">
           <argument>data_collector.request</argument>
-          <argument>onCoreController</argument>
+          <argument>onKernelController</argument>
         </argument>
         <argument>0</argument>
       </call>
       <call method="addListenerService">
-        <argument>core.request</argument>
+        <argument>kernel.request</argument>
         <argument type="collection">
           <argument>security.firewall</argument>
-          <argument>onCoreRequest</argument>
+          <argument>onKernelRequest</argument>
         </argument>
         <argument>64</argument>
       </call>
       <call method="addListenerService">
-        <argument>core.response</argument>
+        <argument>kernel.response</argument>
         <argument type="collection">
           <argument>security.rememberme.response_listener</argument>
-          <argument>onCoreResponse</argument>
+          <argument>onKernelResponse</argument>
         </argument>
         <argument>0</argument>
       </call>
       <call method="addListenerService">
-        <argument>core.response</argument>
+        <argument>kernel.response</argument>
         <argument type="collection">
           <argument>monolog.handler.firephp</argument>
-          <argument>onCoreResponse</argument>
+          <argument>onKernelResponse</argument>
         </argument>
         <argument>0</argument>
       </call>
       <call method="addListenerService">
-        <argument>core.request</argument>
+        <argument>kernel.request</argument>
         <argument type="collection">
           <argument>assetic.request_listener</argument>
-          <argument>onCoreRequest</argument>
+          <argument>onKernelRequest</argument>
         </argument>
         <argument>0</argument>
       </call>
       <call method="addListenerService">
-        <argument>core.controller</argument>
+        <argument>kernel.controller</argument>
         <argument type="collection">
           <argument>sensio_framework_extra.controller.listener</argument>
-          <argument>onCoreController</argument>
+          <argument>onKernelController</argument>
         </argument>
         <argument>0</argument>
       </call>
       <call method="addListenerService">
-        <argument>core.controller</argument>
+        <argument>kernel.controller</argument>
         <argument type="collection">
           <argument>sensio_framework_extra.converter.listener</argument>
-          <argument>onCoreController</argument>
+          <argument>onKernelController</argument>
         </argument>
         <argument>0</argument>
       </call>
       <call method="addListenerService">
-        <argument>core.controller</argument>
+        <argument>kernel.controller</argument>
         <argument type="collection">
           <argument>sensio_framework_extra.view.listener</argument>
-          <argument>onCoreController</argument>
+          <argument>onKernelController</argument>
         </argument>
         <argument>0</argument>
       </call>
       <call method="addListenerService">
-        <argument>core.view</argument>
+        <argument>kernel.view</argument>
         <argument type="collection">
           <argument>sensio_framework_extra.view.listener</argument>
-          <argument>onCoreView</argument>
+          <argument>onKernelView</argument>
         </argument>
         <argument>0</argument>
       </call>
       <call method="addListenerService">
-        <argument>core.response</argument>
+        <argument>kernel.response</argument>
         <argument type="collection">
           <argument>sensio_framework_extra.cache.listener</argument>
-          <argument>onCoreResponse</argument>
+          <argument>onKernelResponse</argument>
         </argument>
         <argument>0</argument>
       </call>
       <call method="addListenerService">
-        <argument>core.controller</argument>
+        <argument>kernel.controller</argument>
         <argument type="collection">
           <argument>security.extra.controller_listener</argument>
           <argument>onCoreController</argument>
@@ -666,18 +716,10 @@
         <argument>-255</argument>
       </call>
       <call method="addListenerService">
-        <argument>core.controller</argument>
-        <argument type="collection">
-          <argument>acme.demo.listener</argument>
-          <argument>onCoreController</argument>
-        </argument>
-        <argument>0</argument>
-      </call>
-      <call method="addListenerService">
-        <argument>core.response</argument>
+        <argument>kernel.response</argument>
         <argument type="collection">
           <argument>web_profiler.debug_toolbar</argument>
-          <argument>onCoreResponse</argument>
+          <argument>onKernelResponse</argument>
         </argument>
         <argument>-128</argument>
       </call>
@@ -1068,15 +1110,21 @@
       </call>
     </service>
     <service id="profiler_listener" class="Symfony\Component\HttpKernel\EventListener\ProfilerListener">
-      <tag name="kernel.listener" event="core.response" method="onCoreResponse" priority="-100"/>
-      <tag name="kernel.listener" event="core.exception" method="onCoreException"/>
+      <tag name="kernel.event_listener" event="kernel.response" method="onKernelResponse" priority="-100"/>
+      <tag name="kernel.event_listener" event="kernel.exception" method="onKernelException"/>
       <argument type="service" id="profiler"/>
-      <argument>null</argument>
+      <argument type="service">
+        <service class="Symfony\Component\HttpFoundation\RequestMatcher" public="false">
+          <call method="matchPath">
+            <argument>^/(?!admin)</argument>
+          </call>
+        </service>
+      </argument>
       <argument>false</argument>
       <argument>false</argument>
     </service>
     <service id="data_collector.request" class="Symfony\Bundle\FrameworkBundle\DataCollector\RequestDataCollector">
-      <tag name="kernel.listener" event="core.controller" method="onCoreController"/>
+      <tag name="kernel.event_listener" event="kernel.controller" method="onKernelController"/>
       <tag name="data_collector" template="WebProfilerBundle:Collector:request" id="request" priority="255"/>
     </service>
     <service id="routing.loader" class="Symfony\Bundle\FrameworkBundle\Routing\DelegatingLoader">
@@ -1114,20 +1162,6 @@
               <service class="Symfony\Bundle\AsseticBundle\Routing\AsseticLoader" public="false">
                 <tag name="routing.loader"/>
                 <argument type="service" id="assetic.asset_manager"/>
-              </service>
-            </argument>
-          </call>
-          <call method="addLoader">
-            <argument type="service">
-              <service class="Symfony\Component\Routing\Loader\AnnotationGlobLoader" public="false">
-                <tag name="routing.loader"/>
-                <argument type="service" id="file_locator"/>
-                <argument type="service">
-                  <service class="Sensio\Bundle\FrameworkExtraBundle\Routing\AnnotatedRouteControllerLoader" public="false">
-                    <tag name="routing.loader"/>
-                    <argument type="service" id="annotation_reader"/>
-                  </service>
-                </argument>
               </service>
             </argument>
           </call>
@@ -1263,6 +1297,9 @@
           </call>
         </service>
       </argument>
+      <argument type="collection">
+        <argument>FrameworkBundle:Form</argument>
+      </argument>
     </service>
     <service id="templating.globals" class="Symfony\Bundle\FrameworkBundle\Templating\GlobalVariables">
       <argument type="service" id="service_container"/>
@@ -1324,7 +1361,7 @@
       <argument>true</argument>
     </service>
     <service id="security.firewall" class="Symfony\Component\Security\Http\Firewall">
-      <tag name="kernel.listener" event="core.request" method="onCoreRequest" priority="64"/>
+      <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest" priority="64"/>
       <argument type="service">
         <service class="Symfony\Bundle\SecurityBundle\Security\FirewallMap" public="false">
           <argument type="service" id="service_container"/>
@@ -1355,7 +1392,7 @@
       <argument type="service" id="event_dispatcher"/>
     </service>
     <service id="security.rememberme.response_listener" class="Symfony\Bundle\SecurityBundle\EventListener\ResponseListener">
-      <tag name="kernel.listener" event="core.response" method="onCoreResponse"/>
+      <tag name="kernel.event_listener" event="kernel.response" method="onKernelResponse"/>
     </service>
     <service id="templating.helper.security" class="Symfony\Bundle\SecurityBundle\Templating\Helper\SecurityHelper">
       <tag name="templating.helper" alias="security"/>
@@ -1425,6 +1462,11 @@
         <argument type="service">
           <service class="Symfony\Component\Security\Http\Firewall\LogoutListener" public="false">
             <argument type="service" id="security.context"/>
+            <argument type="service">
+              <service class="Symfony\Component\Security\Http\HttpUtils" public="false">
+                <argument type="service" id="router"/>
+              </service>
+            </argument>
             <argument>/demo/secured/logout</argument>
             <argument>/demo/</argument>
             <argument>null</argument>
@@ -1443,6 +1485,11 @@
             <argument type="service">
               <service class="Symfony\Component\Security\Http\Session\SessionAuthenticationStrategy" public="false">
                 <argument>migrate</argument>
+              </service>
+            </argument>
+            <argument type="service">
+              <service class="Symfony\Component\Security\Http\HttpUtils" public="false">
+                <argument type="service" id="router"/>
               </service>
             </argument>
             <argument>secured_area</argument>
@@ -1486,8 +1533,18 @@
           <argument type="service" id="security.context"/>
           <argument type="service" id="security.authentication.trust_resolver"/>
           <argument type="service">
+            <service class="Symfony\Component\Security\Http\HttpUtils" public="false">
+              <argument type="service" id="router"/>
+            </service>
+          </argument>
+          <argument type="service">
             <service class="Symfony\Component\Security\Http\EntryPoint\FormAuthenticationEntryPoint" public="false">
               <argument type="service" id="http_kernel"/>
+              <argument type="service">
+                <service class="Symfony\Component\Security\Http\HttpUtils" public="false">
+                  <argument type="service" id="router"/>
+                </service>
+              </argument>
               <argument>/demo/secured/login</argument>
               <argument>false</argument>
             </service>
@@ -1599,7 +1656,7 @@
       <argument>true</argument>
     </service>
     <service id="monolog.handler.firephp" class="Symfony\Bridge\Monolog\Handler\FirePHPHandler">
-      <tag name="kernel.listener" event="core.response" method="onCoreResponse"/>
+      <tag name="kernel.event_listener" event="kernel.response" method="onKernelResponse"/>
       <argument>200</argument>
       <argument>true</argument>
     </service>
@@ -1653,6 +1710,7 @@
           </call>
         </service>
       </argument>
+      <argument type="collection"/>
     </service>
     <service id="form.type_guesser.doctrine" class="Symfony\Bridge\Doctrine\Form\DoctrineOrmTypeGuesser">
       <tag name="form.type_guesser"/>
@@ -2000,16 +2058,16 @@
               <argument type="service">
                 <service class="%assetic.directory_resource.class%" public="false">
                   <argument type="service" id="templating.loader"/>
-                  <argument>FdTPoliticiBundle</argument>
-                  <argument>/vol/www/domini/wilano/app/Resources/FdTPoliticiBundle/views</argument>
+                  <argument>FDTAdminBundle</argument>
+                  <argument>/vol/www/domini/wilano/app/Resources/FDTAdminBundle/views</argument>
                   <argument>/^[^.]+\.[^.]+\.twig$/</argument>
                 </service>
               </argument>
               <argument type="service">
                 <service class="%assetic.directory_resource.class%" public="false">
                   <argument type="service" id="templating.loader"/>
-                  <argument>FdTPoliticiBundle</argument>
-                  <argument>/vol/www/domini/wilano/src/FdT/PoliticiBundle/Resources/views</argument>
+                  <argument>FDTAdminBundle</argument>
+                  <argument>/vol/www/domini/wilano/src/FDT/AdminBundle/Resources/views</argument>
                   <argument>/^[^.]+\.[^.]+\.twig$/</argument>
                 </service>
               </argument>
@@ -2064,6 +2122,60 @@
                   <argument type="service" id="templating.loader"/>
                   <argument>WebProfilerBundle</argument>
                   <argument>/vol/www/domini/wilano/vendor/symfony/src/Symfony/Bundle/WebProfilerBundle/Resources/views</argument>
+                  <argument>/^[^.]+\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+            </argument>
+          </service>
+        </argument>
+        <argument>twig</argument>
+      </call>
+      <call method="addResource">
+        <argument type="service">
+          <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource" public="false">
+            <tag name="assetic.templating.twig"/>
+            <tag name="assetic.formula_resource" loader="twig"/>
+            <argument type="collection">
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>SensioDistributionBundle</argument>
+                  <argument>/vol/www/domini/wilano/app/Resources/SensioDistributionBundle/views</argument>
+                  <argument>/^[^.]+\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>SensioDistributionBundle</argument>
+                  <argument>/vol/www/domini/wilano/vendor/bundles/Sensio/Bundle/DistributionBundle/Resources/views</argument>
+                  <argument>/^[^.]+\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+            </argument>
+          </service>
+        </argument>
+        <argument>twig</argument>
+      </call>
+      <call method="addResource">
+        <argument type="service">
+          <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource" public="false">
+            <tag name="assetic.templating.twig"/>
+            <tag name="assetic.formula_resource" loader="twig"/>
+            <argument type="collection">
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>SensioGeneratorBundle</argument>
+                  <argument>/vol/www/domini/wilano/app/Resources/SensioGeneratorBundle/views</argument>
+                  <argument>/^[^.]+\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>SensioGeneratorBundle</argument>
+                  <argument>/vol/www/domini/wilano/vendor/bundles/Sensio/Bundle/GeneratorBundle/Resources/views</argument>
                   <argument>/^[^.]+\.[^.]+\.twig$/</argument>
                 </service>
               </argument>
@@ -2145,14 +2257,14 @@
       <argument>/vol/www/domini/wilano/app/cache/dev/assetic/assets</argument>
     </service>
     <service id="assetic.request_listener" class="Symfony\Bundle\AsseticBundle\EventListener\RequestListener">
-      <tag name="kernel.listener" event="core.request" method="onCoreRequest"/>
+      <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest"/>
     </service>
     <service id="sensio_framework_extra.controller.listener" class="Sensio\Bundle\FrameworkExtraBundle\EventListener\ControllerListener">
-      <tag name="kernel.listener" event="core.controller" method="onCoreController"/>
+      <tag name="kernel.event_listener" event="kernel.controller" method="onKernelController"/>
       <argument type="service" id="annotation_reader"/>
     </service>
     <service id="sensio_framework_extra.converter.listener" class="Sensio\Bundle\FrameworkExtraBundle\EventListener\ParamConverterListener">
-      <tag name="kernel.listener" event="core.controller" method="onCoreController"/>
+      <tag name="kernel.event_listener" event="kernel.controller" method="onKernelController"/>
       <argument type="service" id="sensio_framework_extra.converter.manager"/>
     </service>
     <service id="sensio_framework_extra.converter.manager" class="Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\ParamConverterManager">
@@ -2167,12 +2279,12 @@
       <argument type="service" id="doctrine"/>
     </service>
     <service id="sensio_framework_extra.view.listener" class="Sensio\Bundle\FrameworkExtraBundle\EventListener\TemplateListener">
-      <tag name="kernel.listener" event="core.controller" method="onCoreController"/>
-      <tag name="kernel.listener" event="core.view" method="onCoreView"/>
+      <tag name="kernel.event_listener" event="kernel.controller" method="onKernelController"/>
+      <tag name="kernel.event_listener" event="kernel.view" method="onKernelView"/>
       <argument type="service" id="service_container"/>
     </service>
     <service id="sensio_framework_extra.cache.listener" class="Sensio\Bundle\FrameworkExtraBundle\EventListener\CacheListener">
-      <tag name="kernel.listener" event="core.response" method="onCoreResponse"/>
+      <tag name="kernel.event_listener" event="kernel.response" method="onKernelResponse"/>
     </service>
     <service id="security.access.method_interceptor" class="JMS\SecurityExtraBundle\Security\Authorization\Interception\MethodSecurityInterceptor">
       <argument type="service" id="security.context"/>
@@ -2192,9 +2304,55 @@
       <argument type="service" id="logger"/>
     </service>
     <service id="security.extra.controller_listener" class="JMS\SecurityExtraBundle\Controller\ControllerListener">
-      <tag name="kernel.listener" event="core.controller" method="onCoreController" priority="-255"/>
+      <tag name="kernel.event_listener" event="kernel.controller" method="onCoreController" priority="-255"/>
       <argument type="service" id="service_container"/>
       <argument type="service" id="annotation_reader"/>
+    </service>
+    <service id="manage_menu" class="FDT\AdminBundle\Services\ManageMenu">
+      <argument type="collection">
+        <argument key="bundlesConfig" type="collection">
+          <argument key="paths" type="collection">
+            <argument type="collection">
+              <argument key="name">Parties</argument>
+              <argument key="path">/bundles/fdtparties/js/Parties</argument>
+            </argument>
+            <argument type="collection">
+              <argument key="name">Parties2</argument>
+              <argument key="path">/bundles/fdtparties/js/Parties2</argument>
+            </argument>
+            <argument type="collection">
+              <argument key="name">Admin</argument>
+              <argument key="path">/bundles/fdtadmin/js/Admin</argument>
+            </argument>
+            <argument type="collection">
+              <argument key="name">Test</argument>
+              <argument key="path">/bundles/fdtadmin/js/Admin</argument>
+            </argument>
+          </argument>
+        </argument>
+      </argument>
+    </service>
+    <service id="bundles_config" class="FDT\AdminBundle\Services\GetBundlesConfig">
+      <argument type="collection">
+        <argument key="paths" type="collection">
+          <argument type="collection">
+            <argument key="name">Parties</argument>
+            <argument key="path">/bundles/fdtparties/js/Parties</argument>
+          </argument>
+          <argument type="collection">
+            <argument key="name">Parties2</argument>
+            <argument key="path">/bundles/fdtparties/js/Parties2</argument>
+          </argument>
+          <argument type="collection">
+            <argument key="name">Admin</argument>
+            <argument key="path">/bundles/fdtadmin/js/Admin</argument>
+          </argument>
+          <argument type="collection">
+            <argument key="name">Test</argument>
+            <argument key="path">/bundles/fdtadmin/js/Admin</argument>
+          </argument>
+        </argument>
+      </argument>
     </service>
     <service id="twig.extension.acme.demo" class="Acme\DemoBundle\Twig\Extension\DemoExtension" public="false">
       <tag name="twig.extension"/>
@@ -2205,10 +2363,13 @@
       <argument type="service" id="twig.extension.acme.demo"/>
     </service>
     <service id="web_profiler.debug_toolbar" class="Symfony\Bundle\WebProfilerBundle\EventListener\WebDebugToolbarListener">
-      <tag name="kernel.listener" event="core.response" method="onCoreResponse" priority="-128"/>
+      <tag name="kernel.event_listener" event="kernel.response" method="onKernelResponse" priority="-128"/>
       <argument type="service" id="templating"/>
       <argument>false</argument>
       <argument>true</argument>
+    </service>
+    <service id="sensio.distribution.webconfigurator" class="Sensio\Bundle\DistributionBundle\Configurator\Configurator">
+      <argument>/vol/www/domini/wilano/app</argument>
     </service>
     <service id="symfony.webconfigurator" class="Symfony\Bundle\WebConfiguratorBundle\Configurator">
       <argument>/vol/www/domini/wilano/app</argument>
@@ -2314,7 +2475,11 @@
     </service>
     <service id="annotation_reader" class="Doctrine\Common\Annotations\FileCacheReader">
       <argument type="service">
-        <service class="Doctrine\Common\Annotations\AnnotationReader" public="false"/>
+        <service class="Doctrine\Common\Annotations\AnnotationReader" public="false">
+          <call method="setAutoloadAnnotations">
+            <argument>true</argument>
+          </call>
+        </service>
       </argument>
       <argument>/vol/www/domini/wilano/app/cache/dev/annotations</argument>
       <argument>true</argument>
