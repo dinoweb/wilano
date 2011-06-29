@@ -4,6 +4,7 @@ Ext.define('Parties.view.Menu',
     alias : 'widget.PartiesMenu',
 
     title : 'Parties',
+    rootVisible: false,
     
     store: 'Parties.store.Menu'
 });

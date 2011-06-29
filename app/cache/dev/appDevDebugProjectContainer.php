@@ -877,7 +877,7 @@ class appDevDebugProjectContainer extends Container
      */
     protected function getManageMenuService()
     {
-        return $this->services['manage_menu'] = new \FDT\AdminBundle\Services\ManageMenu(array('bundlesConfig' => array('paths' => array(0 => array('name' => 'Parties', 'path' => '/bundles/fdtparties/js/Parties')))));
+        return $this->services['manage_menu'] = new \FDT\AdminBundle\Services\ManageMenu(array('parties' => array(0 => array('id' => 'Parties', 'text' => 'Parties', 'leaf' => true, 'action' => 'Parties.controller.Init'), 1 => array('id' => 'PartiesSettingsMenu', 'text' => 'Settings', 'leaf' => false, 'action' => 'open', 'children' => array(0 => array('id' => 'PariesRoles', 'text' => 'Ruoli', 'leaf' => true, 'action' => 'Palla')))), 'contents' => array()));
     }
 
     /**
@@ -2520,13 +2520,30 @@ class appDevDebugProjectContainer extends Container
             'security.extra.secure_all_services' => false,
             'manage_menu.class' => 'FDT\\AdminBundle\\Services\\ManageMenu',
             'manage_menu.config' => array(
-                'bundlesConfig' => array(
-                    'paths' => array(
-                        0 => array(
-                            'name' => 'Parties',
-                            'path' => '/bundles/fdtparties/js/Parties',
+                'parties' => array(
+                    0 => array(
+                        'id' => 'Parties',
+                        'text' => 'Parties',
+                        'leaf' => true,
+                        'action' => 'Parties.controller.Init',
+                    ),
+                    1 => array(
+                        'id' => 'PartiesSettingsMenu',
+                        'text' => 'Settings',
+                        'leaf' => false,
+                        'action' => 'open',
+                        'children' => array(
+                            0 => array(
+                                'id' => 'PariesRoles',
+                                'text' => 'Ruoli',
+                                'leaf' => true,
+                                'action' => 'Palla',
+                            ),
                         ),
                     ),
+                ),
+                'contents' => array(
+
                 ),
             ),
             'bundles_config.class' => 'FDT\\AdminBundle\\Services\\GetBundlesConfig',

@@ -2,9 +2,9 @@ homepage:
     pattern:  /admin/
     defaults: { _controller: FDTAdminBundle:Default:index }
 
-admin_menu:
-    pattern:  /admin/getMenu/
-    defaults: { _controller: FDTAdminBundle:GetMenu:index }
+FDTAdmin_getMenu:
+    pattern:  /admin/{bundleName}/getMenu
+    defaults: { _controller: FDTAdminBundle:GetMenu:index}
 
 admin_bundlesConfig:
     pattern:  /admin/getBundlesConfig/

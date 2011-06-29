@@ -17,21 +17,18 @@ Ext.define('Parties.controller.Menu', {
     ],
 
     init: function() {
-        this.control({
-            'viewport > mainMenu':
-            {
-                render: this.onPanelRendered,
-            },
-             'servizioMenu':
-             {
-                itemdblclick: this.onMenuDbClick
-            }
-        });
+                        this.control({
+                                       'PartiesMenu':
+                                        {
+                                            itemdblclick: this.onMenuDbClick
+                                        }
+                                    });
         
-        this.onPanelRendered ();
+        
+        this.addMenu ();
     },
 
-    onPanelRendered: function()
+    addMenu: function()
     {   
         var Panel = Ext.ComponentQuery.query('viewport > mainMenu');
                 
@@ -40,12 +37,10 @@ Ext.define('Parties.controller.Menu', {
     
     
     onMenuDbClick: function(Panel, Record)
-    {
-        console.log (Ext.Loader.getPath ('Parties'));
-        
+    {        
         if (Record.isLeaf())
         {
-        	console.info(Record.get('palla'));
+        	console.info(Record.get('action'));
         	
         }
         

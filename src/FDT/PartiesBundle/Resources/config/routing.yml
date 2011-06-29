@@ -1,3 +1,0 @@
-FDTPartiesBundle_getMenu:
-    pattern:  /admin/parties/getMenu
-    defaults: { _controller: FDTPartiesBundle:GetMenu:index }

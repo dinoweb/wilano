@@ -34,9 +34,8 @@ class appdevUrlGenerator extends Symfony\Component\Routing\Generator\UrlGenerato
        '_configurator_step' => true,
        '_configurator_final' => true,
        'homepage' => true,
-       'admin_menu' => true,
+       'FDTAdmin_getMenu' => true,
        'admin_bundlesConfig' => true,
-       'FDTPartiesBundle_getMenu' => true,
     );
 
     /**
@@ -165,18 +164,13 @@ class appdevUrlGenerator extends Symfony\Component\Routing\Generator\UrlGenerato
         return array(array (), array (  '_controller' => 'FDT\\AdminBundle\\Controller\\DefaultController::indexAction',), array (), array (  0 =>   array (    0 => 'text',    1 => '/admin/',  ),));
     }
 
-    private function getadmin_menuRouteInfo()
+    private function getFDTAdmin_getMenuRouteInfo()
     {
-        return array(array (), array (  '_controller' => 'FDT\\AdminBundle\\Controller\\GetMenuController::indexAction',), array (), array (  0 =>   array (    0 => 'text',    1 => '/admin/getMenu/',  ),));
+        return array(array (  0 => 'bundleName',), array (  '_controller' => 'FDT\\AdminBundle\\Controller\\GetMenuController::indexAction',), array (), array (  0 =>   array (    0 => 'text',    1 => '/getMenu',  ),  1 =>   array (    0 => 'variable',    1 => '/',    2 => '[^/]+?',    3 => 'bundleName',  ),  2 =>   array (    0 => 'text',    1 => '/admin',  ),));
     }
 
     private function getadmin_bundlesConfigRouteInfo()
     {
         return array(array (), array (  '_controller' => 'FDT\\AdminBundle\\Controller\\GetBundlesConfigController::indexAction',), array (), array (  0 =>   array (    0 => 'text',    1 => '/admin/getBundlesConfig/',  ),));
-    }
-
-    private function getFDTPartiesBundle_getMenuRouteInfo()
-    {
-        return array(array (), array (  '_controller' => 'FDTPartiesBundle:GetMenu:index',), array (), array (  0 =>   array (    0 => 'text',    1 => '/admin/parties/getMenu',  ),));
     }
 }

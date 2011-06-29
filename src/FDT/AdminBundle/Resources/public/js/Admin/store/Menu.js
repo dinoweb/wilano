@@ -2,6 +2,7 @@ Ext.define('Admin.store.Menu',
 {
     extend: 'Ext.data.TreeStore',
     autoLoad: true,
+    rootVisible: false,
     model: 'Admin.model.Menu',
     root: 
 	{

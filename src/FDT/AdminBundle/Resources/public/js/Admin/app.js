@@ -13,10 +13,6 @@ Ext.define('Admin.app',
         'Admin.store.Paths'
     ],
     
-    models:
-    [
-    	'Admin.model.Paths'
-    ],
     
     createAppBundles : function ()
     {

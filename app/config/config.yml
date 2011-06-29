@@ -57,8 +57,27 @@ jms_security_extra:
     
 
 fdt_admin:
-    bundlesConfig:
+    pathConfig:
       paths:
         0:
           name: Parties
           path: /bundles/fdtparties/js/Parties
+    menuConfig:
+      parties:
+        0:
+          id: Parties
+          text: Parties
+          leaf: true
+          action: Parties.controller.Init
+        1:
+          id: PartiesSettingsMenu
+          text: Settings
+          leaf: false
+          action: open
+          children:
+            0:
+              id: PariesRoles
+              text: Ruoli
+              leaf: true
+              action: Palla
+      

@@ -366,14 +366,29 @@
     <parameter key="security.extra.secure_all_services">false</parameter>
     <parameter key="manage_menu.class">FDT\AdminBundle\Services\ManageMenu</parameter>
     <parameter key="manage_menu.config" type="collection">
-      <parameter key="bundlesConfig" type="collection">
-        <parameter key="paths" type="collection">
-          <parameter type="collection">
-            <parameter key="name">Parties</parameter>
-            <parameter key="path">/bundles/fdtparties/js/Parties</parameter>
+      <parameter key="parties" type="collection">
+        <parameter type="collection">
+          <parameter key="id">Parties</parameter>
+          <parameter key="text">Parties</parameter>
+          <parameter key="leaf">true</parameter>
+          <parameter key="action">Parties.controller.Init</parameter>
+        </parameter>
+        <parameter type="collection">
+          <parameter key="id">PartiesSettingsMenu</parameter>
+          <parameter key="text">Settings</parameter>
+          <parameter key="leaf">false</parameter>
+          <parameter key="action">open</parameter>
+          <parameter key="children" type="collection">
+            <parameter type="collection">
+              <parameter key="id">PariesRoles</parameter>
+              <parameter key="text">Ruoli</parameter>
+              <parameter key="leaf">true</parameter>
+              <parameter key="action">Palla</parameter>
+            </parameter>
           </parameter>
         </parameter>
       </parameter>
+      <parameter key="contents" type="collection"/>
     </parameter>
     <parameter key="bundles_config.class">FDT\AdminBundle\Services\GetBundlesConfig</parameter>
     <parameter key="bundles_config.config" type="collection">
@@ -2314,14 +2329,29 @@
     </service>
     <service id="manage_menu" class="FDT\AdminBundle\Services\ManageMenu">
       <argument type="collection">
-        <argument key="bundlesConfig" type="collection">
-          <argument key="paths" type="collection">
-            <argument type="collection">
-              <argument key="name">Parties</argument>
-              <argument key="path">/bundles/fdtparties/js/Parties</argument>
+        <argument key="parties" type="collection">
+          <argument type="collection">
+            <argument key="id">Parties</argument>
+            <argument key="text">Parties</argument>
+            <argument key="leaf">true</argument>
+            <argument key="action">Parties.controller.Init</argument>
+          </argument>
+          <argument type="collection">
+            <argument key="id">PartiesSettingsMenu</argument>
+            <argument key="text">Settings</argument>
+            <argument key="leaf">false</argument>
+            <argument key="action">open</argument>
+            <argument key="children" type="collection">
+              <argument type="collection">
+                <argument key="id">PariesRoles</argument>
+                <argument key="text">Ruoli</argument>
+                <argument key="leaf">true</argument>
+                <argument key="action">Palla</argument>
+              </argument>
             </argument>
           </argument>
         </argument>
+        <argument key="contents" type="collection"/>
       </argument>
     </service>
     <service id="bundles_config" class="FDT\AdminBundle\Services\GetBundlesConfig">

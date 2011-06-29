@@ -26,7 +26,6 @@ Ext.define('appLoader',
                             Ext.create('Admin.app');
 
                            } 
-                            
                                                         
                         }
                   

@@ -150,12 +150,9 @@ class appdevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
             return array (  '_controller' => 'FDTAdminBundle:Default:index',  '_route' => 'homepage',);
         }
 
-        // admin_menu
-        if (rtrim($pathinfo, '/') === '/admin/getMenu') {
-            if (substr($pathinfo, -1) !== '/') {
-                return $this->redirect($pathinfo.'/', 'admin_menu');
-            }
-            return array (  '_controller' => 'FDTAdminBundle:GetMenu:index',  '_route' => 'admin_menu',);
+        // FDTAdmin_getMenu
+        if (0 === strpos($pathinfo, '/admin') && preg_match('#^/admin/(?P<bundleName>[^/]+?)/getMenu$#x', $pathinfo, $matches)) {
+            return array_merge($this->mergeDefaults($matches, array (  '_controller' => 'FDTAdminBundle:GetMenu:index',)), array('_route' => 'FDTAdmin_getMenu'));
         }
 
         // admin_bundlesConfig
@@ -166,11 +163,6 @@ class appdevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
             return array (  '_controller' => 'FDTAdminBundle:GetBundlesConfig:index',  '_route' => 'admin_bundlesConfig',);
         }
 
-        // FDTPartiesBundle_getMenu
-        if ($pathinfo === '/admin/parties/getMenu') {
-            return array (  '_controller' => 'FDTPartiesBundle:GetMenu:index',  '_route' => 'FDTPartiesBundle_getMenu',);
-        }
-
         // homepage
         if (rtrim($pathinfo, '/') === '/admin') {
             if (substr($pathinfo, -1) !== '/') {
@@ -179,12 +171,9 @@ class appdevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
             return array (  '_controller' => 'FDT\\AdminBundle\\Controller\\DefaultController::indexAction',  '_route' => 'homepage',);
         }
 
-        // admin_menu
-        if (rtrim($pathinfo, '/') === '/admin/getMenu') {
-            if (substr($pathinfo, -1) !== '/') {
-                return $this->redirect($pathinfo.'/', 'admin_menu');
-            }
-            return array (  '_controller' => 'FDT\\AdminBundle\\Controller\\GetMenuController::indexAction',  '_route' => 'admin_menu',);
+        // FDTAdmin_getMenu
+        if (0 === strpos($pathinfo, '/admin') && preg_match('#^/admin/(?P<bundleName>[^/]+?)/getMenu$#x', $pathinfo, $matches)) {
+            return array_merge($this->mergeDefaults($matches, array (  '_controller' => 'FDT\\AdminBundle\\Controller\\GetMenuController::indexAction',)), array('_route' => 'FDTAdmin_getMenu'));
         }
 
         // admin_bundlesConfig
@@ -193,11 +182,6 @@ class appdevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
                 return $this->redirect($pathinfo.'/', 'admin_bundlesConfig');
             }
             return array (  '_controller' => 'FDT\\AdminBundle\\Controller\\GetBundlesConfigController::indexAction',  '_route' => 'admin_bundlesConfig',);
-        }
-
-        // FDTPartiesBundle_getMenu
-        if ($pathinfo === '/admin/parties/getMenu') {
-            return array (  '_controller' => 'FDTPartiesBundle:GetMenu:index',  '_route' => 'FDTPartiesBundle_getMenu',);
         }
 
         throw 0 < count($allow) ? new MethodNotAllowedException(array_unique($allow)) : new ResourceNotFoundException();

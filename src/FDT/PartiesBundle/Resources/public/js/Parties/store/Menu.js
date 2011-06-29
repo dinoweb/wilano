@@ -3,9 +3,10 @@ Ext.define('Parties.store.Menu',
     extend: 'Ext.data.TreeStore',
     autoLoad: true,
     model: 'Admin.model.Menu',
+    rootVisible: false,
     root: 
 	{
-	   expanded: false,
+	   expanded: true,
 	   nodeType:'async'
 	},
 	proxy:
