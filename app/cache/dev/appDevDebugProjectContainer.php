@@ -84,8 +84,11 @@ class appDevDebugProjectContainer extends Container
         $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'AsseticBundle', '/vol/www/domini/wilano/app/Resources/AsseticBundle/views', '/^[^.]+\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'AsseticBundle', '/vol/www/domini/wilano/vendor/bundles/Symfony/Bundle/AsseticBundle/Resources/views', '/^[^.]+\\.[^.]+\\.twig$/'))), 'twig');
         $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'SensioFrameworkExtraBundle', '/vol/www/domini/wilano/app/Resources/SensioFrameworkExtraBundle/views', '/^[^.]+\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'SensioFrameworkExtraBundle', '/vol/www/domini/wilano/vendor/bundles/Sensio/Bundle/FrameworkExtraBundle/Resources/views', '/^[^.]+\\.[^.]+\\.twig$/'))), 'twig');
         $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'JMSSecurityExtraBundle', '/vol/www/domini/wilano/app/Resources/JMSSecurityExtraBundle/views', '/^[^.]+\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'JMSSecurityExtraBundle', '/vol/www/domini/wilano/vendor/bundles/JMS/SecurityExtraBundle/Resources/views', '/^[^.]+\\.[^.]+\\.twig$/'))), 'twig');
+        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'StofDoctrineExtensionsBundle', '/vol/www/domini/wilano/app/Resources/StofDoctrineExtensionsBundle/views', '/^[^.]+\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'StofDoctrineExtensionsBundle', '/vol/www/domini/wilano/vendor/bundles/Stof/DoctrineExtensionsBundle/Resources/views', '/^[^.]+\\.[^.]+\\.twig$/'))), 'twig');
+        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'DoctrineMongoDBBundle', '/vol/www/domini/wilano/app/Resources/DoctrineMongoDBBundle/views', '/^[^.]+\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'DoctrineMongoDBBundle', '/vol/www/domini/wilano/vendor/bundles/Symfony/Bundle/DoctrineMongoDBBundle/Resources/views', '/^[^.]+\\.[^.]+\\.twig$/'))), 'twig');
         $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'FDTAdminBundle', '/vol/www/domini/wilano/app/Resources/FDTAdminBundle/views', '/^[^.]+\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'FDTAdminBundle', '/vol/www/domini/wilano/src/FDT/AdminBundle/Resources/views', '/^[^.]+\\.[^.]+\\.twig$/'))), 'twig');
         $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'FDTPartiesBundle', '/vol/www/domini/wilano/app/Resources/FDTPartiesBundle/views', '/^[^.]+\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'FDTPartiesBundle', '/vol/www/domini/wilano/src/FDT/PartiesBundle/Resources/views', '/^[^.]+\\.[^.]+\\.twig$/'))), 'twig');
+        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'FDTMetadataBundle', '/vol/www/domini/wilano/app/Resources/FDTMetadataBundle/views', '/^[^.]+\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'FDTMetadataBundle', '/vol/www/domini/wilano/src/FDT/MetadataBundle/Resources/views', '/^[^.]+\\.[^.]+\\.twig$/'))), 'twig');
         $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'AcmeDemoBundle', '/vol/www/domini/wilano/app/Resources/AcmeDemoBundle/views', '/^[^.]+\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'AcmeDemoBundle', '/vol/www/domini/wilano/src/Acme/DemoBundle/Resources/views', '/^[^.]+\\.[^.]+\\.twig$/'))), 'twig');
         $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'WebProfilerBundle', '/vol/www/domini/wilano/app/Resources/WebProfilerBundle/views', '/^[^.]+\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'WebProfilerBundle', '/vol/www/domini/wilano/vendor/symfony/src/Symfony/Bundle/WebProfilerBundle/Resources/views', '/^[^.]+\\.[^.]+\\.twig$/'))), 'twig');
         $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'SensioDistributionBundle', '/vol/www/domini/wilano/app/Resources/SensioDistributionBundle/views', '/^[^.]+\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'SensioDistributionBundle', '/vol/www/domini/wilano/vendor/bundles/Sensio/Bundle/DistributionBundle/Resources/views', '/^[^.]+\\.[^.]+\\.twig$/'))), 'twig');
@@ -155,7 +158,7 @@ class appDevDebugProjectContainer extends Container
      */
     protected function getBundlesConfigService()
     {
-        return $this->services['bundles_config'] = new \FDT\AdminBundle\Services\GetBundlesConfig(array('paths' => array(0 => array('name' => 'Parties', 'path' => '/bundles/fdtparties/js/Parties'))));
+        return $this->services['bundles_config'] = new \FDT\AdminBundle\Services\GetBundlesConfig(array('paths' => array(0 => array('name' => 'Metadata', 'path' => '/bundles/fdtmetadata/js/Metadata'), 1 => array('name' => 'Parties', 'path' => '/bundles/fdtparties/js/Parties'))));
     }
 
     /**
@@ -173,7 +176,7 @@ class appDevDebugProjectContainer extends Container
 
         $c = new \Symfony\Bundle\FrameworkBundle\CacheWarmer\TemplateFinder($a, $b, '/vol/www/domini/wilano/app/Resources');
 
-        return $this->services['cache_warmer'] = new \Symfony\Component\HttpKernel\CacheWarmer\CacheWarmerAggregate(array(0 => new \Symfony\Bundle\FrameworkBundle\CacheWarmer\TemplatePathsCacheWarmer($c, $this->get('templating.locator')), 1 => new \Symfony\Bundle\AsseticBundle\CacheWarmer\AssetManagerCacheWarmer($this), 2 => new \Symfony\Bundle\FrameworkBundle\CacheWarmer\RouterCacheWarmer($this->get('router')), 3 => new \Symfony\Bundle\TwigBundle\CacheWarmer\TemplateCacheCacheWarmer($this, $c), 4 => new \Symfony\Bridge\Doctrine\CacheWarmer\ProxyCacheWarmer($this->get('doctrine'))));
+        return $this->services['cache_warmer'] = new \Symfony\Component\HttpKernel\CacheWarmer\CacheWarmerAggregate(array(0 => new \Symfony\Bundle\FrameworkBundle\CacheWarmer\TemplatePathsCacheWarmer($c, $this->get('templating.locator')), 1 => new \Symfony\Bundle\AsseticBundle\CacheWarmer\AssetManagerCacheWarmer($this), 2 => new \Symfony\Bundle\FrameworkBundle\CacheWarmer\RouterCacheWarmer($this->get('router')), 3 => new \Symfony\Bundle\TwigBundle\CacheWarmer\TemplateCacheCacheWarmer($this, $c), 4 => new \Symfony\Bridge\Doctrine\CacheWarmer\ProxyCacheWarmer($this->get('doctrine')), 5 => new \Symfony\Bundle\DoctrineMongoDBBundle\CacheWarmer\ProxyCacheWarmer($this), 6 => new \Symfony\Bundle\DoctrineMongoDBBundle\CacheWarmer\HydratorCacheWarmer($this)));
     }
 
     /**
@@ -230,8 +233,183 @@ class appDevDebugProjectContainer extends Container
 
         $b = new \Doctrine\Common\EventManager();
         $b->addEventSubscriber(new \Doctrine\DBAL\Event\Listeners\MysqlSessionInit('UTF8'));
+        $b->addEventSubscriber($this->get('stof_doctrine_extensions.listener.timestampable'));
+        $b->addEventSubscriber($this->get('stof_doctrine_extensions.listener.sluggable'));
+        $b->addEventSubscriber($this->get('stof_doctrine_extensions.listener.translatable'));
+        $b->addEventSubscriber($this->get('stof_doctrine_extensions.listener.loggable'));
 
         return $this->services['doctrine.dbal.default_connection'] = $this->get('doctrine.dbal.connection_factory')->createConnection(array('dbname' => 'symfony', 'host' => 'localhost', 'user' => 'root', 'password' => '', 'driver' => 'pdo_mysql', 'port' => NULL, 'driverOptions' => array()), $a, $b, array());
+    }
+
+    /**
+     * Gets the 'doctrine.odm.mongodb.cache.array' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return Doctrine\Common\Cache\ArrayCache A Doctrine\Common\Cache\ArrayCache instance.
+     */
+    protected function getDoctrine_Odm_Mongodb_Cache_ArrayService()
+    {
+        return $this->services['doctrine.odm.mongodb.cache.array'] = new \Doctrine\Common\Cache\ArrayCache();
+    }
+
+    /**
+     * Gets the 'doctrine.odm.mongodb.default_configuration' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return Doctrine\ODM\MongoDB\Configuration A Doctrine\ODM\MongoDB\Configuration instance.
+     */
+    protected function getDoctrine_Odm_Mongodb_DefaultConfigurationService()
+    {
+        $a = new \Symfony\Bundle\DoctrineMongoDBBundle\Mapping\Driver\XmlDriver(array(0 => '/vol/www/domini/wilano/vendor/bundles/Stof/DoctrineExtensionsBundle/Resources/config/doctrine'));
+        $a->setNamespacePrefixes(array('/vol/www/domini/wilano/vendor/bundles/Stof/DoctrineExtensionsBundle/Resources/config/doctrine' => 'Stof\\DoctrineExtensionsBundle\\Document'));
+        $a->setGlobalBasename('mapping');
+
+        $b = new \Doctrine\ODM\MongoDB\Mapping\Driver\DriverChain();
+        $b->addDriver($a, 'Stof\\DoctrineExtensionsBundle\\Document');
+
+        $this->services['doctrine.odm.mongodb.default_configuration'] = $instance = new \Doctrine\ODM\MongoDB\Configuration();
+
+        $instance->setDocumentNamespaces(array('StofDoctrineExtensionsBundle' => 'Stof\\DoctrineExtensionsBundle\\Document'));
+        $instance->setMetadataCacheImpl($this->get('doctrine.odm.mongodb.default_metadata_cache'));
+        $instance->setMetadataDriverImpl($b);
+        $instance->setProxyDir('/vol/www/domini/wilano/app/cache/dev/doctrine/odm/mongodb/Proxies');
+        $instance->setProxyNamespace('Proxies');
+        $instance->setAutoGenerateProxyClasses(false);
+        $instance->setHydratorDir('/vol/www/domini/wilano/app/cache/dev/doctrine/odm/mongodb/Hydrators');
+        $instance->setHydratorNamespace('Hydrators');
+        $instance->setAutoGenerateHydratorClasses(false);
+        $instance->setDefaultDB('wilano');
+        $instance->setLoggerCallable(array(0 => $this->get('doctrine.odm.mongodb.logger'), 1 => 'logQuery'));
+
+        return $instance;
+    }
+
+    /**
+     * Gets the 'doctrine.odm.mongodb.default_connection' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return Doctrine\MongoDB\Connection A Doctrine\MongoDB\Connection instance.
+     */
+    protected function getDoctrine_Odm_Mongodb_DefaultConnectionService()
+    {
+        return $this->services['doctrine.odm.mongodb.default_connection'] = new \Doctrine\MongoDB\Connection('mongodb://int-app-glusterfs.gemmyx.com:8080', array('connect' => true), $this->get('doctrine.odm.mongodb.default_configuration'));
+    }
+
+    /**
+     * Gets the 'doctrine.odm.mongodb.default_document_manager' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return Doctrine\ODM\MongoDB\DocumentManager A Doctrine\ODM\MongoDB\DocumentManager instance.
+     */
+    protected function getDoctrine_Odm_Mongodb_DefaultDocumentManagerService()
+    {
+        return $this->services['doctrine.odm.mongodb.default_document_manager'] = call_user_func(array('Doctrine\\ODM\\MongoDB\\DocumentManager', 'create'), $this->get('doctrine.odm.mongodb.default_connection'), $this->get('doctrine.odm.mongodb.default_configuration'), $this->get('doctrine.odm.mongodb.event_manager'));
+    }
+
+    /**
+     * Gets the 'doctrine.odm.mongodb.default_metadata_cache' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return Doctrine\Common\Cache\ArrayCache A Doctrine\Common\Cache\ArrayCache instance.
+     */
+    protected function getDoctrine_Odm_Mongodb_DefaultMetadataCacheService()
+    {
+        return $this->services['doctrine.odm.mongodb.default_metadata_cache'] = new \Doctrine\Common\Cache\ArrayCache();
+    }
+
+    /**
+     * Gets the 'doctrine.odm.mongodb.event_manager' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return Doctrine\Common\EventManager A Doctrine\Common\EventManager instance.
+     */
+    protected function getDoctrine_Odm_Mongodb_EventManagerService()
+    {
+        $this->services['doctrine.odm.mongodb.event_manager'] = $instance = new \Doctrine\Common\EventManager();
+
+        $instance->addEventSubscriber($this->get('stof_doctrine_extensions.listener.timestampable'));
+        $instance->addEventSubscriber($this->get('stof_doctrine_extensions.listener.sluggable'));
+        $instance->addEventSubscriber($this->get('stof_doctrine_extensions.listener.translatable'));
+        $instance->addEventSubscriber($this->get('stof_doctrine_extensions.listener.loggable'));
+
+        return $instance;
+    }
+
+    /**
+     * Gets the 'doctrine.odm.mongodb.logger' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return Symfony\Bundle\DoctrineMongoDBBundle\Logger\DoctrineMongoDBLogger A Symfony\Bundle\DoctrineMongoDBBundle\Logger\DoctrineMongoDBLogger instance.
+     */
+    protected function getDoctrine_Odm_Mongodb_LoggerService()
+    {
+        return $this->services['doctrine.odm.mongodb.logger'] = new \Symfony\Bundle\DoctrineMongoDBBundle\Logger\DoctrineMongoDBLogger($this->get('monolog.logger.doctrine'));
+    }
+
+    /**
+     * Gets the 'doctrine.odm.mongodb.metadata.annotation' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver A Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver instance.
+     */
+    protected function getDoctrine_Odm_Mongodb_Metadata_AnnotationService()
+    {
+        return $this->services['doctrine.odm.mongodb.metadata.annotation'] = new \Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver($this->get('annotation_reader'), array());
+    }
+
+    /**
+     * Gets the 'doctrine.odm.mongodb.metadata.chain' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return Doctrine\ODM\MongoDB\Mapping\Driver\DriverChain A Doctrine\ODM\MongoDB\Mapping\Driver\DriverChain instance.
+     */
+    protected function getDoctrine_Odm_Mongodb_Metadata_ChainService()
+    {
+        return $this->services['doctrine.odm.mongodb.metadata.chain'] = new \Doctrine\ODM\MongoDB\Mapping\Driver\DriverChain();
+    }
+
+    /**
+     * Gets the 'doctrine.odm.mongodb.metadata.xml' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return Symfony\Bundle\DoctrineMongoDBBundle\Mapping\Driver\XmlDriver A Symfony\Bundle\DoctrineMongoDBBundle\Mapping\Driver\XmlDriver instance.
+     */
+    protected function getDoctrine_Odm_Mongodb_Metadata_XmlService()
+    {
+        return $this->services['doctrine.odm.mongodb.metadata.xml'] = new \Symfony\Bundle\DoctrineMongoDBBundle\Mapping\Driver\XmlDriver(array());
+    }
+
+    /**
+     * Gets the 'doctrine.odm.mongodb.metadata.yml' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return Symfony\Bundle\DoctrineMongoDBBundle\Mapping\Driver\YamlDriver A Symfony\Bundle\DoctrineMongoDBBundle\Mapping\Driver\YamlDriver instance.
+     */
+    protected function getDoctrine_Odm_Mongodb_Metadata_YmlService()
+    {
+        return $this->services['doctrine.odm.mongodb.metadata.yml'] = new \Symfony\Bundle\DoctrineMongoDBBundle\Mapping\Driver\YamlDriver(array());
     }
 
     /**
@@ -253,18 +431,25 @@ class appDevDebugProjectContainer extends Container
         $c = new \Doctrine\Common\Cache\ArrayCache();
         $c->setNamespace('sf2orm_default_771dadf257d4f619aee3992b1a27e2b3');
 
-        $d = new \Doctrine\ORM\Configuration();
-        $d->setEntityNamespaces(array());
-        $d->setMetadataCacheImpl($a);
-        $d->setQueryCacheImpl($b);
-        $d->setResultCacheImpl($c);
-        $d->setMetadataDriverImpl(new \Doctrine\ORM\Mapping\Driver\DriverChain());
-        $d->setProxyDir('/vol/www/domini/wilano/app/cache/dev/doctrine/orm/Proxies');
-        $d->setProxyNamespace('Proxies');
-        $d->setAutoGenerateProxyClasses(true);
-        $d->setClassMetadataFactoryName('Doctrine\\ORM\\Mapping\\ClassMetadataFactory');
+        $d = new \Symfony\Bridge\Doctrine\Mapping\Driver\XmlDriver(array(0 => '/vol/www/domini/wilano/vendor/bundles/Stof/DoctrineExtensionsBundle/Resources/config/doctrine'));
+        $d->setNamespacePrefixes(array('/vol/www/domini/wilano/vendor/bundles/Stof/DoctrineExtensionsBundle/Resources/config/doctrine' => 'Stof\\DoctrineExtensionsBundle\\Entity'));
+        $d->setGlobalBasename('mapping');
 
-        return $this->services['doctrine.orm.default_entity_manager'] = call_user_func(array('Doctrine\\ORM\\EntityManager', 'create'), $this->get('doctrine.dbal.default_connection'), $d);
+        $e = new \Doctrine\ORM\Mapping\Driver\DriverChain();
+        $e->addDriver($d, 'Stof\\DoctrineExtensionsBundle\\Entity');
+
+        $f = new \Doctrine\ORM\Configuration();
+        $f->setEntityNamespaces(array('StofDoctrineExtensionsBundle' => 'Stof\\DoctrineExtensionsBundle\\Entity'));
+        $f->setMetadataCacheImpl($a);
+        $f->setQueryCacheImpl($b);
+        $f->setResultCacheImpl($c);
+        $f->setMetadataDriverImpl($e);
+        $f->setProxyDir('/vol/www/domini/wilano/app/cache/dev/doctrine/orm/Proxies');
+        $f->setProxyNamespace('Proxies');
+        $f->setAutoGenerateProxyClasses(true);
+        $f->setClassMetadataFactoryName('Doctrine\\ORM\\Mapping\\ClassMetadataFactory');
+
+        return $this->services['doctrine.orm.default_entity_manager'] = call_user_func(array('Doctrine\\ORM\\EntityManager', 'create'), $this->get('doctrine.dbal.default_connection'), $f);
     }
 
     /**
@@ -278,6 +463,19 @@ class appDevDebugProjectContainer extends Container
     protected function getDoctrine_Orm_Validator_UniqueService()
     {
         return $this->services['doctrine.orm.validator.unique'] = new \Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntityValidator($this->get('doctrine'));
+    }
+
+    /**
+     * Gets the 'doctrine_odm.mongodb.validator.unique' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return Symfony\Bundle\DoctrineMongoDBBundle\Validator\Constraints\UniqueValidator A Symfony\Bundle\DoctrineMongoDBBundle\Validator\Constraints\UniqueValidator instance.
+     */
+    protected function getDoctrineOdm_Mongodb_Validator_UniqueService()
+    {
+        return $this->services['doctrine_odm.mongodb.validator.unique'] = new \Symfony\Bundle\DoctrineMongoDBBundle\Validator\Constraints\UniqueValidator($this);
     }
 
     /**
@@ -310,6 +508,9 @@ class appDevDebugProjectContainer extends Container
         $instance->addListenerService('kernel.view', array(0 => 'sensio_framework_extra.view.listener', 1 => 'onKernelView'), 0);
         $instance->addListenerService('kernel.response', array(0 => 'sensio_framework_extra.cache.listener', 1 => 'onKernelResponse'), 0);
         $instance->addListenerService('kernel.controller', array(0 => 'security.extra.controller_listener', 1 => 'onCoreController'), -255);
+        $instance->addListenerService('kernel.request', array(0 => 'stof_doctrine_extensions.listener.translatable', 1 => 'onKernelRequest'), -10);
+        $instance->addListenerService('kernel.request', array(0 => 'stof_doctrine_extensions.listener.loggable', 1 => 'onKernelRequest'), 0);
+        $instance->addListenerService('kernel.request', array(0 => 'stof_doctrine_extensions.listener.loggable', 1 => 'onKernelRequest'), 0);
         $instance->addListenerService('kernel.response', array(0 => 'web_profiler.debug_toolbar', 1 => 'onKernelResponse'), -128);
 
         return $instance;
@@ -377,7 +578,7 @@ class appDevDebugProjectContainer extends Container
      */
     protected function getForm_FactoryService()
     {
-        return $this->services['form.factory'] = new \Symfony\Component\Form\FormFactory(array(0 => new \Symfony\Component\Form\Extension\DependencyInjection\DependencyInjectionExtension($this, array('field' => 'form.type.field', 'form' => 'form.type.form', 'birthday' => 'form.type.birthday', 'checkbox' => 'form.type.checkbox', 'choice' => 'form.type.choice', 'collection' => 'form.type.collection', 'country' => 'form.type.country', 'date' => 'form.type.date', 'datetime' => 'form.type.datetime', 'email' => 'form.type.email', 'file' => 'form.type.file', 'hidden' => 'form.type.hidden', 'integer' => 'form.type.integer', 'language' => 'form.type.language', 'locale' => 'form.type.locale', 'money' => 'form.type.money', 'number' => 'form.type.number', 'password' => 'form.type.password', 'percent' => 'form.type.percent', 'radio' => 'form.type.radio', 'repeated' => 'form.type.repeated', 'search' => 'form.type.search', 'textarea' => 'form.type.textarea', 'text' => 'form.type.text', 'time' => 'form.type.time', 'timezone' => 'form.type.timezone', 'url' => 'form.type.url', 'csrf' => 'form.type.csrf', 'entity' => 'form.type.entity'), array('field' => array(0 => 'form.type_extension.field'), 'form' => array(0 => 'form.type_extension.csrf')), array(0 => 'form.type_guesser.validator', 1 => 'form.type_guesser.doctrine'))));
+        return $this->services['form.factory'] = new \Symfony\Component\Form\FormFactory(array(0 => new \Symfony\Component\Form\Extension\DependencyInjection\DependencyInjectionExtension($this, array('field' => 'form.type.field', 'form' => 'form.type.form', 'birthday' => 'form.type.birthday', 'checkbox' => 'form.type.checkbox', 'choice' => 'form.type.choice', 'collection' => 'form.type.collection', 'country' => 'form.type.country', 'date' => 'form.type.date', 'datetime' => 'form.type.datetime', 'email' => 'form.type.email', 'file' => 'form.type.file', 'hidden' => 'form.type.hidden', 'integer' => 'form.type.integer', 'language' => 'form.type.language', 'locale' => 'form.type.locale', 'money' => 'form.type.money', 'number' => 'form.type.number', 'password' => 'form.type.password', 'percent' => 'form.type.percent', 'radio' => 'form.type.radio', 'repeated' => 'form.type.repeated', 'search' => 'form.type.search', 'textarea' => 'form.type.textarea', 'text' => 'form.type.text', 'time' => 'form.type.time', 'timezone' => 'form.type.timezone', 'url' => 'form.type.url', 'csrf' => 'form.type.csrf', 'entity' => 'form.type.entity', 'document' => 'form.type.mongodb_document'), array('field' => array(0 => 'form.type_extension.field'), 'form' => array(0 => 'form.type_extension.csrf')), array(0 => 'form.type_guesser.validator', 1 => 'form.type_guesser.doctrine', 2 => 'form.type_guesser.doctrine.mongodb'))));
     }
 
     /**
@@ -615,6 +816,19 @@ class appDevDebugProjectContainer extends Container
     }
 
     /**
+     * Gets the 'form.type.mongodb_document' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return Symfony\Bundle\DoctrineMongoDBBundle\Form\Type\DocumentType A Symfony\Bundle\DoctrineMongoDBBundle\Form\Type\DocumentType instance.
+     */
+    protected function getForm_Type_MongodbDocumentService()
+    {
+        return $this->services['form.type.mongodb_document'] = new \Symfony\Bundle\DoctrineMongoDBBundle\Form\Type\DocumentType($this->get('doctrine.odm.mongodb.default_document_manager'));
+    }
+
+    /**
      * Gets the 'form.type.number' service.
      *
      * This service is shared.
@@ -797,6 +1011,19 @@ class appDevDebugProjectContainer extends Container
     }
 
     /**
+     * Gets the 'form.type_guesser.doctrine.mongodb' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return Symfony\Bundle\DoctrineMongoDBBundle\Form\DoctrineMongoDBTypeGuesser A Symfony\Bundle\DoctrineMongoDBBundle\Form\DoctrineMongoDBTypeGuesser instance.
+     */
+    protected function getForm_TypeGuesser_Doctrine_MongodbService()
+    {
+        return $this->services['form.type_guesser.doctrine.mongodb'] = new \Symfony\Bundle\DoctrineMongoDBBundle\Form\DoctrineMongoDBTypeGuesser($this->get('doctrine.odm.mongodb.default_document_manager'));
+    }
+
+    /**
      * Gets the 'form.type_guesser.validator' service.
      *
      * This service is shared.
@@ -877,7 +1104,7 @@ class appDevDebugProjectContainer extends Container
      */
     protected function getManageMenuService()
     {
-        return $this->services['manage_menu'] = new \FDT\AdminBundle\Services\ManageMenu(array('parties' => array(0 => array('id' => 'Parties', 'text' => 'Parties', 'leaf' => true, 'action' => 'Parties.controller.Init'), 1 => array('id' => 'PartiesSettingsMenu', 'text' => 'Settings', 'leaf' => false, 'action' => 'open', 'children' => array(0 => array('id' => 'PariesRoles', 'text' => 'Ruoli', 'leaf' => true, 'action' => 'Palla')))), 'contents' => array()));
+        return $this->services['manage_menu'] = new \FDT\AdminBundle\Services\ManageMenu(array('metadata' => array(0 => array('id' => 'metadataSettingsMenu', 'text' => 'Settings', 'leaf' => false, 'action' => 'open', 'children' => array(0 => array('id' => 'metadataTipologie', 'text' => 'Tipologie', 'leaf' => true, 'action' => 'Metadata.controller.tipologie.init')))), 'parties' => array(0 => array('id' => 'Parties', 'text' => 'Parties', 'leaf' => true, 'action' => 'Parties.controller.Init'), 1 => array('id' => 'PartiesSettingsMenu', 'text' => 'Settings', 'leaf' => false, 'action' => 'open', 'children' => array(0 => array('id' => 'PariesRoles', 'text' => 'Ruoli', 'leaf' => true, 'action' => 'Palla')))), 'contents' => array()));
     }
 
     /**
@@ -1080,6 +1307,7 @@ class appDevDebugProjectContainer extends Container
         $instance->add(new \Symfony\Bundle\SecurityBundle\DataCollector\SecurityDataCollector($this->get('security.context')));
         $instance->add(new \Symfony\Bundle\SwiftmailerBundle\DataCollector\MessageDataCollector($this, false));
         $instance->add(new \Symfony\Bridge\Doctrine\DataCollector\DoctrineDataCollector($this->get('doctrine'), $this->get('doctrine.dbal.logger')));
+        $instance->add(new \Symfony\Bundle\DoctrineMongoDBBundle\DataCollector\DoctrineMongoDBDataCollector($this->get('doctrine.odm.mongodb.logger')));
 
         return $instance;
     }
@@ -1478,6 +1706,43 @@ class appDevDebugProjectContainer extends Container
     }
 
     /**
+     * Gets the 'stof_doctrine_extensions.listener.loggable' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return Stof\DoctrineExtensionsBundle\Listener\LoggableListener A Stof\DoctrineExtensionsBundle\Listener\LoggableListener instance.
+     */
+    protected function getStofDoctrineExtensions_Listener_LoggableService()
+    {
+        $this->services['stof_doctrine_extensions.listener.loggable'] = $instance = new \Stof\DoctrineExtensionsBundle\Listener\LoggableListener();
+
+        $instance->setContainer($this);
+        $instance->setAnnotationReader($this->get('annotation_reader'));
+
+        return $instance;
+    }
+
+    /**
+     * Gets the 'stof_doctrine_extensions.listener.translatable' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return Stof\DoctrineExtensionsBundle\Listener\TranslationListener A Stof\DoctrineExtensionsBundle\Listener\TranslationListener instance.
+     */
+    protected function getStofDoctrineExtensions_Listener_TranslatableService()
+    {
+        $this->services['stof_doctrine_extensions.listener.translatable'] = $instance = new \Stof\DoctrineExtensionsBundle\Listener\TranslationListener();
+
+        $instance->setAnnotationReader($this->get('annotation_reader'));
+        $instance->setDefaultLocale('it_IT');
+        $instance->setTranslationFallback(false);
+
+        return $instance;
+    }
+
+    /**
      * Gets the 'swiftmailer.plugin.messagelogger' service.
      *
      * This service is shared.
@@ -1847,7 +2112,7 @@ class appDevDebugProjectContainer extends Container
      */
     protected function getValidatorService()
     {
-        return $this->services['validator'] = new \Symfony\Component\Validator\Validator($this->get('validator.mapping.class_metadata_factory'), new \Symfony\Bundle\FrameworkBundle\Validator\ConstraintValidatorFactory($this, array('doctrine.orm.validator.unique' => 'doctrine.orm.validator.unique')));
+        return $this->services['validator'] = new \Symfony\Component\Validator\Validator($this->get('validator.mapping.class_metadata_factory'), new \Symfony\Bundle\FrameworkBundle\Validator\ConstraintValidatorFactory($this, array('doctrine.orm.validator.unique' => 'doctrine.orm.validator.unique', 'doctrine_odm.mongodb.unique' => 'doctrine_odm.mongodb.validator.unique')));
     }
 
     /**
@@ -1881,6 +2146,36 @@ class appDevDebugProjectContainer extends Container
     protected function getDebug_EventDispatcherService()
     {
         return $this->get('event_dispatcher');
+    }
+
+    /**
+     * Gets the doctrine.odm.mongodb.cache service alias.
+     *
+     * @return Doctrine\Common\Cache\ArrayCache An instance of the doctrine.odm.mongodb.cache.array service
+     */
+    protected function getDoctrine_Odm_Mongodb_CacheService()
+    {
+        return $this->get('doctrine.odm.mongodb.cache.array');
+    }
+
+    /**
+     * Gets the doctrine.odm.mongodb.document_manager service alias.
+     *
+     * @return Doctrine\ODM\MongoDB\DocumentManager An instance of the doctrine.odm.mongodb.default_document_manager service
+     */
+    protected function getDoctrine_Odm_Mongodb_DocumentManagerService()
+    {
+        return $this->get('doctrine.odm.mongodb.default_document_manager');
+    }
+
+    /**
+     * Gets the doctrine.odm.mongodb.metadata.annotation_reader service alias.
+     *
+     * @return Doctrine\Common\Annotations\FileCacheReader An instance of the annotation_reader service
+     */
+    protected function getDoctrine_Odm_Mongodb_Metadata_AnnotationReaderService()
+    {
+        return $this->get('annotation_reader');
     }
 
     /**
@@ -2039,6 +2334,48 @@ class appDevDebugProjectContainer extends Container
     }
 
     /**
+     * Gets the 'stof_doctrine_extensions.listener.sluggable' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * This service is private.
+     * If you want to be able to request this service from the container directly,
+     * make it public, otherwise you might end up with broken code.
+     *
+     * @return Gedmo\Sluggable\SluggableListener A Gedmo\Sluggable\SluggableListener instance.
+     */
+    protected function getStofDoctrineExtensions_Listener_SluggableService()
+    {
+        $this->services['stof_doctrine_extensions.listener.sluggable'] = $instance = new \Gedmo\Sluggable\SluggableListener();
+
+        $instance->setAnnotationReader($this->get('annotation_reader'));
+
+        return $instance;
+    }
+
+    /**
+     * Gets the 'stof_doctrine_extensions.listener.timestampable' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * This service is private.
+     * If you want to be able to request this service from the container directly,
+     * make it public, otherwise you might end up with broken code.
+     *
+     * @return Gedmo\Timestampable\TimestampableListener A Gedmo\Timestampable\TimestampableListener instance.
+     */
+    protected function getStofDoctrineExtensions_Listener_TimestampableService()
+    {
+        $this->services['stof_doctrine_extensions.listener.timestampable'] = $instance = new \Gedmo\Timestampable\TimestampableListener();
+
+        $instance->setAnnotationReader($this->get('annotation_reader'));
+
+        return $instance;
+    }
+
+    /**
      * Gets the 'templating.locator' service.
      *
      * This service is shared.
@@ -2159,8 +2496,11 @@ class appDevDebugProjectContainer extends Container
                 'AsseticBundle' => 'Symfony\\Bundle\\AsseticBundle\\AsseticBundle',
                 'SensioFrameworkExtraBundle' => 'Sensio\\Bundle\\FrameworkExtraBundle\\SensioFrameworkExtraBundle',
                 'JMSSecurityExtraBundle' => 'JMS\\SecurityExtraBundle\\JMSSecurityExtraBundle',
+                'StofDoctrineExtensionsBundle' => 'Stof\\DoctrineExtensionsBundle\\StofDoctrineExtensionsBundle',
+                'DoctrineMongoDBBundle' => 'Symfony\\Bundle\\DoctrineMongoDBBundle\\DoctrineMongoDBBundle',
                 'FDTAdminBundle' => 'FDT\\AdminBundle\\FDTAdminBundle',
                 'FDTPartiesBundle' => 'FDT\\PartiesBundle\\FDTPartiesBundle',
+                'FDTMetadataBundle' => 'FDT\\MetadataBundle\\FDTMetadataBundle',
                 'AcmeDemoBundle' => 'Acme\\DemoBundle\\AcmeDemoBundle',
                 'WebProfilerBundle' => 'Symfony\\Bundle\\WebProfilerBundle\\WebProfilerBundle',
                 'SensioDistributionBundle' => 'Sensio\\Bundle\\DistributionBundle\\SensioDistributionBundle',
@@ -2518,8 +2858,73 @@ class appDevDebugProjectContainer extends Container
             'security.extra.controller_listener.class' => 'JMS\\SecurityExtraBundle\\Controller\\ControllerListener',
             'security.access.iddqd_voter.class' => 'JMS\\SecurityExtraBundle\\Security\\Authorization\\Voter\\IddqdVoter',
             'security.extra.secure_all_services' => false,
+            'stof_doctrine_extensions.default_locale' => 'it_IT',
+            'stof_doctrine_extensions.translation_fallback' => false,
+            'stof_doctrine_extensions.listener.translatable.class' => 'Stof\\DoctrineExtensionsBundle\\Listener\\TranslationListener',
+            'stof_doctrine_extensions.listener.timestampable.class' => 'Gedmo\\Timestampable\\TimestampableListener',
+            'stof_doctrine_extensions.listener.sluggable.class' => 'Gedmo\\Sluggable\\SluggableListener',
+            'stof_doctrine_extensions.listener.tree.class' => 'Gedmo\\Tree\\TreeListener',
+            'stof_doctrine_extensions.listener.loggable.class' => 'Stof\\DoctrineExtensionsBundle\\Listener\\LoggableListener',
+            'doctrine.odm.mongodb.connection.class' => 'Doctrine\\MongoDB\\Connection',
+            'doctrine.odm.mongodb.configuration.class' => 'Doctrine\\ODM\\MongoDB\\Configuration',
+            'doctrine.odm.mongodb.document_manager.class' => 'Doctrine\\ODM\\MongoDB\\DocumentManager',
+            'doctrine.odm.mongodb.logger.class' => 'Symfony\\Bundle\\DoctrineMongoDBBundle\\Logger\\DoctrineMongoDBLogger',
+            'doctrine.odm.mongodb.data_collector.class' => 'Symfony\\Bundle\\DoctrineMongoDBBundle\\DataCollector\\DoctrineMongoDBDataCollector',
+            'doctrine.odm.mongodb.event_manager.class' => 'Doctrine\\Common\\EventManager',
+            'doctrine.odm.mongodb.proxy_namespace' => 'Proxies',
+            'doctrine.odm.mongodb.proxy_dir' => '/vol/www/domini/wilano/app/cache/dev/doctrine/odm/mongodb/Proxies',
+            'doctrine.odm.mongodb.auto_generate_proxy_classes' => false,
+            'doctrine.odm.mongodb.hydrator_namespace' => 'Hydrators',
+            'doctrine.odm.mongodb.hydrator_dir' => '/vol/www/domini/wilano/app/cache/dev/doctrine/odm/mongodb/Hydrators',
+            'doctrine.odm.mongodb.auto_generate_hydrator_classes' => false,
+            'doctrine.odm.mongodb.cache.array.class' => 'Doctrine\\Common\\Cache\\ArrayCache',
+            'doctrine.odm.mongodb.cache.apc.class' => 'Doctrine\\Common\\Cache\\ApcCache',
+            'doctrine.odm.mongodb.cache.memcache.class' => 'Doctrine\\Common\\Cache\\MemcacheCache',
+            'doctrine.odm.mongodb.cache.memcache_host' => 'localhost',
+            'doctrine.odm.mongodb.cache.memcache_port' => 11211,
+            'doctrine.odm.mongodb.cache.memcache_instance.class' => 'Memcache',
+            'doctrine.odm.mongodb.cache.xcache.class' => 'Doctrine\\Common\\Cache\\XcacheCache',
+            'doctrine.odm.mongodb.metadata.driver_chain.class' => 'Doctrine\\ODM\\MongoDB\\Mapping\\Driver\\DriverChain',
+            'doctrine.odm.mongodb.metadata.annotation.class' => 'Doctrine\\ODM\\MongoDB\\Mapping\\Driver\\AnnotationDriver',
+            'doctrine.odm.mongodb.metadata.xml.class' => 'Symfony\\Bundle\\DoctrineMongoDBBundle\\Mapping\\Driver\\XmlDriver',
+            'doctrine.odm.mongodb.metadata.yml.class' => 'Symfony\\Bundle\\DoctrineMongoDBBundle\\Mapping\\Driver\\YamlDriver',
+            'doctrine.odm.mongodb.mapping_dirs' => array(
+
+            ),
+            'doctrine.odm.mongodb.xml_mapping_dirs' => array(
+
+            ),
+            'doctrine.odm.mongodb.yml_mapping_dirs' => array(
+
+            ),
+            'doctrine.odm.mongodb.document_dirs' => array(
+
+            ),
+            'doctrine.odm.mongodb.security.user.provider.class' => 'Symfony\\Bundle\\DoctrineMongoDBBundle\\Security\\DocumentUserProvider',
+            'doctrine.odm.mongodb.proxy_cache_warmer.class' => 'Symfony\\Bundle\\DoctrineMongoDBBundle\\CacheWarmer\\ProxyCacheWarmer',
+            'doctrine.odm.mongodb.hydrator_cache_warmer.class' => 'Symfony\\Bundle\\DoctrineMongoDBBundle\\CacheWarmer\\HydratorCacheWarmer',
+            'doctrine_odm.mongodb.validator.unique.class' => 'Symfony\\Bundle\\DoctrineMongoDBBundle\\Validator\\Constraints\\UniqueValidator',
+            'doctrine.odm.mongodb.document_managers' => array(
+                0 => 'default',
+            ),
             'manage_menu.class' => 'FDT\\AdminBundle\\Services\\ManageMenu',
             'manage_menu.config' => array(
+                'metadata' => array(
+                    0 => array(
+                        'id' => 'metadataSettingsMenu',
+                        'text' => 'Settings',
+                        'leaf' => false,
+                        'action' => 'open',
+                        'children' => array(
+                            0 => array(
+                                'id' => 'metadataTipologie',
+                                'text' => 'Tipologie',
+                                'leaf' => true,
+                                'action' => 'Metadata.controller.tipologie.init',
+                            ),
+                        ),
+                    ),
+                ),
                 'parties' => array(
                     0 => array(
                         'id' => 'Parties',
@@ -2550,6 +2955,10 @@ class appDevDebugProjectContainer extends Container
             'bundles_config.config' => array(
                 'paths' => array(
                     0 => array(
+                        'name' => 'Metadata',
+                        'path' => '/bundles/fdtmetadata/js/Metadata',
+                    ),
+                    1 => array(
                         'name' => 'Parties',
                         'path' => '/bundles/fdtparties/js/Parties',
                     ),
@@ -2600,6 +3009,10 @@ class appDevDebugProjectContainer extends Container
                 'data_collector.doctrine' => array(
                     0 => 'db',
                     1 => 'DoctrineBundle:Collector:db',
+                ),
+                'doctrine.odm.mongodb.data_collector' => array(
+                    0 => 'mongodb',
+                    1 => 'DoctrineMongoDBBundle:Collector:mongodb',
                 ),
             ),
             'kernel.compiled_classes' => array(

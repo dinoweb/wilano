@@ -31,7 +31,6 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->arrayNode('pathConfig')
                     ->addDefaultsIfNotSet()
-                    ->canBeUnset()
                     ->children()
                         ->arrayNode('paths')
                             ->requiresAtLeastOneElement ()
@@ -40,6 +39,28 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
             ->end();
+            
+            /*
+$rootNode
+            ->children()
+                ->arrayNode('pathConfig')
+                    ->addDefaultsIfNotSet()
+                    ->canBeUnset()
+                    ->children()
+                        ->arrayNode('paths')
+                            ->requiresAtLeastOneElement ()
+                            ->children()
+                                ->arrayNode('0')
+                                    ->children()
+                                        ->scalarNode('name')->end()
+                                        ->scalarNode('path')->end()
+                                    ->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end();
+*/
     }
     
  
@@ -50,6 +71,10 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('menuConfig')
                     ->requiresAtLeastOneElement()
                     ->children()
+                        ->arrayNode('metadata')
+                            ->requiresAtLeastOneElement ()
+                            ->prototype('variable')->end()
+                        ->end()
                         ->arrayNode('parties')
                             ->requiresAtLeastOneElement ()
                             ->prototype('variable')->end()

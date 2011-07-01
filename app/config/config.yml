@@ -56,26 +56,64 @@ jms_security_extra:
     secure_all_services: false
     
 
+doctrine_mongodb:
+    connections:
+        default:
+            server: mongodb://int-app-glusterfs.gemmyx.com:8080
+            options:
+                connect: true
+    default_database: wilano
+    document_managers:
+        default:
+            auto_mapping: true
+
+stof_doctrine_extensions:
+    default_locale: it_IT
+    orm:
+        default:
+            tree: false
+    mongodb:
+        default:
+            tree: false
+
+
 fdt_admin:
     pathConfig:
       paths:
-        0:
+        -
+          name: Metadata
+          path: /bundles/fdtmetadata/js/Metadata
+        -
           name: Parties
           path: /bundles/fdtparties/js/Parties
+          
     menuConfig:
+      metadata:
+        -
+          id: metadataSettingsMenu
+          text: Settings
+          leaf: false
+          action: open
+          children:
+            -
+              id: metadataTipologie
+              text: Tipologie
+              leaf: true
+              action: Metadata.controller.tipologie.init
+
       parties:
-        0:
+        -
           id: Parties
           text: Parties
           leaf: true
           action: Parties.controller.Init
-        1:
+        -
           id: PartiesSettingsMenu
           text: Settings
           leaf: false
           action: open
           children:
-            0:
+            -
               id: PariesRoles
               text: Ruoli
               leaf: true

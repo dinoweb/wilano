@@ -1,20 +1,12 @@
 Ext.define('Parties.app',
 {
-    extend: 'Ext.app.Application',
+    extend: 'Admin.app',
     
     controllers: 
    	[
         'Parties.controller.Menu'
-    ],
+    ]
 
-    
-    
-    launch : function ()
-    {
-	   
-	   	 		 	
-	 
-    } 
     
     
     

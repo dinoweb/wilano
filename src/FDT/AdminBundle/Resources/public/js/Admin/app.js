@@ -14,9 +14,12 @@ Ext.define('Admin.app',
     ],
     
     
-    createAppBundles : function ()
+    createAppBundles : function (store)
     {
-        var pathStore = this.getStore ('Admin.store.Paths');
+        store.each (this.aggiungiAppBundles);
+        
+        /*
+var pathStore = this.getStore ('Admin.store.Paths');
         
         pathStore.load({
                         scope   : this,
@@ -31,12 +34,16 @@ Ext.define('Admin.app',
                         }
                   
                   });
+*/
     },
     
     aggiungiAppBundles : function (Record)
     {
+        
         var appBundleName = Record.get('name')+'.app';
-
+        
+         console.log (appBundleName);
+                
         Ext.create(appBundleName);
           
     
@@ -56,21 +63,31 @@ Ext.define('Admin.app',
     
     },
     
-    launch : function ()
+    
+    init : function (store)
 	 {
-	    	    
+	    console.log ('init iniziato');	    
 	 	
-	 	Ext.create('Admin.view.Viewport');
-	 	
-	 	this.createAppBundles ();
+	 	this.createAppBundles (store);
 	 		 	
 	 	
+	 	
+	 	console.log ('init chiamato');
 
 	 	
 	 	
         //var store = this.getStore('Bundles');	 
 	 
-	 } 
+	 },
+	 
+	 launch : function ()
+	 {
+	 
+	   Ext.create('Admin.view.Viewport');
+	 
+	   console.log ('launch chiamato');
+	   
+	 }
     
     
     

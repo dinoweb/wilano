@@ -12,9 +12,10 @@ Ext.define('appLoader',
 
     setBundlesPath: function()
     {
+        Ext.require ('Admin.app');
         
         var store = Ext.create ('Admin.store.Paths');
-        //store.each (this.aggiungiPath);
+
         store.load({
                         scope   : this,
                         callback: function (records, operation, success)
@@ -23,8 +24,9 @@ Ext.define('appLoader',
                            {
                             store.each (this.aggiungiPath);
                             
-                            Ext.create('Admin.app');
-
+                            Ext.create('Admin.app').init(store);
+                            
+                            
                            } 
                                                         
                         }
@@ -36,7 +38,9 @@ Ext.define('appLoader',
     aggiungiPath: function (Record)
     {
         Ext.Loader.setPath (Record.get('name'), Record.get('path'));
-            
+        
+        var appBundleName = Record.get('name')+'.app';
+                            
     }
     
     
@@ -44,9 +48,12 @@ Ext.define('appLoader',
 });
 
 Ext.onReady (function ()
-             {
-             
+            {
+            
+                
+
                 Ext.create ('appLoader').setBundlesPath();
-             
-             }   
-            )
+
+            
+            }   
+)

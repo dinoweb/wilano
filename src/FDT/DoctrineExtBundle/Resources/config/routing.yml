@@ -1,0 +1,3 @@
+FDTDoctrineExtBundle_homepage:
+    pattern:  /hello/{name}
+    defaults: { _controller: FDTDoctrineExtBundle:Default:index }

@@ -17,12 +17,13 @@ Ext.define('Parties.controller.Menu', {
     ],
 
     init: function() {
-                        this.control({
-                                       'PartiesMenu':
-                                        {
-                                            itemdblclick: this.onMenuDbClick
-                                        }
-                                    });
+    
+        this.control({
+                       'viewport > mainMenu > PartiesMenu':
+                        {
+                            itemdblclick: this.onMenuDbClick
+                        }
+                    });
         
         
         this.addMenu ();
