@@ -1,6 +1,4 @@
-Ext.define('Parties.app',
-{
-    extend: 'Admin.app',
+Ext.application({
     
     controllers: 
    	[

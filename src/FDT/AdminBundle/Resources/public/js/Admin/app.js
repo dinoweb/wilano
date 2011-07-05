@@ -1,17 +1,19 @@
-Ext.define('Admin.app',
-{
-    extend: 'Ext.app.Application',
-    
+Ext.application({
     
     requires:
     [
 		'Admin.view.Viewport'
     ],
     
-    stores:
+    controllers:
     [
-        'Admin.store.Paths'
+        
+        'Metadata.controller.Menu',
+        'Parties.controller.Menu'
+        
+    
     ],
+    
     
     
     createAppBundles : function (store)
@@ -64,28 +66,18 @@ var pathStore = this.getStore ('Admin.store.Paths');
     },
     
     
-    init : function (store)
-	 {
-	    console.log ('init iniziato');	    
-	 	
-	 	this.createAppBundles (store);
-	 		 	
-	 	
-	 	
-	 	console.log ('init chiamato');
-
-	 	
-	 	
-        //var store = this.getStore('Bundles');	 
-	 
-	 },
-	 
 	 launch : function ()
 	 {
-	 
+	   this.addEvents('viewPortCreated');
+       this.enableBubble('viewPortCreated');
+	   
 	   Ext.create('Admin.view.Viewport');
+	   
+	   this.fireEvent('viewPortCreated');
+	   
+	   
 	 
-	   console.log ('launch chiamato');
+	   //console.log ('launch chiamato');
 	   
 	 }
     

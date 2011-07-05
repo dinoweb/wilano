@@ -15,15 +15,14 @@ class FDTDoctrineExtExtension extends Extension
     	$processor = new Processor();
         $configuration = new Configuration(true);
         $config = $processor->processConfiguration($configuration, $configs);
-                            	    	
+                                    	    	
     	
     	$loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
     	$loader->load('services.yml');
     	
-    	$container->setParameter('manage_menu.config', $config['menuConfig']);
-    	    	
-    	$container->setParameter('bundles_config.config', $config['pathConfig']);
-    	
+    	$container->setParameter('node_listener.class', $config['NestedSet']['nested_set_listener']);
+    	$container->setParameter('tree_manager.class', $config['NestedSet']['tree_manager']);
+    	    	    	
     }
     
     

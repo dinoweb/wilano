@@ -1,0 +1,11 @@
+parameters:
+    tree_manager.class: ~ 
+        
+services:
+    node_listener:
+        class:        %node_listener.class%
+        tags:
+            -  { name: doctrine.odm.mongodb.default_event_subscriber }
+    tree_manager:
+        class:        %tree_manager.class%
+        arguments:    [@doctrine.odm.mongodb.document_manager]    

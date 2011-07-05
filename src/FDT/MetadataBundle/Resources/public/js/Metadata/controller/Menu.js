@@ -24,10 +24,13 @@ Ext.define('Metadata.controller.Menu', {
                         {
                             itemdblclick: this.onMenuDbClick
                         }
-                        
                       });
-          
-          this.addMenu ();
+         
+         this.application.addListener
+         ({ 
+            'viewPortCreated' : this.addMenu, 
+         }); 
+         
 
                   
     },
@@ -38,13 +41,21 @@ Ext.define('Metadata.controller.Menu', {
 
     addMenu: function()
     {   
-        var Panel = Ext.ComponentQuery.query('viewport > mainMenu');
-        
-                
-        Panel[0].add ([{xtype: 'MetadataMenu'}]);
+        var Panels = Ext.ComponentQuery.query('viewport > mainMenu'); 
+                        
+        Panels[0].add ([{xtype: 'MetadataMenu'}]);
               
         
     },
+    
+    launch : function ()
+	 {
+	   
+	    this.addMenu ();
+	 
+	   //console.log ('launch chiamato');
+	   
+	 },
     
     
     onMenuDbClick: function(Panel, Record)

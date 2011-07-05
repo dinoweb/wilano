@@ -1,5 +1,15 @@
 Ext.Loader.setConfig ({
                         enabled: true,
+                        paths : {'Admin': '/bundles/fdtadmin/js/Admin',
+                                 'Parties': '/bundles/fdtparties/js/Parties',
+                                 'Metadata': '/bundles/fdtmetadata/js/Metadata'
+                                
+                                }
+                     });
+
+/*
+Ext.Loader.setConfig ({
+                        enabled: true,
                         paths : {'Admin': '/bundles/fdtadmin/js/Admin'}
                      });
 
@@ -57,3 +67,4 @@ Ext.onReady (function ()
             
             }   
 )
+*/

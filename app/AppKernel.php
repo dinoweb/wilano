@@ -18,15 +18,16 @@ class AppKernel extends Kernel
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
-            new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
             
             //EXTRA BUNDLES
             new Symfony\Bundle\DoctrineMongoDBBundle\DoctrineMongoDBBundle(),
-            
+            new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
+
             //MY BUNDLES
             new FDT\AdminBundle\FDTAdminBundle(),
             new FDT\PartiesBundle\FDTPartiesBundle(),
             new FDT\MetadataBundle\FDTMetadataBundle(),
+            new FDT\DoctrineExtBundle\FDTDoctrineExtBundle(),
             
         );
 

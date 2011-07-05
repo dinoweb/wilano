@@ -15,25 +15,30 @@ Ext.define('Parties.controller.Menu', {
     [
     	'Admin.model.Menu'
     ],
-
+        
     init: function() {
-    
+        
         this.control({
                        'viewport > mainMenu > PartiesMenu':
                         {
                             itemdblclick: this.onMenuDbClick
                         }
+                        
                     });
         
-        
-        this.addMenu ();
+         this.application.addListener
+         ({ 
+            'viewPortCreated' : this.addMenu, 
+        }); 
+                
     },
 
     addMenu: function()
     {   
-        var Panel = Ext.ComponentQuery.query('viewport > mainMenu');
+    
+        var Panels = Ext.ComponentQuery.query('viewport > mainMenu');
                 
-        Panel[0].add ([{xtype: 'PartiesMenu'}]);
+        Panels[0].add ([{xtype: 'PartiesMenu'}]);
     },
     
     

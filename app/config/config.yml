@@ -77,6 +77,8 @@ stof_doctrine_extensions:
             tree: false
 
 
+fdt_doctrine_ext: ~
+
 fdt_admin:
     pathConfig:
       paths:

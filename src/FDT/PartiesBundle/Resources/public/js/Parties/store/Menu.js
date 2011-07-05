@@ -9,6 +9,8 @@ Ext.define('Parties.store.Menu',
 	   expanded: true,
 	   nodeType:'async'
 	},
+	
+
 	proxy:
 	{
             type:'ajax',            

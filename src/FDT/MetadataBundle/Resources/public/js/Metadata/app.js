@@ -1,6 +1,5 @@
-Ext.define('Metadata.app',
-{
-    extend: 'Admin.app',
+Ext.application
+({
     
     controllers: 
    	[
