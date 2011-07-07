@@ -67,15 +67,6 @@ doctrine_mongodb:
         default:
             auto_mapping: true
 
-stof_doctrine_extensions:
-    default_locale: it_IT
-    orm:
-        default:
-            tree: false
-    mongodb:
-        default:
-            tree: false
-
 
 fdt_doctrine_ext: ~
 

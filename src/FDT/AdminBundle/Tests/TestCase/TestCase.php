@@ -13,7 +13,7 @@ class TestCase extends WebTestCase
        if (!$this->client)
        {
        
-        $this->client = static::createClient();
+        $this->client = $this->createClient(array ('test', true));
        
        }
        return $this->client;

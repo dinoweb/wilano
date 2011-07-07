@@ -2,35 +2,23 @@
 
 namespace FDT\MetadataBundle\Tests\Document;
 
-use FDT\MetadataBundle\Document\Tipologia;
+use FDT\MetadataBundle\Document\Tipologie\BaseTipologia;
+use FDT\MetadataBundle\Document\Tipologie\Prodotti;
 use FDT\AdminBundle\Tests\TestCase\TestCase;
 
 
 class TipologiaTest extends TestCase
 {
-    public function testNewTipologia()
-    {
-        $gioielli = new Tipologia ();
-        $gioielli->setName ('Gioielli');
-                
-        $treeManager = $this->getDic()->get('tree_manager'); 
-        
-        $nodeRoot = $treeManager->getNode ($gioielli);
-       	
-       	$this->assertEquals ('FDT\doctrineExtensions\NestedSet\NodeWrapper', get_class($nodeRoot));
-       	
-       	$dm = $this->getDm (); 
     
-    }
-    
+
     public function testAddChild ()
     {
     	
-    	$tipologia1 = new Tipologia ();
-       	$tipologia1->setName ('Mobili');
+    	$tipologia1 = new Prodotti ();
+       	$tipologia1->setName ('Gioielli');
        	
-       	$tipologia2 = new Tipologia ();
-       	$tipologia2->setName ('Sedie');
+       	$tipologia2 = new Prodotti ();
+       	$tipologia2->setName ('Orecchini');
        	
        	$nodeRoot = $this->getTreeManager ()->getNode ($tipologia1);
               	       	
@@ -43,12 +31,12 @@ class TipologiaTest extends TestCase
        	
        	$this->assertEquals (1, $descendants->count());
        	
-       	$tipologia3 = new Tipologia ();
-       	$tipologia3->setName ('Sgabelli');
+       	$tipologia3 = new Prodotti ();
+       	$tipologia3->setName ('Bracciali');
        	
        	$nodeRoot->addChild ($tipologia3);
        	
-       	$this->getDocumentManager()->persist($categoria3);
+       	$this->getDocumentManager()->persist($tipologia3);
        	$this->getDocumentManager()->flush ();
        	
        	$descendants = $nodeRoot->getDescendants ();
@@ -57,6 +45,7 @@ class TipologiaTest extends TestCase
     
     
     }
+    
     
     private function getTreeManager ()
     {
