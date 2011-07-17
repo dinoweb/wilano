@@ -68,5 +68,4 @@
     
 [DoctrineExtensionsBundle]
     git=http://github.com/stof/StofDoctrineExtensionsBundle.git
-    target=/bundles/Stof/Bundle/DoctrineExtensionsBundle
-    
+    target=/bundles/Stof/DoctrineExtensionsBundle

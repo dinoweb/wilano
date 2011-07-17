@@ -67,6 +67,17 @@ doctrine_mongodb:
         default:
             auto_mapping: true
 
+stof_doctrine_extensions:
+    default_locale: %locale%
+    translation_fallback: true
+    orm:
+        default: ~
+    mongodb:
+        default:
+          translatable : true
+          sluggable: true
+          timestampable: true
+
 
 fdt_doctrine_ext: ~
 

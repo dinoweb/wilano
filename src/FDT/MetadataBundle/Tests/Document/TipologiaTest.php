@@ -61,6 +61,18 @@ class TipologiaTest extends TestCase
         return $this->getDm(); 
     
     }
+    
+    public function tearDown ()
+    {
+    
+        $job = $this->getDm()->createQueryBuilder('FDT\MetadataBundle\Document\Tipologie\Prodotti')
+               ->findAndRemove()
+               ->getQuery()
+               ->execute();
+    
+    
+    
+    }
 
 
 }

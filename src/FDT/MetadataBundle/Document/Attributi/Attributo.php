@@ -1,10 +1,14 @@
 <?php
 namespace FDT\MetadataBundle\Document\Attributi;
 
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\Sluggable\Util;
 
 /**
  * @MongoDB\Document(collection="attributi")
+ * @Gedmo\TranslationEntity(class="FDT\MetadataBundle\Document\Attributi\AttributoTranslation")
  */
  
 class Attributo
@@ -12,16 +16,45 @@ class Attributo
     /** @MongoDB\Id(strategy="AUTO") */
     private $id;
     
-    /** @MongoDB\String*/
+    /** 
+    * @MongoDB\String
+    * @Gedmo\Translatable
+    * @Gedmo\Sluggable(slugField="slug")
+    * @Assert\NotBlank()
+    * 
+    */
     private $name;
     
-    /** @MongoDB\String*/
-    private $visibleName;
+    /** 
+    * @MongoDB\String
+    * @Gedmo\Sluggable(slugField="uniqueSlug")
+    * @Assert\NotBlank()
+    */
+    private $uniqueName;
     
-    /** @MongoDB\String*/
+    /**
+     * @MongoDB\String
+     * @Gedmo\Slug
+     */
+    private $uniqueSlug;
+    
+    /**
+     * @MongoDB\String
+     * @Gedmo\Translatable
+     * @Gedmo\Slug
+     */
+    private $slug;
+    
+    /** 
+    * @MongoDB\String
+    * @Gedmo\Translatable
+    */
     private $descrizione;
     
-    /** @MongoDB\String*/
+    /** 
+    * @MongoDB\String
+    * @Assert\NotBlank()
+    */
     private $tipo;
     
     /** @MongoDB\Boolean*/
@@ -58,25 +91,35 @@ class Attributo
     {
         return $this->name;
     }
-
-    /**
-     * Set visibleName
-     *
-     * @param string $visibleName
-     */
-    public function setVisibleName($visibleName)
+    
+    public function getSlug()
     {
-        $this->visibleName = $visibleName;
+        return $this->slug;
     }
 
     /**
-     * Get visibleName
+     * Set uniqueName
      *
-     * @return string $visibleName
+     * @param string $uniqueName
      */
-    public function getVisibleName()
+    public function setUniqueName($uniqueName)
     {
-        return $this->visibleName;
+        $this->uniqueName = $uniqueName;
+    }
+
+    /**
+     * Get uniqueName
+     *
+     * @return string $uniqueName
+     */
+    public function getUniqueName()
+    {
+        return $this->uniqueName;
+    }
+      
+    public function getUniqueSlug()
+    {
+        return $this->uniqueSlug;
     }
 
     /**
