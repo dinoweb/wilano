@@ -1,0 +1,7 @@
+parameters:
+    attributo_saver.class:               FDT\MetadataBundle\Services\AttributoSaver
+
+services:
+    attributo_saver:
+        class:        %attributo_saver.class%
+        arguments:    [@doctrine.odm.mongodb.document_manager, @validator]
