@@ -20,7 +20,7 @@ class FDTMetadataExtension extends Extension
     	$loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
     	$loader->load('services.yml');
     	
-    	$container->setParameter('attributo_saver.class', $config['attributo_saver']['attributo_saver_class']);
+    	$container->setParameter('document_saver.class', $config['document_saver']['document_saver_class']);
     	    	    	
     }
     

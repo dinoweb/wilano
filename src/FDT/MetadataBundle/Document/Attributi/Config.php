@@ -1,10 +1,12 @@
 <?php
 namespace FDT\MetadataBundle\Document\Attributi;
 
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @MongoDB\Document
+ * @MongoDB\Document(collection="attributi.config"))
  */
  
 class Config
@@ -12,37 +14,60 @@ class Config
     /** @MongoDB\Id(strategy="AUTO") */
     private $id;
     
-    /** @MongoDB\Int*/ 
-    private $ordine;
+    /** 
+    * @MongoDB\Int
+    * @Assert\Type("int")
+    */ 
+    private $ordine = 0;
     
-    /** @MongoDB\Boolean*/
+    /** 
+    * @MongoDB\Boolean
+    * @Assert\Type("bool")
+    */
     private $isActive = true;
     
-    /** @MongoDB\Boolean*/
+    /** 
+    * @MongoDB\Boolean
+    * @Assert\Type("bool")
+    */
     private $isObligatory = true;
     
-    /** @MongoDB\Boolean*/
+    /** 
+    * @MongoDB\Boolean
+    * @Assert\Type("bool")
+    */
     private $inSearch = true;
     
-    /** @MongoDB\Boolean*/
+    /** 
+    * @MongoDB\Boolean
+    * @Assert\Type("bool")
+    */
     private $inQuickSearch = true;
     
-    /** @MongoDB\Boolean*/
+    /** 
+    * @MongoDB\Boolean
+    * @Assert\Type("bool")
+    */
     private $hasTranslation = false;
     
-    /** @MongoDB\Boolean*/
+    /** 
+    * @MongoDB\Boolean
+    * @Assert\Type("bool")
+    */
     private $isPubblicable = true;
     
-    /** @MongoDB\Boolean*/
+    /** 
+    * @MongoDB\Boolean
+    * @Assert\Type("bool")
+    */
     private $isForConfiguration = false;
     
     /**
-     * @MongoDB\ReferenceMany(targetDocument="Attributo", discriminatorField="type")
-     *
-     * @var array|ArrayCollection
-     * @access protected
+     * @MongoDB\ReferenceOne(targetDocument="Attributo")
+     * @Assert\NotBlank()
+     * @access private
      */
-    protected $attributi = array();
+    private $attributo;
     
 
     /**
@@ -214,28 +239,24 @@ class Config
     {
         return $this->isForConfiguration;
     }
-    public function __construct()
-    {
-        $this->attributi = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-    
+        
     /**
-     * Add attributi
+     * Add attributo
      *
-     * @param FDT\MetadataBundle\Document\Attributi\Attributo $attributi
+     * @param FDT\MetadataBundle\Document\Attributi\Attributo $attributo
      */
-    public function addAttributi(\FDT\MetadataBundle\Document\Attributi\Attributo $attributi)
+    public function addAttributo(\FDT\MetadataBundle\Document\Attributi\Attributo $attributo)
     {
-        $this->attributi[] = $attributi;
+        $this->attributo = $attributo;
     }
 
     /**
      * Get attributi
      *
-     * @return Doctrine\Common\Collections\Collection $attributi
+     * @return Doctrine\Common\Collections\Collection $attributo
      */
-    public function getAttributi()
+    public function getAttributo()
     {
-        return $this->attributi;
+        return $this->attributo;
     }
 }

@@ -5,21 +5,22 @@ use Doctrine\Common\Annotations\AnnotationRegistry;
 
 $loader = new UniversalClassLoader();
 $loader->registerNamespaces(array(
-    'Symfony'                   => array(__DIR__.'/../vendor/symfony/src', __DIR__.'/../vendor/bundles'),
-    'Sensio'                    => __DIR__.'/../vendor/bundles',
-    'JMS'                       => __DIR__.'/../vendor/bundles',
-    'Doctrine\\ODM\\MongoDB'    => __DIR__.'/../vendor/doctrine-mongodb-odm/lib',
-    'Doctrine\\MongoDB'         => __DIR__.'/../vendor/doctrine-mongodb/lib',
-    'Doctrine\\Common'          => __DIR__.'/../vendor/doctrine-common/lib',
-    'Doctrine\\DBAL'            => __DIR__.'/../vendor/doctrine-dbal/lib',
-    'Doctrine'                  => __DIR__.'/../vendor/doctrine/lib',
-    'Monolog'                   => __DIR__.'/../vendor/monolog/src',
-    'Assetic'                   => __DIR__.'/../vendor/assetic/src',
-    'Metadata'                  => __DIR__.'/../vendor/metadata/src',
-    'FDT\\doctrineExtensions'   => __DIR__.'/../vendor/fdt-doctrine-extensions/lib',
-    'FDT' 			            => __DIR__.'/../src',
-    'Stof'                      => __DIR__.'/../vendor/bundles',
-    'Gedmo'                     => __DIR__.'/../vendor/gedmo-doctrine-extensions/lib',
+    'Symfony'                        => array(__DIR__.'/../vendor/symfony/src', __DIR__.'/../vendor/bundles'),
+    'Sensio'                         => __DIR__.'/../vendor/bundles',
+    'JMS'                            => __DIR__.'/../vendor/bundles',
+    'Doctrine\\ODM\\MongoDB'         => __DIR__.'/../vendor/doctrine-mongodb-odm/lib',
+    'Doctrine\\MongoDB'              => __DIR__.'/../vendor/doctrine-mongodb/lib',
+    'Doctrine\\Common\\DataFixtures' => __DIR__.'/../vendor/doctrine-fixtures/lib',
+    'Doctrine\\Common'               => __DIR__.'/../vendor/doctrine-common/lib',
+    'Doctrine\\DBAL'                 => __DIR__.'/../vendor/doctrine-dbal/lib',
+    'Doctrine'                       => __DIR__.'/../vendor/doctrine/lib',
+    'Monolog'                        => __DIR__.'/../vendor/monolog/src',
+    'Assetic'                        => __DIR__.'/../vendor/assetic/src',
+    'Metadata'                       => __DIR__.'/../vendor/metadata/src',
+    'FDT\\doctrineExtensions'        => __DIR__.'/../vendor/fdt-doctrine-extensions/lib',
+    'FDT' 			                 => __DIR__.'/../src',
+    'Stof'                           => __DIR__.'/../vendor/bundles',
+    'Gedmo'                          => __DIR__.'/../vendor/gedmo-doctrine-extensions/lib',
 ));
 
 $loader->registerPrefixes(array(

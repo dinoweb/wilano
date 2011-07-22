@@ -7,7 +7,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Sluggable\Util;
 
 /**
- * @MongoDB\Document(collection="attributi")
+ * @MongoDB\Document(collection="attributi", repositoryClass="FDT\MetadataBundle\Document\Attributi\AttributiRepository"))
  * @Gedmo\TranslationEntity(class="FDT\MetadataBundle\Document\Attributi\AttributoTranslation")
  */
  
@@ -54,6 +54,7 @@ class Attributo
     /** 
     * @MongoDB\String
     * @Assert\NotBlank()
+    * @Assert\Choice(callback = {"\FDT\MetadataBundle\Utilities\Attributi\AttributiCallbacks", "getTypes"})
     */
     private $tipo;
     

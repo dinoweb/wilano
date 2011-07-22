@@ -1,12 +1,14 @@
 <?php
 namespace FDT\MetadataBundle\Document\Tipologie;
 
+use Symfony\Component\Validator\Constraints as Assert;
 use FDT\doctrineExtensions\NestedSet\Documents\BaseNode;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Doctrine\Common\Collections\ArrayCollection;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * @MongoDB\Document(collection="tipologie")
+ * @MongoDB\Document(collection="tipologie", repositoryClass="FDT\MetadataBundle\Document\Tipologie\TipologieRepository")
  * @MongoDB\InheritanceType("SINGLE_COLLECTION")
  * @MongoDB\DiscriminatorField(fieldName="type")
  * @MongoDB\DiscriminatorMap({
@@ -14,6 +16,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  *                               "schede"="Schede"
  *                               
  *                           })
+ *@Gedmo\TranslationEntity(class="FDT\MetadataBundle\Document\Tipologie\TipologiaTranslation")
  */
  
  
@@ -28,8 +31,38 @@ class BaseTipologia implements BaseNode
      */
     private $level;
     
-    /** @MongoDB\String */
+    /** 
+    * @MongoDB\String
+    * @Gedmo\Translatable
+    * @Gedmo\Sluggable(slugField="slug")
+    * @Assert\NotBlank()
+    * 
+    */
     private $name;
+    
+    /** 
+    * @MongoDB\String
+    * @Gedmo\Translatable
+    * @Gedmo\Sluggable(slugField="uniqueSlug")
+    * @Assert\NotBlank()
+    * 
+    */
+    private $uniqueName;
+    
+    
+    /**
+     * @MongoDB\String
+     * @Gedmo\Translatable
+     * @Gedmo\Slug
+     */
+    private $slug;
+    
+     /**
+     * @MongoDB\String
+     * @Gedmo\Slug
+     */
+    private $uniqueSlug;
+    
     
     /**
      * @MongoDB\ReferenceMany(targetDocument="BaseTipologia", cascade="all")
@@ -45,7 +78,7 @@ class BaseTipologia implements BaseNode
     
     
     /**
-     * @MongoDB\EmbedMany(discriminatorField="type")
+     * @MongoDB\ReferenceMany(discriminatorField="type")
      *
      * @var array|ArrayCollection
      * @access protected
@@ -73,7 +106,7 @@ class BaseTipologia implements BaseNode
      * @param mixed $metadata una categoria associabile a contenuti di questa tipologia o un attributo associabile
      * @return void
      */
-    public function setMetadata ($metadata)
+    public function addMetadata ($metadata)
     {
     
         $this->metadata[] = $metadata;
@@ -139,6 +172,25 @@ class BaseTipologia implements BaseNode
     }
     
     /**
+     * setUniqueName function.
+     * 
+     * @access public
+     * @param mixed $uniqueName
+     * @return void
+     */
+    public function setUniqueName ($uniqueName)
+    {
+    
+        $this->uniqueName = $uniqueName;
+    
+    }
+    
+    public function getUniqueSlug()
+    {
+        return $this->uniqueSlug;
+    }
+    
+    /**
      * getName function.
      * 
      * @access public
@@ -149,6 +201,11 @@ class BaseTipologia implements BaseNode
     
         return $this->name;
     
+    }
+    
+    public function getSlug()
+    {
+        return $this->slug;
     }
 
 }

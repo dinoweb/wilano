@@ -22,6 +22,7 @@ class AppKernel extends Kernel
             //EXTRA BUNDLES
             new Symfony\Bundle\DoctrineMongoDBBundle\DoctrineMongoDBBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
+            new Symfony\Bundle\DoctrineFixturesBundle\DoctrineFixturesBundle(),
 
             //MY BUNDLES
             new FDT\AdminBundle\FDTAdminBundle(),

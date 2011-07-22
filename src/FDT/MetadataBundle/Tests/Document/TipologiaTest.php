@@ -16,9 +16,11 @@ class TipologiaTest extends TestCase
     	
     	$tipologia1 = new Prodotti ();
        	$tipologia1->setName ('Gioielli');
+       	$tipologia1->setUniqueName ('Gioielli');
        	
        	$tipologia2 = new Prodotti ();
        	$tipologia2->setName ('Orecchini');
+       	$tipologia2->setUniqueName ('Orecchini');
        	
        	$nodeRoot = $this->getTreeManager ()->getNode ($tipologia1);
               	       	
@@ -33,6 +35,7 @@ class TipologiaTest extends TestCase
        	
        	$tipologia3 = new Prodotti ();
        	$tipologia3->setName ('Bracciali');
+       	$tipologia3->setUniqueName ('Bracciali');
        	
        	$nodeRoot->addChild ($tipologia3);
        	

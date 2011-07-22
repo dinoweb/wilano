@@ -24,8 +24,8 @@ class FDTMetadataExtensionTest extends \PHPUnit_Framework_TestCase
         $config = $processor->processConfiguration($configuration, $configs);
         $extension->load(array($config), $container = new ContainerBuilder());
 
-        $this->assertTrue($container->hasParameter('attributo_saver.class'));
-        $this->assertEquals($container->getParameter('attributo_saver.class'), 'FDT\MetadataBundle\Services\AttributoSaver');
+        $this->assertTrue($container->hasParameter('document_saver.class'));
+        $this->assertEquals($container->getParameter('document_saver.class'), 'FDT\MetadataBundle\Services\DocumentSaver');
         
         
     

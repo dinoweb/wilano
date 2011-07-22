@@ -7,8 +7,30 @@ use Doctrine\Common\DataFixtures\Loader;
 
 class TestCase extends WebTestCase
 {
-    private $client = FALSE; 
+    private $client = FALSE;
     
+    public function setUp ()
+    {
+        $collectionAttributo = $this->getDm()->getDocumentCollection('FDT\MetadataBundle\Document\Attributi\Attributo');
+        $collectionAttributo->drop();
+        
+        $collectionAttributoTranslation = $this->getDm()->getDocumentCollection('FDT\MetadataBundle\Document\Attributi\AttributoTranslation');
+        $collectionAttributoTranslation->drop();
+        
+        $collectionAttributoTranslation = $this->getDm()->getDocumentCollection('FDT\MetadataBundle\Document\Attributi\Config');
+        $collectionAttributoTranslation->drop();
+        
+        $collectionAttributoTranslation = $this->getDm()->getDocumentCollection('FDT\MetadataBundle\Document\Attributi\Config');
+        $collectionAttributoTranslation->drop();
+        
+        $collectionAttributoTranslation = $this->getDm()->getDocumentCollection('FDT\MetadataBundle\Document\Tipologie\Prodotti');
+        $collectionAttributoTranslation->drop();
+        
+        $collectionAttributoTranslation = $this->getDm()->getDocumentCollection('FDT\MetadataBundle\Document\Tipologie\TipologiaTranslation');
+        $collectionAttributoTranslation->drop();
+        
+    }
+           
     public function getClient()
     {
        if (!$this->client)
@@ -46,12 +68,12 @@ class TestCase extends WebTestCase
     }
     
     
-    public function loadMongoDBDataFixtures($append = false)
+    public function loadMongoDBDataFixtures($bundleName, $arrayFixturesToLoad,$append = false)
     {
         $dm = $this->getDm();
 
         $loader = new Loader();
-        foreach ($this->getDataFixturesPaths('MongoDB') as $path) {
+        foreach ($this->getDataFixturesPaths($bundleName, $arrayFixturesToLoad) as $path) {
             $loader->loadFromDirectory($path);
         }
         $fixtures = $loader->getFixtures();
@@ -60,22 +82,30 @@ class TestCase extends WebTestCase
         $executor->execute($fixtures, $append);
     }
     
-    public function getDataFixturesPaths($lastDir = '', $testDir = '')
+    public function getDataFixturesPaths($bundleName, $arrayFixturesToLoad)
     {
         $paths = array();
-        $bundleDirs = $this->getKernel()->getBundleDirs();
-        foreach ($this->getKernel()->getBundles() as $bundle) {
-            $tmp = dirname(str_replace('\\', '/', get_class($bundle)));
-            $namespace = str_replace('/', '\\', dirname($tmp));
-            $class = basename($tmp);
-
-            if (isset($bundleDirs[$namespace]) && is_dir($dir = $bundleDirs[$namespace].'/'.$class.'/'.$testDir.'/DataFixtures/'.$lastDir)) {
+        $bundleDir = self::$kernel->getBundle($bundleName)->getPath ();
+        $testFixtureDir = $bundleDir.'/Tests/Document/Fixtures';
+        foreach ($arrayFixturesToLoad as $fixtureToLoad)
+        {
+            $fixtureDir = $testFixtureDir.'/'.$fixtureToLoad;
+            if (is_dir($dir = $fixtureDir))
+            {
                 $paths[] = $dir;
             }
         }
-
+        
         return $paths;
     }
+    
+    public function getSaver ()
+    {
+    
+        return $this->getDic()->get('document_saver');
+    
+    }
+    
     
     
 }
