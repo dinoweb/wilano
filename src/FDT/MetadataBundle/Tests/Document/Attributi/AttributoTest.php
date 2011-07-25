@@ -3,6 +3,7 @@
 namespace FDT\MetadataBundle\Tests\Document\Attributi;
 
 use FDT\MetadataBundle\Document\Attributi\Attributo;
+use FDT\MetadataBundle\Document\Attributi\DataSet;
 use FDT\AdminBundle\Tests\TestCase\TestCase;
 use FDT\MetadataBundle\Exception\ValidatorErrorException;
 
@@ -251,6 +252,63 @@ class AttributoTest extends TestCase
         
        	
        	
+    }
+    
+    public function testDataSet()
+    {
+        $dataSet = new DataSet ();
+       	$dataSet->setName ('Nazioni');
+       	$dataSet->setDescrizione ('Elenco nazioni');
+       	$dataSet->setUniqueName ('Nazioni unique name');
+       	
+       	$dataSet = $this->getSaver()->save($dataSet);
+        
+        
+        $attributo = new Attributo ();
+       	$attributo->setName ('Peso palla');
+       	$attributo->setDescrizione ('descrizione');
+       	$attributo->setUniqueName ('Peso tradotto');
+       	$attributo->setTipo ('singleSelect');
+       	$attributo->addDataSet ($dataSet);
+       	
+        $this->getSaver()->save($attributo);
+        
+        $this->assertEquals('nazioni', $attributo->getDataset()->getSlug());
+              	
+       	
+        
+    }
+    
+    public function testDataSetValidator()
+    {
+        $dataSet = new DataSet ();
+       	$dataSet->setName ('Nazioni');
+       	$dataSet->setDescrizione ('Elenco nazioni');
+       	$dataSet->setUniqueName ('Nazioni unique name');
+       	
+       	$dataSet = $this->getSaver()->save($dataSet);
+        
+        
+        $attributo = new Attributo ();
+       	$attributo->setName ('Peso palla');
+       	$attributo->setDescrizione ('descrizione');
+       	$attributo->setUniqueName ('Peso tradotto');
+       	$attributo->setTipo ('text');
+       	$attributo->addDataSet ($dataSet);
+       	
+       	try 
+       	{
+            $this->getSaver()->save($attributo);
+        }
+        catch (ValidatorErrorException $expected)
+        {
+            return;
+        }
+ 
+        $this->fail('An expected ValidatorErrorException has not been raised.');
+       	
+       	
+        
     }
     
 

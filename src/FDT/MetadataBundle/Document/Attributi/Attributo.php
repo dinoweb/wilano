@@ -4,6 +4,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Translatable\Translatable;
+use FDT\MetadataBundle\Validator as MyAssert;
 
 /**
  * @MongoDB\Document(collection="attributi", repositoryClass="FDT\MetadataBundle\Document\Attributi\AttributiRepository"))
@@ -67,8 +68,8 @@ class Attributo implements Translatable
     private $locale;
     
     /**
-     * @MongoDB\ReferenceOne(targetDocument="DataSet")
-     * @DataSet()
+     * @MongoDB\ReferenceOne(targetDocument="DataSet", cascade="all")
+     * @MyAssert\DataSetIsOk()
      * @access private
      */
     private $dataSet;
@@ -205,6 +206,21 @@ class Attributo implements Translatable
     public function setTranslatableLocale($locale)
     {
         $this->locale = $locale;
+    }
+    
+    /**
+     * Add dataset
+     *
+     * @param FDT\MetadataBundle\Document\Attributi\Attributo $attributo
+     */
+    public function addDataset(\FDT\MetadataBundle\Document\Attributi\DataSet $dataSet)
+    {
+        $this->dataSet = $dataSet;
+    }
+    
+    public function getDataSet()
+    {
+        return $this->dataSet;
     }
 
 }
