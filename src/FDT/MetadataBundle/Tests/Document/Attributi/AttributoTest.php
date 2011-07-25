@@ -15,6 +15,7 @@ class AttributoTest extends TestCase
     	
     	$attributo = new Attributo ();
        	$attributo->setName ('Peso palla');
+       	$attributo->setDescrizione ('Descrizione');
        	$attributo->setUniqueName ('Peso visibile');
        	$attributo->setTipo ('weight');
        	
@@ -45,10 +46,11 @@ class AttributoTest extends TestCase
                 
         $this->assertEquals('peso-visibile', $attributoResult2->getUniqueSlug());
         $this->assertArrayHasKey('en_us', $translations);
-        $this->assertEquals('peso-palla', $translations['en_us']['slug']);
+        $this->assertEquals('peso', $translations['en_us']['slug']);
         
         $attributo2 = new Attributo ();
        	$attributo2->setName ('Peso palla');
+       	$attributo2->setDescrizione ('Descrizione');
        	$attributo2->setUniqueName ('Peso visibile');
        	$attributo2->setTipo ('weight');
        	$attributo2->setDescrizione ('descrizione');
@@ -153,7 +155,103 @@ class AttributoTest extends TestCase
        	
                     
     
-    } 
+    }
+    
+    public function testUpdatableSlug()
+    {
+        $attributo = new Attributo ();
+       	$attributo->setName ('Peso palla');
+       	$attributo->setDescrizione ('descrizione');
+       	$attributo->setUniqueName ('Peso visibile');
+       	$attributo->setTipo ('text');
+       	
+       	$this->getSaver()->save($attributo);
+       	
+       	$repository = $this->getDm()->getRepository('FDT\MetadataBundle\Document\Attributi\AttributoTranslation');
+        $translations = $repository->findTranslations($attributo);
+
+        $this->assertEquals('Peso palla', $attributo->getName());
+        $this->assertEquals('peso-palla', $attributo->getSlug());
+        
+        $attributo->setName ('Peso');
+        
+        $this->assertEquals('Peso', $attributo->getName());
+       	$this->assertEquals('peso-palla', $attributo->getSlug());
+       	
+       	$attributoSaved = $this->getSaver()->save($attributo);
+       	
+       	$this->assertEquals('peso-palla', $attributoSaved->getSlug());
+       	
+       	$attributoResult = $this->getDm()->createQueryBuilder('FDT\MetadataBundle\Document\Attributi\Attributo')
+                           ->field('uniqueSlug')->equals('peso-visibile')
+                           ->getQuery()
+                           ->getSingleResult();
+        
+        
+       	$this->assertEquals('peso-palla', $attributoResult->getSlug());
+       	
+       	
+    }
+    
+    public function testTranslateAttributo()
+    {
+        $attributo = new Attributo ();
+       	$attributo->setName ('Peso palla');
+       	$attributo->setDescrizione ('descrizione');
+       	$attributo->setUniqueName ('Peso tradotto');
+       	$attributo->setTipo ('text');
+       	
+       	$this->getSaver()->save($attributo);
+       	
+       	$attributoResult = $this->getDm()->getRepository('FDT\MetadataBundle\Document\Attributi\Attributo')->findOneBy (array ('uniqueSlug'=>'peso-tradotto'));
+        
+        $attributoResult->setName('Peso It');
+        $attributoResult->setDescrizione ('Descrizione it');
+        $attributoResult->setTranslatableLocale('it_it');
+        
+        $attributoSaved = $this->getSaver()->save($attributoResult);
+                        
+        $repository = $this->getDm()->getRepository('FDT\MetadataBundle\Document\Attributi\AttributoTranslation');
+        $translations = $repository->findTranslations($attributoSaved);
+        
+        
+        $this->assertArrayHasKey('en_us', $translations);
+        $this->assertArrayHasKey('it_it', $translations);
+        $this->assertEquals('peso-palla', $translations['en_us']['slug']);
+        $this->assertEquals('peso-it', $translations['it_it']['slug']);
+        
+       	
+    }
+    
+    public function testNewTranslation()
+    {
+        $attributo = new Attributo ();
+       	$attributo->setName ('Peso palla');
+       	$attributo->setDescrizione ('descrizione');
+       	$attributo->setUniqueName ('Peso tradotto');
+       	$attributo->setTipo ('text');
+       	
+       	$attributo = $this->getSaver()->save($attributo);
+       	
+       	$attributo->setTranslatableLocale('it_it');
+       	$attributo->setName('Peso It');
+        $attributo->setDescrizione ('Descrizione it');
+        
+        $attributo = $this->getSaver()->save($attributo);
+        
+        $repository = $this->getDm()->getRepository('FDT\MetadataBundle\Document\Attributi\AttributoTranslation');
+        $translations = $repository->findTranslations($attributo);
+        
+        
+        $this->assertArrayHasKey('en_us', $translations);
+        $this->assertArrayHasKey('it_it', $translations);
+        $this->assertEquals('peso-palla', $translations['en_us']['slug']);
+        $this->assertEquals('peso-it', $translations['it_it']['slug']);
+        
+        
+       	
+       	
+    }
     
 
         

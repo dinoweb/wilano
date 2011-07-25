@@ -6,6 +6,7 @@ use FDT\doctrineExtensions\NestedSet\Documents\BaseNode;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\Translatable\Translatable;
 
 /**
  * @MongoDB\Document(collection="tipologie", repositoryClass="FDT\MetadataBundle\Document\Tipologie\TipologieRepository")
@@ -20,7 +21,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  */
  
  
-class BaseTipologia implements BaseNode
+class BaseTipologia implements BaseNode, Translatable
 {
     
      /** @MongoDB\Id(strategy="AUTO") */
@@ -53,7 +54,7 @@ class BaseTipologia implements BaseNode
     /**
      * @MongoDB\String
      * @Gedmo\Translatable
-     * @Gedmo\Slug
+     * @Gedmo\Slug(updatable=false)
      */
     private $slug;
     
@@ -76,40 +77,222 @@ class BaseTipologia implements BaseNode
      */
     private $parent;
     
+    /**
+    * @Gedmo\Locale
+    */
+    protected $locale;
+    
     
     /**
-     * @MongoDB\ReferenceMany(discriminatorField="type")
+     * @MongoDB\ReferenceMany(targetDocument="FDT\MetadataBundle\Document\Attributi\Config", cascade="all", sort={"ordine"="asc"})
      *
      * @var array|ArrayCollection
      * @access protected
      */
-    private $metadata = array();
+    private $attributi = array();
+    
+    private $attributiTree = FALSE;
     
     public function __construct()
     {
         $this->ancestors = new ArrayCollection();
-        $this->metadata = new ArrayCollection();
+        $this->attributi = new ArrayCollection();
     }
     
-    public function getMetadata ()
+    
+    /**
+     * initAttributiTree function. Inizializza la collection $attributiTree per il documento
+     * 
+     * @access private
+     * @return void
+     */
+    private function initAttributiTree ()
     {
     
-        return $this->metadata;
+        if (!$this->attributiTree)
+        {
+            $this->attributiTree = new ArrayCollection();
+             
+        }
     
     }
     
     
     /**
-     * setMetadata function.
+     * addAttributiToTree function. Aggiunge gli attributi di un singolo documento alla lista degli attributi dell albero
      * 
-     * @access public
-     * @param mixed $metadata una categoria associabile a contenuti di questa tipologia o un attributo associabile
+     * @access private
      * @return void
      */
-    public function addMetadata ($metadata)
+    private function addAttributiToTree ()
     {
     
-        $this->metadata[] = $metadata;
+        $attributi = $this->getAttributi ();
+            
+        if ($attributi->count() > 0)
+        {
+            foreach ($attributi as $attributo)
+            {
+                $this->addAttributiTree ($attributo);
+            }
+        } 
+    
+    
+    
+    }
+    
+    
+    
+    /**
+     * getAttributiTree function.
+     * 
+     * @access public
+     * @param bool $withParent (default: TRUE)
+     * @return array collection di tutte le configurazioni di attributi, comprese quelle delle classi parent
+     */
+    public function getAttributiTree ($withParent = TRUE)
+    {
+        $this->initAttributiTree ();
+        
+        if ($withParent)
+        {
+            $parent = $this->getParent();
+        
+            if ($parent)
+            {
+                $attributiParent = $parent->getAttributiTree ();
+                
+                    if ($attributiParent->count() > 0)
+                    {
+                        foreach ($attributiParent as $attributo)
+                        {
+                            $this->addAttributiTree ($attributo);
+                        }
+                    }    
+                
+            }
+        }
+        
+        $this->addAttributiToTree ();
+        
+        
+        
+        return  $this->attributiTree;
+    
+    }
+    
+    
+    public function sortByOneKey($collection, $key, $asc = true)
+    {
+        $result = array();
+        $values = array();
+        $functionName = 'get'.ucfirst($key);
+        
+        $array = $collection->toArray ();
+        foreach ($array as $id => $value)
+        {
+            $values[$id] = method_exists($value, $functionName) ? $value->$functionName() : '';
+        }
+        
+        if ($asc) 
+        {
+            asort($values);
+        }
+        else 
+        {
+            arsort($values);
+        }
+        
+        foreach ($values as $key => $value)
+        {
+            $result[$key] = $array[$key];
+        }
+        
+        return new ArrayCollection ($result);
+    }
+    
+    
+    /**
+     * getAttributi function.
+     * 
+     * @access public
+     * @return la configurazione degli attributi associati a questo documento
+     */
+    public function getAttributi ()
+    {
+        
+        return  $this->sortByOneKey($this->attributi, 'ordine', $asc = true);    
+        //return $this->attributi;
+    
+    }
+    
+    
+    
+    /**
+     * getAttributoConfig function.
+     * 
+     * @access public
+     * @param mixed $uniqueSlug
+     * @return Attributi\Config instance
+     */
+    public function getAttributoConfig ($uniqueSlug)
+    {
+        $attributi = $this->getAttributiTree ();
+        
+        return $attributi[$uniqueSlug];
+    
+    }
+    
+    
+    /**
+     * getAttributo function.
+     * 
+     * @access public
+     * @param mixed $uniqueSlug
+     * @return Attributi\Attributo instance
+     */
+    public function getAttributo ($uniqueSlug)
+    {
+        $attributoConfig = $this->getAttributoConfig ($uniqueSlug);
+        
+        if (is_null($attributoConfig))
+        {
+        
+            return NULL;
+            
+        }
+        
+        return $attributoConfig->getAttributo ();
+    
+    }
+    
+    
+    /**
+     * addAttributiTree function.
+     * 
+     * @access public
+     * @param mixed $attibutoConf una configurazione attributo associabile
+     * @return void
+     */
+    public function addAttributiTree ($attibutoConf)
+    {
+        $uniqueSlug = $attibutoConf->getAttributo ()->getUniqueSlug();
+            
+        $this->attributiTree->set ($uniqueSlug, $attibutoConf);
+    
+    }
+    
+    
+    /**
+     * addAttributi function.
+     * 
+     * @access public
+     * @param mixed $attibutoConf una configurazione attributo associabile
+     * @return void
+     */
+    public function addAttributi ($attibutoConf)
+    {            
+        $this->attributi->add ($attibutoConf);
     
     }
     
@@ -128,7 +311,7 @@ class BaseTipologia implements BaseNode
     
     public function addAncestor($ancestor)
     {
-        $this->ancestors[] = $ancestor;
+        $this->ancestors->add($ancestor);
     }
 
     public function getAncestors()
@@ -191,6 +374,16 @@ class BaseTipologia implements BaseNode
     }
     
     /**
+     *
+     * @return string uniqueName
+     * @author Lorenzo Caldara
+     */
+    public function getUniqueName()
+    {
+        return $this->uniqueName;
+    }
+    
+    /**
      * getName function.
      * 
      * @access public
@@ -206,6 +399,19 @@ class BaseTipologia implements BaseNode
     public function getSlug()
     {
         return $this->slug;
+    }
+    
+    
+    /**
+     * modifica la lingua in cui salvare il documento
+     *
+     * @param string $locale 
+     * @return void
+     * @author Lorenzo Caldara
+     */
+    public function setTranslatableLocale($locale)
+    {
+        $this->locale = $locale;
     }
 
 }

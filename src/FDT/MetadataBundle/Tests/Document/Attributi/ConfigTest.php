@@ -23,6 +23,8 @@ class ConfigTest extends TestCase
     
         $peso =  $this->getDm()->getRepository('FDT\MetadataBundle\Document\Attributi\Attributo')->getByMyUniqueId('peso');
         $descrizione =  $this->getDm()->getRepository('FDT\MetadataBundle\Document\Attributi\Attributo')->getByMyUniqueId('descrizione');
+        $larghezza =  $this->getDm()->getRepository('FDT\MetadataBundle\Document\Attributi\Attributo')->getByMyUniqueId('larghezza');
+        $this->assertEquals('larghezza', $larghezza->getUniqueSlug ());
         
         $config = new Config ();
         $config->addAttributo($peso);
@@ -38,7 +40,8 @@ class ConfigTest extends TestCase
        	
        	$this->assertTrue($config->getIsActive());
        	
-       	$this->assertEquals('Descrizione', $config->getAttributo()->getUniqueName ());        
+       	$this->assertEquals('Descrizione', $config->getAttributo()->getUniqueName ());
+       	$this->assertEquals('descrizione', $config->getAttributo()->getUniqueSlug ());        
         
         
     

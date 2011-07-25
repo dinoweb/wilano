@@ -38,7 +38,7 @@ class DocumentSaver
     
     }
      
-    public function save ($document)
+    public function save ($document, $doFlush = true)
     {
         $errorList = $this->validate ($document);
         
@@ -47,8 +47,13 @@ class DocumentSaver
           throw new ValidatorErrorException ($errorList->__toString ());
         }
         $this->getDm()->persist($document);
-       	$this->getDm()->flush ();
-       	$this->getDm()->clear();
+        
+        if ($doFlush)
+        {
+           $this->getDm()->flush (); 
+        }
+       	
+       	//$this->getDm()->clear();
        	
        	return $document;
     

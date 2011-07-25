@@ -20,9 +20,7 @@ class AttributiFixtures extends AbstractFixture implements FixtureInterface, Ord
        	$attributo->setUniqueName ('Peso');
        	$attributo->setTipo ('weight');
        	
-        $manager->persist($attributo);
-       	
-       	$this->addReference('attributo.peso', $attributo);
+        $manager->persist($attributo);       	
        	
        	$attributo2 = new Attributo ();
        	$attributo2->setName ('Descrizione visibile');
@@ -31,7 +29,6 @@ class AttributiFixtures extends AbstractFixture implements FixtureInterface, Ord
        	
         $manager->persist($attributo2);
         
-        $this->addReference('attributo.descrizione', $attributo2);
         
         $attributo3 = new Attributo ();
        	$attributo3->setName ('Lunghezza visibile');
@@ -40,17 +37,25 @@ class AttributiFixtures extends AbstractFixture implements FixtureInterface, Ord
        	
         $manager->persist($attributo3);
         
-        $this->addReference('attributo.length', $attributo3);
-        
+        $attributo4 = new Attributo ();
+       	$attributo4->setName ('Larghezza visibile');
+       	$attributo4->setUniqueName ('Larghezza');
+       	$attributo4->setTipo ('number');
+       	
+        $manager->persist($attributo4);
         
         $manager->flush();
        	
+       	$this->addReference('attributo.peso', $attributo);
+       	$this->addReference('attributo.descrizione', $attributo2);
+       	$this->addReference('attributo.length', $attributo3);
+       	$this->addReference('attributo.larghezza', $attributo4);
        	
     }
     
     public function getOrder()
     {
-        return 1; // the order in which fixtures will be loaded
+        return 2; // the order in which fixtures will be loaded
     }
 
  

@@ -1,17 +1,16 @@
 <?php
 namespace FDT\MetadataBundle\Document\Attributi;
-
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Gedmo\Mapping\Annotation as Gedmo;
-use Gedmo\Sluggable\Util;
+use Gedmo\Translatable\Translatable;
 
 /**
  * @MongoDB\Document(collection="attributi", repositoryClass="FDT\MetadataBundle\Document\Attributi\AttributiRepository"))
  * @Gedmo\TranslationEntity(class="FDT\MetadataBundle\Document\Attributi\AttributoTranslation")
  */
  
-class Attributo
+class Attributo implements Translatable
 {
     /** @MongoDB\Id(strategy="AUTO") */
     private $id;
@@ -41,13 +40,14 @@ class Attributo
     /**
      * @MongoDB\String
      * @Gedmo\Translatable
-     * @Gedmo\Slug
+     * @Gedmo\Slug(updatable=false)
      */
     private $slug;
     
     /** 
     * @MongoDB\String
     * @Gedmo\Translatable
+    * @Assert\NotBlank()
     */
     private $descrizione;
     
@@ -60,6 +60,18 @@ class Attributo
     
     /** @MongoDB\Boolean*/
     private $isActive = true;
+    
+    /**
+     * @Gedmo\Locale
+     */
+    private $locale;
+    
+    /**
+     * @MongoDB\ReferenceOne(targetDocument="DataSet")
+     * @DataSet()
+     * @access private
+     */
+    private $dataSet;
       
 
     /**
@@ -181,6 +193,18 @@ class Attributo
     public function isActive()
     {
         return $this->isActive;
+    }
+    
+    /**
+     * modifica la lingua in cui salvare il documento
+     *
+     * @param string $locale 
+     * @return void
+     * @author Lorenzo Caldara
+     */
+    public function setTranslatableLocale($locale)
+    {
+        $this->locale = $locale;
     }
 
 }
