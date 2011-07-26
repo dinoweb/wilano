@@ -6,6 +6,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Translatable\Translatable;
+use FDT\MetadataBundle\Exception\DatasetNoOptionsException;
 
 /**
  * @MongoDB\Document(collection="dataset", repositoryClass="FDT\MetadataBundle\Document\Attributi\DataSetRepository"))
@@ -60,7 +61,7 @@ class DataSet implements Translatable
     private $locale;
     
     /**
-    * @mongodb:EmbedMany(targetDocument="FDT\MetadataBundle\Document\Attributi\Option")
+    * @MongoDB\EmbedMany(targetDocument="FDT\MetadataBundle\Document\Attributi\Option")
     */
     protected $options = array();
     
@@ -163,9 +164,23 @@ class DataSet implements Translatable
         $this->locale = $locale;
     }
     
-    public function getOptions()
+    public function getOptions($toArray = FALSE, $indexBy = 'slug')
     {
-        return  $this->sortByOneKey($this->options, 'ordine', $asc = true);
+        if (count($this->options) <= 0) {
+            throw new DatasetNoOptionsException(sprintf('Il dataset %s non contine opzioni', $this->getName()));
+            
+        }
+        $optionsArrayCollection = $this->sortByOneKey($this->options, 'ordine', $asc = true);
+        if ($toArray) {
+            $arrayOptions = array ();
+            $functionName = 'get'.ucfirst($indexBy);
+            foreach ($optionsArrayCollection as $key => $value) {
+                $arrayKey = method_exists($value, $functionName) ? $value->$functionName() : $key;
+                $arrayOptions[$arrayKey] = array ('name'=>$value->getName(), 'value'=>$value->getValue());
+            }
+            return $arrayOptions;
+        }
+        return  $optionsArrayCollection;
     }
 
     public function setOptions(ArrayCollection $options)

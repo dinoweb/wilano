@@ -11,6 +11,9 @@ class TestCase extends WebTestCase
     
     public function setUp ()
     {
+        $collectionAttributo = $this->getDm()->getDocumentCollection('FDT\MetadataBundle\Document\Attributi\OptionTranslation');
+        $collectionAttributo->drop();
+        
         $collectionAttributo = $this->getDm()->getDocumentCollection('FDT\MetadataBundle\Document\Attributi\DataSet');
         $collectionAttributo->drop();
         

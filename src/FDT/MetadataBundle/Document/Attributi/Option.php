@@ -7,7 +7,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Translatable\Translatable;
 
 /**
- * @mongodb\EmbeddedDocument
+ * @MongoDB\EmbeddedDocument
  * @Gedmo\TranslationEntity(class="FDT\MetadataBundle\Document\Attributi\OptionTranslation")
  */
 class Option

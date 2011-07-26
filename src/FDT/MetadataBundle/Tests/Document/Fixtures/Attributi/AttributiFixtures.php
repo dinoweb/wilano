@@ -44,12 +44,21 @@ class AttributiFixtures extends AbstractFixture implements FixtureInterface, Ord
        	
         $manager->persist($attributo4);
         
+        $attributo5 = new Attributo ();
+       	$attributo5->setName ('Nazione');
+       	$attributo5->setUniqueName ('Nazione');
+       	$attributo5->setTipo ('singleSelect');
+       	$attributo5->addDataset($manager->merge($this->getReference('dataset.nazioni')));
+       	
+        $manager->persist($attributo5);
+        
         $manager->flush();
        	
        	$this->addReference('attributo.peso', $attributo);
        	$this->addReference('attributo.descrizione', $attributo2);
        	$this->addReference('attributo.length', $attributo3);
        	$this->addReference('attributo.larghezza', $attributo4);
+       	$this->addReference('attributo.nazione', $attributo5);
        	
     }
     

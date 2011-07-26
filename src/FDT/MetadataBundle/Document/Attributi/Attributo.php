@@ -222,5 +222,21 @@ class Attributo implements Translatable
     {
         return $this->dataSet;
     }
+    
+    public function getOptions($toArray = TRUE, $indexBy = 'slug')
+    {
+        if ($this->hasDataset()) {
+            return $this->getDataSet()->getOptions($toArray, $indexBy);
+        }
+    }
+    
+    public function hasDataset()
+    {
+        if ($this->getDataset()) {
+            return TRUE;
+        }
+        
+        return FALSE;
+    }
 
 }

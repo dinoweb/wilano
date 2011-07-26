@@ -36,12 +36,18 @@ class ConfigFixtures extends AbstractFixture implements FixtureInterface, Ordere
         $configLarghezza->addAttributo($manager->merge($this->getReference('attributo.larghezza')));       	
         $manager->persist($configLarghezza);
         
+        $configNazione = new Config ();
+        $configNazione->setOrdine (50);
+        $configNazione->addAttributo($manager->merge($this->getReference('attributo.nazione')));       	
+        $manager->persist($configNazione);
+        
         $manager->flush();
                	
        	$this->addReference('config.peso', $configPeso);
        	$this->addReference('config.descrizione', $configDescrizione);
        	$this->addReference('config.length', $configLength);
        	$this->addReference('config.larghezza', $configLarghezza);
+       	$this->addReference('config.nazione', $configNazione);
     }
     
     public function getOrder()

@@ -20,14 +20,14 @@ class TipologiaTest extends TestCase
     public function testTipologieArray ()
     {
         $orecchini =  $this->getDm()->getRepository('FDT\MetadataBundle\Document\Tipologie\Prodotti')->getByMyUniqueId('orecchini');
-        $this->assertEquals(3, count ($orecchini->getAttributiTree ()));
+        $this->assertEquals(4, count ($orecchini->getAttributiTree ()));
         $this->assertEquals('Lunghezza', $orecchini->getAttributo ('lunghezza')->getUniqueName());
         
         $orecchiniFigli =  $this->getDm()->getRepository('FDT\MetadataBundle\Document\Tipologie\Prodotti')->getByMyUniqueId('orecchini-figli');
         
         $this->assertEquals('orecchini-figli', $orecchiniFigli->getUniqueSlug());
         $this->assertEquals(1, count ($orecchiniFigli->getAttributiTree ($withParent = FALSE)));
-        $this->assertEquals(4, count ($orecchiniFigli->getAttributiTree ()));
+        $this->assertEquals(5, count ($orecchiniFigli->getAttributiTree ()));
         
 
         
@@ -47,8 +47,25 @@ class TipologiaTest extends TestCase
         
         $this->assertEquals ('descrizione', $arrayKeys[0]);
         $this->assertEquals ('larghezza', $arrayKeys[1]);
-        $this->assertEquals ('lunghezza', $arrayKeys[2]);
-        $this->assertEquals ('peso', $arrayKeys[3]);
+        $this->assertEquals ('nazione', $arrayKeys[2]);
+        $this->assertEquals ('lunghezza', $arrayKeys[3]);
+        $this->assertEquals ('peso', $arrayKeys[4]);
+            
+    }
+    
+    public function testAttributiOptions ()
+    {
+    
+        $orecchiniFigli =  $this->getDm()->getRepository('FDT\MetadataBundle\Document\Tipologie\Prodotti')->getByMyUniqueId('orecchini-figli');
+        
+        $optionsNazione = $orecchiniFigli->getAttributo ('nazione')->getOptions();
+        
+        $this->assertArrayHasKey('italia', $optionsNazione);
+        $this->assertArrayHasKey('francia', $optionsNazione);
+        $this->assertArrayHasKey('stati-uniti', $optionsNazione);
+        $this->assertEquals('IT', $optionsNazione['italia']['value']);
+        $this->assertEquals('Italia', $optionsNazione['italia']['name']);
+        
             
     }
 
