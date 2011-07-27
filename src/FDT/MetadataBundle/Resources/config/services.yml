@@ -5,3 +5,9 @@ services:
     document_saver:
         class:        %document_saver.class%
         arguments:    [@doctrine.odm.mongodb.document_manager, @validator]
+    contenuti.form_builder:
+        class:        %form_builder_class%
+        arguments:    [%languages%, %formClasses%, @form.factory]
+    contenuti.form_builder_director:
+        class:        %form_builder_director_class%
+        arguments:    [@contenuti.form_builder]
