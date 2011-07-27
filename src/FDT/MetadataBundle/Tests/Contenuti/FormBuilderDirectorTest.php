@@ -24,8 +24,9 @@ class FormBuildeDirectorTest extends TestCase
         
         $formView = $form->createView();
         
-        $this->assertEquals (2, $formView->count());
+        $this->assertEquals (3, $formView->count());
         $this->assertEquals (3, $formView->getChild('contenuto')->count());
+        $this->assertEquals (5, $formView->getChild('attributi')->count());
         
         print_r($form->createView());
     }

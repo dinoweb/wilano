@@ -43,4 +43,10 @@ class FormBuilderContenuti extends FormBuilderInterface
         $this->getFormBuilder()->add('contenuto', $this->getFormTypeInstance ('contenuto'));
     }
     
+    public function buildBaseAttributiForm()
+    {
+        $formInstance = $this->getFormTypeInstance ('attributi', $this->tipologia->getAttributiTree());
+        $this->getFormBuilder()->add('attributi', $formInstance);
+    }
+    
 }

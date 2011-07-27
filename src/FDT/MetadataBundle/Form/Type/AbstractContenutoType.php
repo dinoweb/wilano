@@ -10,7 +10,16 @@ use Symfony\Component\Form\FormBuilder;
 */
 abstract class AbstractContenutoType extends AbstractType
 {
+    function __construct($configObject = FALSE)
+    {
+        if ($configObject) {
+            $this->setConfigObject ($configObject);
+        }
+    }
     
-	abstract protected function setConfigObject ($configObject);
+    public function setConfigObject ($configObject)
+    {
+        
+    }
     
 }

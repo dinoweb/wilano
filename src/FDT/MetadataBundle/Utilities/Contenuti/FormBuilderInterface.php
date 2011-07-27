@@ -67,12 +67,12 @@ abstract class FormBuilderInterface
      * @param string $instanceName il nome del form che voglio venga instanziato
      * @author Lorenzo Caldara
      */
-    protected function getFormTypeInstance ($instanceName)
+    protected function getFormTypeInstance ($instanceName, $configObject = FALSE)
     {
         if (isset($this->formClasses[$instanceName])) {
             $className = $this->formClasses[$instanceName].'Type';
             $classWithNamespace = 'FDT\\MetadataBundle\\Form\\Type\\'.$className;
-            return (new $classWithNamespace);
+            return (new $classWithNamespace($configObject));
         }
         
         throw new FormTypeDoNotExistException(sprintf('Il form di tipo %s non esiste', $instanceName));        

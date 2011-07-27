@@ -10,13 +10,6 @@ use FDT\MetadataBundle\Document\Tipologie\BaseTipologia;
 */
 class ContenutoType extends AbstractContenutoType
 {
-    private $tipologia; 
-    
-    public function setConfigObject ($tipologia)
-    {
-        $this->tipologia = $tipologia;
-        
-    }
     
     public function buildForm(FormBuilder $builder, array $options)
     {

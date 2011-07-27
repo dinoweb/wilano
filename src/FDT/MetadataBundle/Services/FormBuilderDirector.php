@@ -55,7 +55,7 @@ class FormBuilderDirector
     public function buildForms()
     {
         $this->getFormBuilderObject ()->buildBaseDataForm ();
-        //$this->getFormBuilderObject ()->buildBaseAttributiForm ();
+        $this->getFormBuilderObject ()->buildBaseAttributiForm ();
         
         
     }
