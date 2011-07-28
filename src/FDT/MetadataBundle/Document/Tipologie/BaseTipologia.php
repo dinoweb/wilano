@@ -337,7 +337,7 @@ class BaseTipologia implements BaseNode, Translatable
     
     public function getStringForPath()
     {
-       return $this->getName();
+       return $this->getSlug();
     }
            
     /**

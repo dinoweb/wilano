@@ -2,6 +2,8 @@
 namespace FDT\MetadataBundle\Utilities\Contenuti;
 use FDT\MetadataBundle\Document\Tipologie as DocumentTipologia;
 use FDT\MetadataBundle\Exception\FormTypeDoNotExistException;
+use FDT\MetadataBundle\Services\AttributiTypeManager;
+use FDT\doctrineExtensions\NestedSet\TreeManager;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormBuilder;
 
@@ -25,16 +27,32 @@ abstract class FormBuilderInterface
     private $formClasses = array();
     
     /**
+     * La classe per la gestione dei tipi di attributi
+     *
+     * @var FDT\MetadataBundle\Sevices\AttributiTypeManager
+     */
+    private $attributiTypeManager;
+    
+    /**
+     * La classe per la gestione dei tree
+     *
+     * @var FDT\doctrineExtensions\NestedSet\TreeManager
+     */
+    private $treeManager;
+    
+    /**
      * Constractor che setta le lingue da gestire
      *
      * @param array $languages 
      * @author Lorenzo Caldara
      */
-    function __construct(array $languages, array $formClasses, FormFactoryInterface $formFactory)
+    function __construct(FormFactoryInterface $formFactory, AttributiTypeManager $attributiTypeManager, TreeManager $treeManager ,array $formClasses, array $languages )
     {
         $this->languages = $languages;
         $this->formClasses = $formClasses;
         $this->createBuilder($formFactory);
+        $this->attributiTypeManager = $attributiTypeManager;
+        $this->treeManager = $treeManager;
     }
     
     private function createBuilder (FormFactoryInterface $formFactory)
@@ -46,6 +64,20 @@ abstract class FormBuilderInterface
     {
         
         return $this->formBuilder;
+        
+    }
+    
+    protected function getAttributiTypeManager ()
+    {
+        
+        return $this->attributiTypeManager;
+        
+    }
+    
+    protected function getTreeManager ()
+    {
+        
+        return $this->treeManager;
         
     }
     
@@ -67,15 +99,20 @@ abstract class FormBuilderInterface
      * @param string $instanceName il nome del form che voglio venga instanziato
      * @author Lorenzo Caldara
      */
-    protected function getFormTypeInstance ($instanceName, $configObject = FALSE)
-    {
+    protected function getFormTypeInstance ($instanceName, $service = FALSE)
+    {   
         if (isset($this->formClasses[$instanceName])) {
-            $className = $this->formClasses[$instanceName].'Type';
-            $classWithNamespace = 'FDT\\MetadataBundle\\Form\\Type\\'.$className;
-            return (new $classWithNamespace($configObject));
+            $className = $this->formClasses[$instanceName];
+            if (class_exists($className)) {
+                if (get_parent_class($className) == 'FDT\MetadataBundle\Form\Type\AbstractContenutoType') {
+                    return (new $className($this->getTipologia(), $service));
+                }
+                throw new FormTypeDoNotExistException(sprintf('La classe di tipo %s deve essere figlia di FDT\MetadataBundle\Form\Type\AbstractContenutoType', $className));
+            }
+            throw new FormTypeDoNotExistException(sprintf('La classe di tipo %s non esiste', $className));
         }
         
-        throw new FormTypeDoNotExistException(sprintf('Il form di tipo %s non esiste', $instanceName));        
+        throw new FormTypeDoNotExistException(sprintf('La chiave %s non esiste nella configurazione', $instanceName));        
     }
     
     public function getForm ()
@@ -84,6 +121,8 @@ abstract class FormBuilderInterface
         return $this->getFormBuilder ()->getForm();
         
     }
+    
+    
     
     /**
      * Setta la Tipologia del contenuto per cui dobbiamo costruire il form

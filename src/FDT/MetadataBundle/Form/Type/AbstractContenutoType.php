@@ -3,6 +3,7 @@ namespace FDT\MetadataBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilder;
+use FDT\MetadataBundle\Document\Tipologie\BaseTipologia;
 
 
 /**
@@ -10,16 +11,12 @@ use Symfony\Component\Form\FormBuilder;
 */
 abstract class AbstractContenutoType extends AbstractType
 {
-    function __construct($configObject = FALSE)
+    
+    function __construct(BaseTipologia $tipologia, $service = FALSE)
     {
-        if ($configObject) {
-            $this->setConfigObject ($configObject);
-        }
+        $this->setConfigObject ($tipologia, $service);
     }
     
-    public function setConfigObject ($configObject)
-    {
-        
-    }
+    abstract public function setConfigObject (BaseTipologia $tipologia, $service = FALSE);
     
 }

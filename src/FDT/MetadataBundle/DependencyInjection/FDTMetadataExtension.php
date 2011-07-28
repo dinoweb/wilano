@@ -23,6 +23,10 @@ class FDTMetadataExtension extends Extension
     	//DOCUMENT SAVER PARAMS
     	$container->setParameter('document_saver.class', $config['document_saver']['document_saver_class']);
     	
+    	//ATTRIBUTI TYPE PARAMS
+    	$container->setParameter('attributi_type_class', $config['attributi_type']['attributi_type_class']);
+    	$container->setParameter('attributi', $config['attributi_type']['attributi']);
+    	
     	//FORM BUILDER PARAMS
     	$container->setParameter('form_builder_director_class', $config['form_builder_director']['form_builder_director_class']);
     	$container->setParameter('languages', $config['form_builder_director']['languages']);
