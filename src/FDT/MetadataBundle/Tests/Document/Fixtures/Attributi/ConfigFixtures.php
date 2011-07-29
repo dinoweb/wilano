@@ -20,6 +20,16 @@ class ConfigFixtures extends AbstractFixture implements FixtureInterface, Ordere
         $configPeso->addAttributo($manager->merge($this->getReference('attributo.peso')));       	
         $manager->persist($configPeso);
         
+        $configTextAreaTraduzione = new Config ();
+        $configTextAreaTraduzione->setOrdine (15);
+        $configTextAreaTraduzione->addAttributo($manager->merge($this->getReference('attributo.textAreaTraduzione')));       	
+        $manager->persist($configTextAreaTraduzione);
+        
+        $configTextTraduzione = new Config ();
+        $configTextTraduzione->setOrdine (17);
+        $configTextTraduzione->addAttributo($manager->merge($this->getReference('attributo.textTranslation')));       	
+        $manager->persist($configTextTraduzione);
+        
         
         $configDescrizione = new Config ();
         $configDescrizione->setOrdine (20);
@@ -48,6 +58,8 @@ class ConfigFixtures extends AbstractFixture implements FixtureInterface, Ordere
        	$this->addReference('config.length', $configLength);
        	$this->addReference('config.larghezza', $configLarghezza);
        	$this->addReference('config.nazione', $configNazione);
+       	$this->addReference('config.textAreaTraduzione', $configTextAreaTraduzione);
+       	$this->addReference('config.textTranslation', $configTextTraduzione);
     }
     
     public function getOrder()

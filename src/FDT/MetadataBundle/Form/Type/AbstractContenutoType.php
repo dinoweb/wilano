@@ -11,10 +11,17 @@ use FDT\MetadataBundle\Document\Tipologie\BaseTipologia;
 */
 abstract class AbstractContenutoType extends AbstractType
 {
+    private $languages;
     
-    function __construct(BaseTipologia $tipologia, $service = FALSE)
+    function __construct(BaseTipologia $tipologia, $service = FALSE, array $languages)
     {
+        $this->languages = $languages;
         $this->setConfigObject ($tipologia, $service);
+    }
+    
+    protected function getLanguages()
+    {
+        return($this->languages);
     }
     
     abstract public function setConfigObject (BaseTipologia $tipologia, $service = FALSE);

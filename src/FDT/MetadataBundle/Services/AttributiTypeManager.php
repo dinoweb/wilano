@@ -15,14 +15,22 @@ class AttributiTypeManager
     private $attributiTypeConfig;
     
     /**
+     * un array con le lingue usate dal sistema
+     *
+     * @var array
+     */
+    private $languages;
+    
+    /**
      * Setta l'array di configurazion degli attributi
      *
      * @param array $attributiTypeConfig 
      * @author Lorenzo Caldara
      */
-    function __construct(array $attributiTypeConfig)
+    function __construct(array $attributiTypeConfig, array $languages)
     {
         $this->attributiTypeConfig = $attributiTypeConfig;
+        $this->setLanguages($languages);
     }
     
     /**
@@ -48,9 +56,41 @@ class AttributiTypeManager
         throw new AttributoDoNotExistException(sprintf('L\'attributo %s non e nella lista delle configurazioni', $key));        
     }
     
+    /** 
+     * @param string $attributoTipo il tipo di attributo
+     * @return il fully qualified name della classe per la gestione dell'attributo
+     * @author Lorenzo Caldara
+     */
     public function getFormTypeClass ($attributoTipo)
     {
         $configArrayForAttributo = $this->getConfig ($attributoTipo);
         return $configArrayForAttributo['formType'];
+    }
+    
+    /**
+     * @param array $languages
+     * @author Lorenzo Caldara
+     */
+    public function setLanguages (array $languages)
+    {
+        
+        $this->languages = $languages;
+        
+    }
+    
+    /**
+     * Ritorna un array con le lingue necessarie per la costruzione del modello per l'attributo.
+     * se il nome dell'attributo è vuoto, ritorna tutte le stringhe. Se l'attributo è traducibile, ritorna un array di tutte le lingue.
+     * Se no ritorna FALSE
+     *
+     * @param string $attributoType 
+     * @return array|false
+     * @author Lorenzo Caldara
+     */
+    public function getLanguages($attributoType = NULL)
+    {
+        
+        return $this->languages;
+        
     }
 }

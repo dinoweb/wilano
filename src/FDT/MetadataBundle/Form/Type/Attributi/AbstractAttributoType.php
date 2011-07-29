@@ -4,6 +4,7 @@ namespace FDT\MetadataBundle\Form\Type\Attributi;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilder;
 use FDT\MetadataBundle\Document\Attributi\Config;
+use FDT\MetadataBundle\Services\AttributiTypeManager;
 
 
 /**
@@ -11,104 +12,162 @@ use FDT\MetadataBundle\Document\Attributi\Config;
 */
 abstract class AbstractAttributoType extends AbstractType
 {
+    /**
+     * @var FDT\MetadataBundle\Document\Attributi\Config
+     */
     private $config;
     
-    function __construct(Config $config)
+    /**
+     * @var FDT\MetadataBundle\Services\AttributiTypeManager
+     */
+    private $attributiTypeManager;
+    
+    /**
+     * @param Config $config 
+     * @param AttributiTypeManager $attributiTypeManager 
+     * @author Lorenzo Caldara
+     */
+    function __construct(Config $config, AttributiTypeManager $attributiTypeManager)
     {
         $this->config = $config;
+        $this->attributiTypeManager = $attributiTypeManager;
     }
     
+    /**
+     * @return FDT\MetadataBundle\Services\AttributiTypeManager
+     * @author Lorenzo Caldara
+     */
+    protected function getAttributiTypeManager()
+    {
+        return ($this->attributiTypeManager);
+    }
+    
+    protected function getLanguages()
+    {
+        return $this->getAttributiTypeManager()->getLanguages();
+    }
+    
+    /**
+     * @return FDT\MetadataBundle\Document\Attributi\Config
+     *
+     * @author Lorenzo Caldara
+     */
     public function getConfig ()
     {
-        return $this->config;
+        return ($this->config);
     }
     
+    /**
+     * @return FDT\MetadataBundle\Document\Attributi\Attributo
+     *
+     * @author Lorenzo Caldara
+     */
     protected function getAttributo ()
     {
         return $this->getConfig ()->getAttributo();        
     }
     
-    protected function buildBaseFields (FormBuilder $builder)
+    private function getFormForName(FormBuilder $builder)
+    {
+       $arrayName = array();
+       foreach ($this->getLanguages() as $key => $value) {
+            $arrayName[$key] = $this->getAttributo ()->getSlug();
+       }
+       
+       return $builder->add('name', 'hidden', array ('data' => $arrayName, 'read_only' => true));
+
+    }
+    
+    /**
+     * Crea i campi di default per ogni attributo - Si tratta dei campi contenenti i parametri di configurazione dell'attributo
+     *
+     * @param FormBuilder $builder 
+     * @return FormBuilder
+     * @author Lorenzo Caldara
+     */
+    protected function buildBaseFields(FormBuilder $builder)
     {
         $builder->add ('isActive', 'hidden', array (
-                                                    'required' => true,
-                                                    'data' => array($this->config->getIsActive()),
+                                                    'data' => $this->config->getIsActive(),
+                                                    'read_only' => true
                                                     
                                                     )
                       
                       );
                       
         $builder->add ('inSearch', 'hidden', array (
-                                                    'required' => true,
-                                                    'data' => array($this->config->getInSearch()),
+                                                    'data' => $this->config->getInSearch(),
+                                                    'read_only' => true
                                                     
                                                     )
                       
                       );
         
         $builder->add ('inQuickSearch', 'hidden', array (
-                                                    'required' => true,
-                                                    'data' => array($this->config->getInQuickSearch()),
+                                                    'data' => $this->config->getInQuickSearch(),
+                                                    'read_only' => true
                                                     
                                                     )
                       
                       );
         
         $builder->add ('isPubblicable', 'hidden', array (
-                                                    'required' => true,
-                                                    'data' => array($this->config->getIsPubblicable()),
+                                                    'data' => $this->config->getIsPubblicable(),
+                                                    'read_only' => true
                                                     
                                                     )
                       
                       );
         
         $builder->add ('isForConfiguration', 'hidden', array (
-                                                    'required' => true,
-                                                    'data' => array($this->config->getIsForConfiguration()),
+                                                    'data' => $this->config->getIsForConfiguration(),
+                                                    'read_only' => true
                                                     
                                                     )
                       
                       );
         
         $builder->add ('configId', 'hidden', array (
-                                                    'required' => true,
-                                                    'data' => array($this->config->getId()),
+                                                    'data' => $this->config->getId(),
+                                                    'read_only' => true
                                                     
                                                     )
                       
                       );
         
         $builder->add ('attributoId', 'hidden', array (
-                                                    'required' => true,
-                                                    'data' => array($this->getAttributo ()->getId()),
+                                                    'data' => $this->getAttributo ()->getId(),
+                                                    'read_only' => true
                                                     
                                                     )
                       
                       );
         
         $builder->add ('slug', 'hidden', array (
-                                                    'required' => true,
-                                                    'data' => array($this->getAttributo ()->getSlug()),
+                                                    'data' => $this->getAttributo ()->getSlug(),
+                                                    'read_only' => true
                                                     
                                                     )
                       
                       );
                       
         $builder->add ('name', 'hidden', array (
-                                                    'required' => true,
-                                                    'data' => array($this->getAttributo ()->getName()),
+                                                    'data' => $this->getAttributo ()->getName(),
+                                                    'read_only' => true
                                                     
                                                     )
                       
                       );
                       
         $builder->add ('uniqueSlug', 'hidden', array (
-                                                    'required' => true,
-                                                    'data' => array($this->getAttributo ()->getUniqueSlug()),
+                                                    'data' => $this->getAttributo ()->getUniqueSlug(),
+                                                    'read_only' => true
                                                     
                                                     )
                       
                       );
+        
+        $builder = $this->getFormForName($builder);
         
         return $builder;
     }

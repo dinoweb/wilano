@@ -51,22 +51,45 @@ abstract class FormBuilderInterface
         $this->languages = $languages;
         $this->formClasses = $formClasses;
         $this->createBuilder($formFactory);
-        $this->attributiTypeManager = $attributiTypeManager;
+        $this->setAttributiTypeManager ($attributiTypeManager);
         $this->treeManager = $treeManager;
     }
     
-    private function createBuilder (FormFactoryInterface $formFactory)
+    /**
+     * @param FormFactoryInterface $formFactory 
+     * @return void
+     * @author Lorenzo Caldara
+     */
+    private function createBuilder(FormFactoryInterface $formFactory)
     {
         $this->formBuilder = $formFactory->createBuilder('form');
     }
     
+    /**
+     * @return Symfony\Component\Form\FormBuilder
+     *
+     * @author Lorenzo Caldara
+     */
     protected function getFormBuilder ()
     {
-        
         return $this->formBuilder;
-        
     }
     
+    /**
+     * @param AttributiTypeManager $attributiTypeManager 
+     * @return void
+     * @author Lorenzo Caldara
+     */
+    private function setAttributiTypeManager(AttributiTypeManager $attributiTypeManager)
+    {
+        $this->attributiTypeManager = $attributiTypeManager;
+    }
+    
+    /**
+     * @return AttributiTypeManager
+     *
+     * @author Lorenzo Caldara
+     */
     protected function getAttributiTypeManager ()
     {
         
@@ -74,6 +97,11 @@ abstract class FormBuilderInterface
         
     }
     
+    /**
+     * @return TreeManager
+     *
+     * @author Lorenzo Caldara
+     */
     protected function getTreeManager ()
     {
         
@@ -105,7 +133,7 @@ abstract class FormBuilderInterface
             $className = $this->formClasses[$instanceName];
             if (class_exists($className)) {
                 if (get_parent_class($className) == 'FDT\MetadataBundle\Form\Type\AbstractContenutoType') {
-                    return (new $className($this->getTipologia(), $service));
+                    return (new $className($this->getTipologia(), $service, $this->getLanguages()));
                 }
                 throw new FormTypeDoNotExistException(sprintf('La classe di tipo %s deve essere figlia di FDT\MetadataBundle\Form\Type\AbstractContenutoType', $className));
             }

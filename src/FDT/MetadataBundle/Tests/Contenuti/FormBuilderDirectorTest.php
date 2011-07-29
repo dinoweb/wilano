@@ -24,11 +24,26 @@ class FormBuildeDirectorTest extends TestCase
         
         $formView = $form->createView();
         
+        $tokenVars = $formView->get('form')->getChild('_token')->getVars();
+        $tokenValue = $tokenVars['value'];
+        
+        $form->bind (array('_token'=>$tokenValue, 
+                            'attributi'=>array(
+                                                'textareatraduzione-unique-name'=>array (
+                                                                                         'value'=>'palla'
+                                                                                         )
+                                               )
+                            )
+                     );
+        $this->assertTrue($form->isValid());
+        
+        print_r($form->getNormData());
+                        
         $this->assertEquals (3, $formView->count());
         $this->assertEquals (4, $formView->getChild('contenuto')->count());
-        $this->assertEquals (5, $formView->getChild('attributi')->count());
+        $this->assertEquals (7, $formView->getChild('attributi')->count());
         
-        print_r($form->createView());
+        
     }
 
 }

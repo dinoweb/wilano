@@ -52,6 +52,20 @@ class AttributiFixtures extends AbstractFixture implements FixtureInterface, Ord
        	
         $manager->persist($attributo5);
         
+        $attributo6 = new Attributo ();
+       	$attributo6->setName ('TextAreaTraduzione');
+       	$attributo6->setUniqueName ('TextAreaTraduzione unique name');
+       	$attributo6->setTipo ('textareaTranslation');
+       	
+        $manager->persist($attributo6);
+        
+        $attributo7 = new Attributo ();
+       	$attributo7->setName ('TextTranslation');
+       	$attributo7->setUniqueName ('TextTranslation unique name');
+       	$attributo7->setTipo ('textTranslation');
+       	
+        $manager->persist($attributo7);
+        
         $manager->flush();
        	
        	$this->addReference('attributo.peso', $attributo);
@@ -59,6 +73,8 @@ class AttributiFixtures extends AbstractFixture implements FixtureInterface, Ord
        	$this->addReference('attributo.length', $attributo3);
        	$this->addReference('attributo.larghezza', $attributo4);
        	$this->addReference('attributo.nazione', $attributo5);
+       	$this->addReference('attributo.textAreaTraduzione', $attributo6);
+       	$this->addReference('attributo.textTranslation', $attributo7);
        	
     }
     

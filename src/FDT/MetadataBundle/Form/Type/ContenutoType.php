@@ -36,27 +36,46 @@ class ContenutoType extends AbstractContenutoType
         return $this->getNode()->getPath();
     }
     
+    private function getFormForName(FormBuilder $builder)
+    {
+       $builder->add('name');
+       foreach ($this->getLanguages() as $key => $value) {
+            $builder->get('name')->add($key)->get($key)->add ('value', 'text', array ('required' => true, 'label' => 'Nome '.$key));
+       }
+       
+       return $builder;
+
+    }
+    
+    /**
+     * @param FormBuilder $builder 
+     * @param array $options 
+     * @return FormBuilder
+     * @author Lorenzo Caldara
+     */
     public function buildForm(FormBuilder $builder, array $options)
     {
-        $builder->add('name', 'text', array ('required' => true,
-                                             'label' => 'Nome'
-                                            )
-                     );
         
-        $builder->add('tipologia', 'hidden', array ('required' => true,
+        
+        $builder->add('tipologia', 'hidden', array (
                                                     'data'=>$this->tipologia->getName(),
+                                                    'read_only' => true
                                                    )
                      );
 
-        $builder->add('tipologiaId', 'hidden', array('required' => true,
+        $builder->add('tipologiaId', 'hidden', array(
                                                      'data'=>$this->tipologia->getId(),
+                                                     'read_only' => true
                                                      )
                       );
                       
-        $builder->add('tipologiaPath', 'hidden', array('required' => true,
+        $builder->add('tipologiaPath', 'hidden', array(
                                                        'data'=>$this->getPath(),
+                                                       'read_only' => true
                                                        )
                       );
+        
+        $this->getFormForName($builder);
     }
 
     public function getName()

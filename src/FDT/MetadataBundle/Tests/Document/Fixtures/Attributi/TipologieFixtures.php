@@ -27,7 +27,9 @@ class TipologiaFixtures extends AbstractFixture implements FixtureInterface, Ord
        	$gioielli->setUniqueName ('Gioielli');
        	$gioielli->addAttributi($manager->merge($this->getReference('config.larghezza'))); 
        	$gioielli->addAttributi($manager->merge($this->getReference('config.descrizione')));
-       	$gioielli->addAttributi($manager->merge($this->getReference('config.nazione'))); 
+       	$gioielli->addAttributi($manager->merge($this->getReference('config.nazione')));
+       	$gioielli->addAttributi($manager->merge($this->getReference('config.textAreaTraduzione')));
+       	$gioielli->addAttributi($manager->merge($this->getReference('config.textTranslation'))); 
        	
        	$orecchini = new Prodotti ();
        	$orecchini->setName ('Orecchini name');

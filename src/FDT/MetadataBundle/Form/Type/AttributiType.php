@@ -40,7 +40,7 @@ class AttributiType extends AbstractContenutoType
         $attributoTipo = $config->getAttributo ()->getTipo();
         $formClassForAttributo = $this->getAttributiTypeManager()->getFormTypeClass ($attributoTipo);
         if (class_exists($formClassForAttributo)) {
-            return new $formClassForAttributo($config);
+            return new $formClassForAttributo($config, $this->getAttributiTypeManager());
         } else {
             throw new NotValidClassException(sprintf('La classe %s non esiste', $formClassForAttributo));
         }
@@ -50,7 +50,7 @@ class AttributiType extends AbstractContenutoType
     {
         foreach ($this->attributiConfig as $key => $attributoConfig) {
             $this->getFormForAttributo($attributoConfig);
-            $builder->add($attributoConfig->getAttributo()->getSlug(), $this->getFormForAttributo($attributoConfig));
+            $builder->add($attributoConfig->getAttributo()->getUniqueSlug(), $this->getFormForAttributo($attributoConfig));
         }
     }
 
