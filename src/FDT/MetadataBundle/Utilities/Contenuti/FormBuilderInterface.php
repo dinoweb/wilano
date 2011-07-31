@@ -62,7 +62,7 @@ abstract class FormBuilderInterface
      */
     private function createBuilder(FormFactoryInterface $formFactory)
     {
-        $this->formBuilder = $formFactory->createBuilder('form');
+        $this->formBuilder = $formFactory->createBuilder('form', NULL, array('required'=>true, 'error_bubbling'=>true));
     }
     
     /**

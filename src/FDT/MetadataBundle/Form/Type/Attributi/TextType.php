@@ -12,7 +12,7 @@ class TextType extends AbstractAttributoType
     public function buildForm(FormBuilder $builder, array $options)
     {
         $this->buildBaseFields ($builder);
-        $builder->add('value', 'text', array('label' => $this->getAttributo ()->getName()));
+        $builder->add('value', 'text', array('label' => $this->getAttributo ()->getName(), 'required'=>true));
     }
 
     public function getName()

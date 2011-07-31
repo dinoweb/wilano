@@ -106,7 +106,7 @@ class Attributo implements Translatable
         return $this->name;
     }
     
-    public function getSlug()
+    public function getSlug($lang = FALSE)
     {
         return $this->slug;
     }

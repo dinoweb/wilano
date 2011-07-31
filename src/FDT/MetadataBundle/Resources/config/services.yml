@@ -7,7 +7,7 @@ services:
         arguments:    [@doctrine.odm.mongodb.document_manager, @validator]
     attributi_type:
         class:        %attributi_type_class%
-        arguments:    [%attributi%, %languages%]
+        arguments:    [@doctrine.odm.mongodb.document_manager, %attributi%, %languages%]
     contenuti.form_builder:
         class:        %form_builder_class%
         arguments:    [@form.factory, @attributi_type, @tree_manager, %formClasses%,  %languages% ]

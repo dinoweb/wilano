@@ -32,13 +32,22 @@ class FormBuildeDirectorTest extends TestCase
                                                 'textareatraduzione-unique-name'=>array (
                                                                                          'value'=>'palla'
                                                                                          )
-                                               )
+                                               ),
+                            'contenuto'=>array(
+                                                'name'=>array (
+                                                                'it_it'=>'palla',
+                                                                'en_us'=>'palla en',
+                                                              )
+                                              )
                             )
                      );
-        $this->assertTrue($form->isValid());
+       print_r($form->getErrors()); 
+       
+       $this->assertTrue($form->isValid());
         
-        print_r($form->getNormData());
-                        
+       print_r($form->getNormData());
+                
+                      
         $this->assertEquals (3, $formView->count());
         $this->assertEquals (4, $formView->getChild('contenuto')->count());
         $this->assertEquals (7, $formView->getChild('attributi')->count());

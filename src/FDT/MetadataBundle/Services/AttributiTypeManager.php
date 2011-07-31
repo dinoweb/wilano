@@ -1,6 +1,7 @@
 <?php
 namespace FDT\MetadataBundle\Services;
 use FDT\MetadataBundle\Exception\AttributoDoNotExistException;
+use Doctrine\ODM\MongoDB\DocumentManager;
 
 /**
 * Service per la gestione dei tipi di attributi
@@ -22,15 +23,23 @@ class AttributiTypeManager
     private $languages;
     
     /**
+     *
+     * @var Doctrine\ODM\MongoDB\DocumentManager
+     */
+    private $documentManager;
+    
+    /**
      * Setta l'array di configurazion degli attributi
      *
      * @param array $attributiTypeConfig 
      * @author Lorenzo Caldara
      */
-    function __construct(array $attributiTypeConfig, array $languages)
+    function __construct(DocumentManager $documentManager, array $attributiTypeConfig, array $languages)
     {
         $this->attributiTypeConfig = $attributiTypeConfig;
         $this->setLanguages($languages);
+        $this->documentManager = $documentManager;
+        
     }
     
     /**
@@ -92,5 +101,10 @@ class AttributiTypeManager
         
         return $this->languages;
         
+    }
+    
+    public function getDocumentManager()
+    {
+        return $this->documentManager;
     }
 }

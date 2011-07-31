@@ -2,6 +2,8 @@
 namespace FDT\MetadataBundle\Form\Type;
 
 use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\CallbackValidator;
+use Symfony\Component\Form\FormError;
 use FDT\MetadataBundle\Document\Tipologie\BaseTipologia;
 use FDT\doctrineExtensions\NestedSet\TreeManager;
 use FDT\MetadataBundle\Exception\NotValidClassException;
@@ -36,11 +38,27 @@ class ContenutoType extends AbstractContenutoType
         return $this->getNode()->getPath();
     }
     
+    /**
+     * Build the form for the name field managing languaegs
+     *
+     * @param FormBuilder $builder 
+     * @return FormBuilder
+     * @author Lorenzo Caldara
+     */
     private function getFormForName(FormBuilder $builder)
     {
-       $builder->add('name');
+       $builder->add('name', 'form', array ('required' => true, 'error_bubbling'=>true));
        foreach ($this->getLanguages() as $key => $value) {
-            $builder->get('name')->add($key)->get($key)->add ('value', 'text', array ('required' => true, 'label' => 'Nome '.$key));
+            $builder->get('name')->add($key, 'text', array ('required' => true));            
+            $builder->get('name')->
+            addValidator(new CallbackValidator(function(\Symfony\Component\Form\Form  $form) use ($key)
+            {
+                if (!$form[$key]->getData())
+                {
+                    $form->addError(new FormError(sprintf('Il campo name %s nel form ContenutoType deve essere compilato', $key)));
+                }
+            })
+           );
        }
        
        return $builder;
@@ -55,7 +73,6 @@ class ContenutoType extends AbstractContenutoType
      */
     public function buildForm(FormBuilder $builder, array $options)
     {
-        
         
         $builder->add('tipologia', 'hidden', array (
                                                     'data'=>$this->tipologia->getName(),

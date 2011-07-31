@@ -47,6 +47,12 @@ abstract class AbstractAttributoType extends AbstractType
         return $this->getAttributiTypeManager()->getLanguages();
     }
     
+    protected function getDocumentManager()
+    {
+        return $this->getAttributiTypeManager()->getDocumentManager();
+    }
+    
+    
     /**
      * @return FDT\MetadataBundle\Document\Attributi\Config
      *
@@ -67,14 +73,34 @@ abstract class AbstractAttributoType extends AbstractType
         return $this->getConfig ()->getAttributo();        
     }
     
-    private function getFormForName(FormBuilder $builder)
+    private function getTranslation($language, $field)
+    {
+        $repository = $this->getDocumentManager()->getRepository('FDT\MetadataBundle\Document\Attributi\AttributoTranslation');
+        $translations = $repository->findTranslations($this->getAttributo ());
+        
+        if (isset ($translations[$language][$field])) {
+            return $translations[$language][$field];
+        }
+        
+        foreach ($this->getLanguages() as $key => $value) {
+            if (isset ($translations[$key][$field])) {
+                return $translations[$key][$field];
+            }
+        }
+                
+        
+        
+    }
+    
+    private function getFormForTranslatedField($field, FormBuilder $builder)
     {
        $arrayName = array();
+       $builder->add($field, 'form', array ('required' => true, 'error_bubbling'=>true));
        foreach ($this->getLanguages() as $key => $value) {
-            $arrayName[$key] = $this->getAttributo ()->getSlug();
+            $builder->get($field)->add($key, 'hidden', array ('data'=>$this->getTranslation($key, $field), 'required' => true, 'read_only' => true)); 
+            
        }
-       
-       return $builder->add('name', 'hidden', array ('data' => $arrayName, 'read_only' => true));
+       return $builder;
 
     }
     
@@ -142,22 +168,6 @@ abstract class AbstractAttributoType extends AbstractType
                                                     )
                       
                       );
-        
-        $builder->add ('slug', 'hidden', array (
-                                                    'data' => $this->getAttributo ()->getSlug(),
-                                                    'read_only' => true
-                                                    
-                                                    )
-                      
-                      );
-                      
-        $builder->add ('name', 'hidden', array (
-                                                    'data' => $this->getAttributo ()->getName(),
-                                                    'read_only' => true
-                                                    
-                                                    )
-                      
-                      );
                       
         $builder->add ('uniqueSlug', 'hidden', array (
                                                     'data' => $this->getAttributo ()->getUniqueSlug(),
@@ -167,7 +177,9 @@ abstract class AbstractAttributoType extends AbstractType
                       
                       );
         
-        $builder = $this->getFormForName($builder);
+        $builder = $this->getFormForTranslatedField('slug', $builder);
+        
+        $builder = $this->getFormForTranslatedField('name', $builder);
         
         return $builder;
     }

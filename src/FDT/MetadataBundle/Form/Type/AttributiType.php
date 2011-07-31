@@ -50,7 +50,7 @@ class AttributiType extends AbstractContenutoType
     {
         foreach ($this->attributiConfig as $key => $attributoConfig) {
             $this->getFormForAttributo($attributoConfig);
-            $builder->add($attributoConfig->getAttributo()->getUniqueSlug(), $this->getFormForAttributo($attributoConfig));
+            $builder->add($attributoConfig->getAttributo()->getUniqueSlug(), $this->getFormForAttributo($attributoConfig), array ('required' => true));
         }
     }
 
