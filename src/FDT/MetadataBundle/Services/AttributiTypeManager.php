@@ -107,4 +107,11 @@ class AttributiTypeManager
     {
         return $this->documentManager;
     }
+    
+    public function isTranslatable($attributoType)
+    {   
+        $configArray = $this->getConfig($attributoType);
+        
+        return $configArray['hasTranslation'];
+    }
 }

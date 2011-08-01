@@ -47,6 +47,11 @@ abstract class AbstractAttributoType extends AbstractType
         return $this->getAttributiTypeManager()->getLanguages();
     }
     
+    protected function attributoMusBeTranslated()
+    {
+        return $this->getAttributiTypeManager()->isTranslatable ($this->getAttributo ()->getTipo());
+    }
+    
     protected function getDocumentManager()
     {
         return $this->getAttributiTypeManager()->getDocumentManager();
@@ -161,6 +166,15 @@ abstract class AbstractAttributoType extends AbstractType
                       
                       );
         
+        $builder->add ('mustBeTranslated', 'hidden', array (
+                                                    'data' => $this->attributoMusBeTranslated(),
+                                                    'read_only' => true
+                                                    
+                                                    )
+                      
+                      );
+        
+        
         $builder->add ('attributoId', 'hidden', array (
                                                     'data' => $this->getAttributo ()->getId(),
                                                     'read_only' => true
@@ -176,6 +190,7 @@ abstract class AbstractAttributoType extends AbstractType
                                                     )
                       
                       );
+                      
         
         $builder = $this->getFormForTranslatedField('slug', $builder);
         

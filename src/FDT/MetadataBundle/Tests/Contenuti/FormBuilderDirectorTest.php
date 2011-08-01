@@ -30,8 +30,11 @@ class FormBuildeDirectorTest extends TestCase
         $form->bind (array('_token'=>$tokenValue, 
                             'attributi'=>array(
                                                 'textareatraduzione-unique-name'=>array (
-                                                                                         'value'=>'palla'
-                                                                                         )
+                                                                                         'value'=> array ('it_it'=>'Palla', 'en_us'=>'Ball')
+                                                                                         ),
+                                                'descrizione'=>array (
+                                                                        'value'=>'prova descrizione testo'
+                                                                      ),
                                                ),
                             'contenuto'=>array(
                                                 'name'=>array (
@@ -44,8 +47,11 @@ class FormBuildeDirectorTest extends TestCase
        print_r($form->getErrors()); 
        
        $this->assertTrue($form->isValid());
+       
+       print_r($formView);
         
        print_r($form->getNormData());
+       
                 
                       
         $this->assertEquals (3, $formView->count());

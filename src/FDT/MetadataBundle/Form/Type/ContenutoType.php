@@ -52,13 +52,13 @@ class ContenutoType extends AbstractContenutoType
             $builder->get('name')->add($key, 'text', array ('required' => true));            
             $builder->get('name')->
             addValidator(new CallbackValidator(function(\Symfony\Component\Form\Form  $form) use ($key)
-            {
-                if (!$form[$key]->getData())
-                {
-                    $form->addError(new FormError(sprintf('Il campo name %s nel form ContenutoType deve essere compilato', $key)));
-                }
-            })
-           );
+                                                       {
+                                                            if (!$form[$key]->getData()) {
+                                                                $form->addError(new FormError(sprintf('Il campo name %s nel form ContenutoType deve essere compilato', $key)));
+                                                            }
+                                                       }
+                                               )
+            );
        }
        
        return $builder;
