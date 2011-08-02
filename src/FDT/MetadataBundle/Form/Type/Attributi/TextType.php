@@ -9,10 +9,15 @@ use Symfony\Component\Form\FormBuilder;
 class TextType extends AbstractAttributoType
 {
     
+    protected function buildSpesificFieldType (FormBuilder $builder, $fieldName)
+    {
+        $builder->add($fieldName, 'text', $this->getMyBasicOptions());
+    }
+    
     public function buildForm(FormBuilder $builder, array $options)
     {
         $this->buildBaseFields ($builder);
-        $builder->add('value', 'text', array('label' => $this->getAttributo ()->getName(), 'required'=>true));
+        $this->buildFieldData ($builder);
     }
 
     public function getName()

@@ -35,6 +35,21 @@ class FormBuildeDirectorTest extends TestCase
                                                 'descrizione'=>array (
                                                                         'value'=>'prova descrizione testo'
                                                                       ),
+                                                'texttranslation-unique-name'=>array (
+                                                                                         'value'=> array ('it_it'=>'Text it', 'en_us'=>'Text en')
+                                                                                         ),
+                                                'larghezza'=>array (
+                                                                        'value'=>10
+                                                                      ),
+                                                'lunghezza'=>array (
+                                                                        'value'=>20
+                                                                      ),
+                                                'peso'=>array (
+                                                                        'value'=>30
+                                                                      ),
+                                                'nazione'=>array (
+                                                                        'value'=>'it_it'
+                                                                      ),
                                                ),
                             'contenuto'=>array(
                                                 'name'=>array (
@@ -48,7 +63,7 @@ class FormBuildeDirectorTest extends TestCase
        
        $this->assertTrue($form->isValid());
        
-       print_r($formView);
+       //print_r($formView);
         
        print_r($form->getNormData());
        

@@ -24,6 +24,7 @@ abstract class AbstractContenutoType extends AbstractType
         return($this->languages);
     }
     
+    
     abstract public function setConfigObject (BaseTipologia $tipologia, $service = FALSE);
     
 }

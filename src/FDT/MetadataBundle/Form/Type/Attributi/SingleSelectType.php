@@ -9,6 +9,16 @@ use Symfony\Component\Form\FormBuilder;
 */
 class SingleSelectType extends AbstractAttributoType
 {
+    
+    protected function buildSpesificFieldType (FormBuilder $builder, $fieldName)
+    {
+        $options = $this->getMyBasicOptions();
+        $options['choices'] = $this->getChoises();
+
+        $builder->add($fieldName, 'choice', $options);
+
+    }
+    
     private function getChoises()
     {
         $arrayChoises = array();
@@ -21,10 +31,7 @@ class SingleSelectType extends AbstractAttributoType
     public function buildForm(FormBuilder $builder, array $options)
     {
         $builder = $this->buildBaseFields ($builder);
-        $builder->add('value', 'choice', array('label' => $this->getAttributo ()->getName(),
-                                               'choices' => $this->getChoises()
-                                               )
-                      );
+        $this->buildFieldData ($builder);
     }
 
     public function getName()

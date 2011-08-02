@@ -13,7 +13,7 @@ use Gedmo\Translatable\Translatable;
 class Option
 {
     /**
-     * @mongodb\Id
+     * @MongoDB\Id
      */
     protected $id;
 

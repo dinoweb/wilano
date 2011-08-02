@@ -3,8 +3,11 @@ namespace FDT\MetadataBundle\Form\Type\Attributi;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\CallbackValidator;
+use Symfony\Component\Form\FormError;
 use FDT\MetadataBundle\Document\Attributi\Config;
 use FDT\MetadataBundle\Services\AttributiTypeManager;
+
 
 
 /**
@@ -198,5 +201,61 @@ abstract class AbstractAttributoType extends AbstractType
         
         return $builder;
     }
+    
+    /**
+     * Si preoccupa di costruire il campo specifico per l'attributo, tenendo presente se deve essere tradotto
+     *
+     * @param FormBuilder $builder 
+     * @param string $type 
+     * @return void
+     * @author Lorenzo Caldara
+     */
+    protected function buildFieldData(FormBuilder $builder)
+    {
+        $languages = $this->getLanguages();
+        $basicOptions = $this->getMyBasicOptions();
+        
+        if ($this->attributoMusBeTranslated()) {
+            $builder->add('value', 'form', $basicOptions);
+            $builder =  $builder->get('value');
+            foreach ($this->getLanguages() as $key => $value) {
+                $this->buildSpesificFieldType ($builder, $key);
+                if ($this->getConfig ()->getIsObligatory()) {
+                    $builder->
+                    addValidator(new CallbackValidator(function(\Symfony\Component\Form\Form  $form) use ($key, $basicOptions)
+                                                       {
+                                                            if (!$form[$key]->getData()) {
+                                                                $form->addError(new FormError(sprintf('Il campo %s %s deve essere compilato', $basicOptions['label'], $key)));
+                                                            }
+                                                       }
+                                               )
+                                );
+                 }
+                
+            }
+        } else {
+            $this->buildSpesificFieldType ($builder, 'value');
+            
+            if ($this->getConfig ()->getIsObligatory()) {
+                    $name = $this->getAttributo ()->getName();
+                    $builder->addValidator(new CallbackValidator(function(\Symfony\Component\Form\Form  $form) use ($name, $basicOptions)
+                                                       {
+                                                            if (!$form['value']->getData()) {
+                                                                $form->addError(new FormError(sprintf('Il campo %s deve essere compilato', $basicOptions['label'])));
+                                                            }
+                                                       }
+                                               )
+                                );
+            }
+        }
+        
+    }
+    
+    public function getMyBasicOptions()
+    {
+        return array('required'=>$this->getConfig ()->getIsObligatory(), 'label' => $this->getAttributo ()->getName());
+    }
+    
+    abstract protected function buildSpesificFieldType (FormBuilder $builder, $fieldName);
         
 }

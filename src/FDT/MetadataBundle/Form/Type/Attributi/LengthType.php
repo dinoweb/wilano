@@ -9,11 +9,15 @@ use Symfony\Component\Form\FormBuilder;
 */
 class LengthType extends AbstractAttributoType
 {
+    protected function buildSpesificFieldType (FormBuilder $builder, $fieldName)
+    {
+        $builder->add($fieldName, 'number', $this->getMyBasicOptions());        
+    }
     
     public function buildForm(FormBuilder $builder, array $options)
     {
         $builder = $this->buildBaseFields ($builder);
-        $builder->add('value', 'number', array('label' => $this->getAttributo ()->getName()));
+        $this->buildFieldData ($builder);
     }
 
     public function getName()

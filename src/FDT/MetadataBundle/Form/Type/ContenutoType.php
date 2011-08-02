@@ -28,14 +28,26 @@ class ContenutoType extends AbstractContenutoType
         
     }
     
-    private function getNode ()
+    
+    
+    private function getDocumentManager ()
     {
-        return $this->treeManager->getNode ($this->tipologia);
+        return $this->treeManager->getDocumentManager();
+    }
+    
+    private function getTipologia ()
+    {
+        return $this->tipologia;
     }
     
     private function getPath()
     {
         return $this->getNode()->getPath();
+    }
+    
+    private function getNode ()
+    {
+        return $this->treeManager->getNode ($this->tipologia);
     }
     
     /**
@@ -65,6 +77,32 @@ class ContenutoType extends AbstractContenutoType
 
     }
     
+    private function getTranslation($language, $field)
+    {
+        $repository = $this->getDocumentManager()->getRepository('FDT\MetadataBundle\Document\Tipologie\TipologiaTranslation');
+        $translations = $repository->findTranslations($this->getTipologia ());
+        
+        if (isset ($translations[$language][$field])) {
+            return $translations[$language][$field];
+        }
+
+        foreach ($this->getLanguages() as $key => $value) {
+            if (isset ($translations[$key][$field])) {
+                return $translations[$key][$field];
+            }
+        }        
+    }
+
+    private function getFormForTranslatedField($fieldName, $property, FormBuilder $builder)
+    {
+       $arrayName = array();
+       $builder->add($fieldName, 'form', array ('required' => true, 'error_bubbling'=>true));
+       foreach ($this->getLanguages() as $key => $value) {
+            $builder->get($fieldName)->add($key, 'hidden', array ('data'=>$this->getTranslation($key, $property), 'required' => true, 'read_only' => true)); 
+       }
+       return $builder;
+    }
+    
     /**
      * @param FormBuilder $builder 
      * @param array $options 
@@ -73,13 +111,7 @@ class ContenutoType extends AbstractContenutoType
      */
     public function buildForm(FormBuilder $builder, array $options)
     {
-        
-        $builder->add('tipologia', 'hidden', array (
-                                                    'data'=>$this->tipologia->getName(),
-                                                    'read_only' => true
-                                                   )
-                     );
-
+        $builder = $this->getFormForTranslatedField('tipologia', 'name', $builder);
         $builder->add('tipologiaId', 'hidden', array(
                                                      'data'=>$this->tipologia->getId(),
                                                      'read_only' => true

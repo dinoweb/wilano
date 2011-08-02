@@ -11,32 +11,7 @@ class TestCase extends WebTestCase
     
     public function setUp ()
     {
-        $collectionAttributo = $this->getDm()->getDocumentCollection('FDT\MetadataBundle\Document\Attributi\OptionTranslation');
-        $collectionAttributo->drop();
         
-        $collectionAttributo = $this->getDm()->getDocumentCollection('FDT\MetadataBundle\Document\Attributi\DataSet');
-        $collectionAttributo->drop();
-        
-        $collectionAttributoTranslation = $this->getDm()->getDocumentCollection('FDT\MetadataBundle\Document\Attributi\DataSetTranslation');
-        $collectionAttributoTranslation->drop();
-        
-        $collectionAttributo = $this->getDm()->getDocumentCollection('FDT\MetadataBundle\Document\Attributi\Attributo');
-        $collectionAttributo->drop();
-        
-        $collectionAttributoTranslation = $this->getDm()->getDocumentCollection('FDT\MetadataBundle\Document\Attributi\AttributoTranslation');
-        $collectionAttributoTranslation->drop();
-        
-        $collectionAttributoTranslation = $this->getDm()->getDocumentCollection('FDT\MetadataBundle\Document\Attributi\Config');
-        $collectionAttributoTranslation->drop();
-        
-        $collectionAttributoTranslation = $this->getDm()->getDocumentCollection('FDT\MetadataBundle\Document\Attributi\Config');
-        $collectionAttributoTranslation->drop();
-        
-        $collectionAttributoTranslation = $this->getDm()->getDocumentCollection('FDT\MetadataBundle\Document\Tipologie\Prodotti');
-        $collectionAttributoTranslation->drop();
-        
-        $collectionAttributoTranslation = $this->getDm()->getDocumentCollection('FDT\MetadataBundle\Document\Tipologie\TipologiaTranslation');
-        $collectionAttributoTranslation->drop();
         
     }
            
@@ -113,6 +88,19 @@ class TestCase extends WebTestCase
     
         return $this->getDic()->get('document_saver');
     
+    }
+    
+    protected function tearDown()
+    {
+        $dm = $this->getDm();
+        if ($dm) {
+            foreach ($dm->getDocumentDatabases() as $db) {
+                foreach ($db->listCollections() as $collection) {
+                    $collection->drop();
+                }
+            }
+            $dm->getConnection()->close();
+        }
     }
     
     
