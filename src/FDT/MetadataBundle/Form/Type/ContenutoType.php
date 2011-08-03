@@ -112,6 +112,7 @@ class ContenutoType extends AbstractContenutoType
     public function buildForm(FormBuilder $builder, array $options)
     {
         $builder = $this->getFormForTranslatedField('tipologia', 'name', $builder);
+        
         $builder->add('tipologiaId', 'hidden', array(
                                                      'data'=>$this->tipologia->getId(),
                                                      'read_only' => true
@@ -120,6 +121,12 @@ class ContenutoType extends AbstractContenutoType
                       
         $builder->add('tipologiaPath', 'hidden', array(
                                                        'data'=>$this->getPath(),
+                                                       'read_only' => true
+                                                       )
+                      );
+        
+        $builder->add('tipologiaClass', 'hidden', array(
+                                                       'data'=>get_class($this->getTipologia()),
                                                        'read_only' => true
                                                        )
                       );

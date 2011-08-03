@@ -92,9 +92,41 @@ class BaseContenuto implements BaseNode
         $this->name = $nameWithTranslation;
     }
     
+    public function getNames()
+    {
+        return $this->name;
+    }
+    
+    
+    /**
+     * Ritorna il nome nella lingua richiesta se esiste, se no ritorna la prima traduzione che trova
+     *
+     * @param string $locale 
+     * @return string $name
+     * @author Lorenzo Caldara
+     */
+    public function getNameLocale($locale)
+    {
+        $names = $this->getNames();
+        if (isset($names[$locale])) {
+            return $names[$locale];
+        }
+        
+        foreach ($names as $key => $value) {
+            return $value;
+        }
+        
+    }
+    
     public function addAttributoValue(\FDT\MetadataBundle\Document\Attributi\BaseAttributoValue $attributoValue)
     {
         $this->attributiValues[] = $attributoValue;
+    }
+    
+    public function getAttributi ()
+    {
+        return $this->attributiValues;
+        
     }
     
     public function setTipologia(BaseTipologia $tipologia)

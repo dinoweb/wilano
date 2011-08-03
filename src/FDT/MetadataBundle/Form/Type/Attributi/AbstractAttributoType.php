@@ -177,6 +177,14 @@ abstract class AbstractAttributoType extends AbstractType
                       
                       );
         
+        $builder->add ('attributoTipo', 'hidden', array (
+                                                    'data' => $this->getAttributo ()->getTipo(),
+                                                    'read_only' => true
+                                                    
+                                                    )
+                      
+                      );
+        
         
         $builder->add ('attributoId', 'hidden', array (
                                                     'data' => $this->getAttributo ()->getId(),

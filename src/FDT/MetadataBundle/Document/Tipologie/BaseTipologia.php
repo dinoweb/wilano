@@ -319,6 +319,19 @@ class BaseTipologia implements BaseNode, Translatable
         return $this->ancestors;
     }
     
+    public function getRoot()
+    {
+        if ($this->getLevel() == 0) {
+            return $this;
+        }
+        
+        foreach ($this->getAncestors() as $key => $ancestor) {
+            if ($ancestor->getLevel() == 0) {
+                return $ancestor;
+            }
+        }
+    }
+    
     public function setParent($ancestor)
     {       
        $this->parent = $ancestor;
@@ -413,6 +426,18 @@ class BaseTipologia implements BaseNode, Translatable
     {
         $this->locale = $locale;
     }
+    
+    public function getType($returnNamespace = FALSE)
+    {
+        $calledClass =  get_called_class();
+        if ($returnNamespace) {
+            return $calledClass;
+        }
+        
+        $arrayCalledClass = explode('\\', $calledClass);
+        return $arrayCalledClass[count($arrayCalledClass) - 1];
+    }
+    
 
 }
 

@@ -33,6 +33,9 @@ class FDTMetadataExtension extends Extension
     	$container->setParameter('attributi_type_class', $config['attributi_type']['attributi_type_class']);
     	$container->setParameter('attributi', $config['attributi_type']['attributi']);
     	
+    	//CONTENUTI BUILDER PARAMS
+    	$container->setParameter('contenuto_builder_class', $config['contenuto_builder']['contenuto_builder_class']);
+    	
     	    	    	
     }
     

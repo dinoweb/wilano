@@ -14,4 +14,7 @@ services:
     contenuti.form_builder_director:
         class:        %form_builder_director_class%
         arguments:    [@contenuti.form_builder]
+    contenuti.contenuto_builder:
+        class:        %contenuto_builder_class%
+        arguments:    [@doctrine.odm.mongodb.document_manager, @attributi_type, @tree_manager, %languages%]
 

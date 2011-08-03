@@ -59,18 +59,22 @@ class FormBuildeDirectorTest extends TestCase
                                               )
                             )
                      );
-       print_r($form->getErrors()); 
+       //print_r($form->getErrors()); 
        
        $this->assertTrue($form->isValid());
+       $formData = $form->getNormData();
+       
+       $contenutoBuilder = $this->getDic ()->get('contenuti.contenuto_builder');
+       
+       $contenuto = $contenutoBuilder->build ($formData);
+       
        
        //print_r($formView);
         
-       print_r($form->getNormData());
-       
-                
-                      
+       //print_r($form->getNormData());
+                             
         $this->assertEquals (3, $formView->count());
-        $this->assertEquals (4, $formView->getChild('contenuto')->count());
+        $this->assertEquals (5, $formView->getChild('contenuto')->count());
         $this->assertEquals (7, $formView->getChild('attributi')->count());
         
         

@@ -65,6 +65,13 @@ class BaseAttributoValue
     */
     private $attributoId;
     
+     /** 
+    * @MongoDB\String
+    * @Assert\Type("string")
+    * @Assert\NotBlank()
+    */
+    private $attributoTipo;
+    
     /** 
     * @MongoDB\String
     * @Assert\Type("string")
@@ -265,6 +272,26 @@ class BaseAttributoValue
     public function getAttributoId()
     {
         return $this->attributoId;
+    }
+    
+    /**
+     * Set $attributoTipo
+     *
+     * @param string $attributoTipo
+     */
+    public function setAttributoTipo($attributoTipo)
+    {
+        $this->attributoTipo = $attributoTipo;
+    }
+
+    /**
+     * Get $attributoTipo
+     *
+     * @return string $attributoTipo
+     */
+    public function getAttributoTipo()
+    {
+        return $this->attributoTipo;
     }
     
     /**
