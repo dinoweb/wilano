@@ -343,8 +343,33 @@ class BaseAttributoValue
     {
         return $this->value = $value;
     }
+    
+    /**
+     * Get $value
+     *
+     */
+    public function getValue()
+    {
+        return $this->value;
+    }
 
-
+    public function build(array $attributoData)
+    {
+        
+        $this->addNames ($attributoData['name']);
+        $this->addSlugs ($attributoData['slug']);
+        $this->setConfigId ($attributoData['configId']);
+        $this->setAttributoId ($attributoData['attributoId']);
+        $this->setAttributoTipo ($attributoData['attributoTipo']);
+        $this->setUniqueSlug ($attributoData['uniqueSlug']);
+        $this->setValue ($attributoData['value']);
+        //FLAGS
+        $this->setIsActive ($attributoData['isActive']==1?true:false);
+        $this->setInSearch ($attributoData['inSearch']==1?true:false);
+        $this->setInQuickSearch ($attributoData['inQuickSearch']==1?true:false);
+        $this->setIsPubblicable ($attributoData['isPubblicable']==1?true:false);
+        $this->setIsForConfiguration ($attributoData['isForConfiguration']==1?true:false);
+    }
     
     
 }

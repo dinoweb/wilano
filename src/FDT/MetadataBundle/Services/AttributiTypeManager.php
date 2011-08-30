@@ -76,6 +76,17 @@ class AttributiTypeManager
         return $configArrayForAttributo['formType'];
     }
     
+    /** 
+     * @param string $attributoTipo il tipo di attributo
+     * @return il fully qualified name del tipo di document per l'attributo
+     * @author Lorenzo Caldara
+     */
+    public function getValueDocumentClass ($attributoTipo)
+    {
+        $configArrayForAttributo = $this->getConfig ($attributoTipo);
+        return $configArrayForAttributo['valueDocument'];
+    }
+    
     /**
      * @param array $languages
      * @author Lorenzo Caldara

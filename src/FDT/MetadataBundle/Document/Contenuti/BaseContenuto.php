@@ -129,6 +129,19 @@ class BaseContenuto implements BaseNode
         
     }
     
+    public function getAttributo($uniqueSlug)
+    {
+        $attributi = $this->getAttributi();
+        
+        foreach ($attributi as $attributo) {
+            if ($attributo->getUniqueSlug() == $uniqueSlug) {
+                return $attributo;
+            }
+        }
+        
+        return NULL;
+    }
+    
     public function setTipologia(BaseTipologia $tipologia)
     {
         $this->tipologia = $tipologia;

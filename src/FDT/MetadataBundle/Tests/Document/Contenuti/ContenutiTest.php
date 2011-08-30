@@ -88,8 +88,8 @@ class ContenutoTest extends TestCase
                                                ),
                             'contenuto'=>array(
                                                 'name'=>array (
-                                                                'it_it'=>'palla',
-                                                                'en_us'=>'palla en',
+                                                                'it_it'=>'Palla',
+                                                                'en_us'=>'Palla en',
                                                               )
                                               )
                             )
@@ -97,6 +97,44 @@ class ContenutoTest extends TestCase
        //print_r($form->getErrors()); 
        
        $this->assertTrue($form->isValid());
+       
+       $formData = $form->getNormData();
+       
+       $contenutoBuilder = $this->getDic ()->get('contenuti.contenuto_builder');
+       
+       $contenuto = $contenutoBuilder->build ($formData);
+       
+       $prodottoResult =  $this->getDm()->getRepository('FDT\MetadataBundle\Document\Contenuti\Prodotti')->findOneById(1);
+       
+       $this->assertArrayHasKey('en_us', $prodottoResult->getNames());
+       $this->assertEquals('Palla', $prodottoResult->getNameLocale('it_it'));
+       $this->assertEquals('Palla en', $prodottoResult->getNameLocale('en_us'));
+       
+       $attributi = $prodottoResult->getAttributi();
+       
+       $this->assertEquals(7, $attributi->count());
+       
+       $this->assertArrayHasKey('en_us', $attributi[0]->getValue());
+       $this->assertArrayHasKey('it_it', $attributi[0]->getValue());
+       $this->assertEquals('Palla', $attributi[0]->getValueLocale('it_it'));
+       $this->assertEquals('Ball', $attributi[0]->getValueLocale('en_us'));
+       
+       $attributoPeso = $prodottoResult->getAttributo('peso');
+       $this->assertInternalType('float', $attributoPeso->getValue());
+       $this->assertEquals(30, $attributoPeso->getValue());
+       
+       $attributoDescrizione = $prodottoResult->getAttributo('descrizione');
+       $this->assertInternalType('string', $attributoDescrizione->getValue());
+       $this->assertEquals('prova descrizione testo', $attributoDescrizione->getValue());
+       
+       $attributoTextareaTraduzione = $prodottoResult->getAttributo('textareatraduzione-unique-name');
+       $this->assertInternalType('array', $attributoTextareaTraduzione->getValue());
+       $this->assertArrayHasKey('en_us', $attributoTextareaTraduzione->getValue());
+       $this->assertArrayHasKey('it_it', $attributoTextareaTraduzione->getValue());
+       $this->assertEquals('Palla', $attributoTextareaTraduzione->getValueLocale('it_it'));
+       $this->assertEquals('Ball', $attributoTextareaTraduzione->getValueLocale('en_us'));
+       
+              
     }
 
 

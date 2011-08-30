@@ -64,10 +64,6 @@ class FormBuildeDirectorTest extends TestCase
        $this->assertTrue($form->isValid());
        $formData = $form->getNormData();
        
-       $contenutoBuilder = $this->getDic ()->get('contenuti.contenuto_builder');
-       
-       $contenuto = $contenutoBuilder->build ($formData);
-       
        
        //print_r($formView);
         

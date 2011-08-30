@@ -1,6 +1,7 @@
 <?php
 namespace FDT\MetadataBundle\Services;
 use FDT\MetadataBundle\Services\AttributiTypeManager;
+use FDT\MetadataBundle\Services\DocumentSaver;
 use FDT\doctrineExtensions\NestedSet\TreeManager;
 use Doctrine\ODM\MongoDB\DocumentManager; 
 
@@ -31,6 +32,13 @@ class ContenutoBuilder
      */
     private $treeManager;
     
+     /**
+     * DocumentSaver $documentSaver
+     *
+     * @var DocumentSaver
+     */
+    private $documentSaver;
+    
     /**
      * array $languages
      *
@@ -55,11 +63,12 @@ class ContenutoBuilder
      * @param array $languages 
      * @author Lorenzo Caldara
      */
-    public function __construct(DocumentManager $documentManager, AttributiTypeManager $attributiTypeManager, TreeManager $treeManager, array $languages)
+    public function __construct(DocumentManager $documentManager, AttributiTypeManager $attributiTypeManager, TreeManager $treeManager, DocumentSaver $documentSaver, array $languages)
     {
         $this->documentManager = $documentManager;
         $this->attributiTypeManager = $attributiTypeManager;
         $this->treeManager = $treeManager;
+        $this->documentSaver = $documentSaver;
         $this->languages = $languages;
        
     }
@@ -67,6 +76,16 @@ class ContenutoBuilder
     private function getDm ()
     {
         return $this->documentManager;
+    }
+    
+    private function getDocumentSaver ()
+    {
+        return $this->documentSaver;
+    }
+    
+    private function getAttributiTypeManager()
+    {
+        return $this->attributiTypeManager;
     }
     
     private function setTipologia(array $contenutoData)
@@ -93,6 +112,33 @@ class ContenutoBuilder
         return $this->contenutoDocument;
     }
     
+    private function buildBaseContent (array $contenutoData)
+    {
+        $this->getContenutoDocument()->setNames ($contenutoData['name']);
+        $this->getContenutoDocument()->setTipologia ($this->getTipologia());
+    }
+    
+    private function buildAttributoValue (array $attributoData)
+    {
+        $valueDocumentClass = $this->getAttributiTypeManager()->getValueDocumentClass($attributoData['attributoTipo']);
+        
+        $attributoValueDocument = new $valueDocumentClass();
+        $attributoValueDocument->build ($attributoData);
+        
+        $attributoValueDocument = $this->getDocumentSaver()->save($attributoValueDocument, FALSE);
+                
+        return $attributoValueDocument;
+        
+    }
+    
+    private function buildAttributiValue(array $attributiData)
+    {
+        foreach ($attributiData as $attributo) {
+            $attributoValueDocument = $this->buildAttributoValue($attributo);
+            $this->getContenutoDocument()->addAttributoValue($attributoValueDocument);
+        }
+    }
+    
     /**
      *
      * @param array $contenutoData ricevuto dall'invio di un form
@@ -101,10 +147,13 @@ class ContenutoBuilder
      */
     public function build(array $contenutoData)
     {
-        print_r($contenutoData);
+        //print_r($contenutoData);
         $this->setTipologia($contenutoData['contenuto']);
         $this->initContenutoDocument();
-        print('Concludere FDT\MetadataBundle\Services\ContenutoBuilder e controllare le dipendenze di questo oggetto, probabilmente TreeManager non serve');
+        $this->buildBaseContent($contenutoData['contenuto']);
+        $this->buildAttributiValue($contenutoData['attributi']);
+        
+        $contenuto = $this->getDocumentSaver()->save($this->getContenutoDocument());
         
     }
     

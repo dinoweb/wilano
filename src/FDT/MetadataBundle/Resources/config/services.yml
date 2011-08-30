@@ -16,5 +16,5 @@ services:
         arguments:    [@contenuti.form_builder]
     contenuti.contenuto_builder:
         class:        %contenuto_builder_class%
-        arguments:    [@doctrine.odm.mongodb.document_manager, @attributi_type, @tree_manager, %languages%]
+        arguments:    [@doctrine.odm.mongodb.document_manager, @attributi_type, @tree_manager, @document_saver, %languages%]
 
