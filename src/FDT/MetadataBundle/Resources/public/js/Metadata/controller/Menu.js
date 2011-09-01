@@ -13,30 +13,18 @@ Ext.define('Metadata.controller.Menu', {
     
     models:
     [
-    	'Metadata.model.Menu'
+    	'Admin.model.Menu'
     ],
     
     init: function() {
                               
-          this.control({
-                        
-                        'viewport > mainMenu > MetadataMenu':
-                        {
-                            itemdblclick: this.onMenuDbClick
-                        }
-                      });
-         
-         this.application.addListener
+        this.application.addListener
          ({ 
             'viewPortCreated' : this.addMenu, 
          }); 
          
 
                   
-    },
-    
-    onPanelRendered: function() {
-        console.log('The panel was added');
     },
 
     addMenu: function()
@@ -45,28 +33,6 @@ Ext.define('Metadata.controller.Menu', {
                         
         Panels[0].add ([{xtype: 'MetadataMenu'}]);
               
-        
-    },
-    
-    launch : function ()
-	 {
-	   
-	    this.addMenu ();
-	 
-	   //console.log ('launch chiamato');
-	   
-	 },
-    
-    
-    onMenuDbClick: function(Panel, Record)
-    {        
-        
-        if (Record.isLeaf())
-        {
-        	console.info(Record.get('action'));
-        	
-        }
-        
         
     }
 });

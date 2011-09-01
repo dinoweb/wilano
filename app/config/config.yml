@@ -94,16 +94,30 @@ fdt_admin:
     menuConfig:
       metadata:
         -
-          id: metadataSettingsMenu
-          text: Settings
+          id: metadataContenuti
+          text: Contenuti
           leaf: false
           action: open
           children:
             -
-              id: metadataTipologie
+              id: metadataTipologieContenuti
               text: Tipologie
-              leaf: true
-              action: Metadata.controller.tipologie.init
+              leaf: false
+              action: open
+              children:
+                -
+                  id: metadataProdotti
+                  text: Prodotti
+                  leaf: true
+                  tipologiaType: Prodotti
+                  action: Metadata.controller.tipologie.init
+                -
+                  id: metadataSchede
+                  text: Schede
+                  leaf: true
+                  tipologiaType: Schede
+                  action: Metadata.controller.tipologie.init 
+            
 
       parties:
         -

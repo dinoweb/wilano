@@ -5,7 +5,7 @@ umask(0000); // This will let the permissions be 0777
 // feel free to remove this, extend it, or make something more sophisticated.
 if (!in_array(@$_SERVER['REMOTE_ADDR'], array(
     '217.133.22.154', //AVANZI
-    '93.34.50.143', //BARD
+    '93.34.53.132', //BARD
     '151.72.16.119', //CASA LORENZO
     '93.62.205.10', //SETT ENIGMISTICA
     '::1',

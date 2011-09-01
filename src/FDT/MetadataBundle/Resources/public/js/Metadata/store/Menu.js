@@ -2,7 +2,7 @@ Ext.define('Metadata.store.Menu',
 {
     extend: 'Ext.data.TreeStore',
     autoLoad: true,
-    model: 'Metadata.model.Menu',
+    model: 'Admin.model.Menu',
     rootVisible: false,
     root: 
 	{

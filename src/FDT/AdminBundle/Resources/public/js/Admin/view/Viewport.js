@@ -14,6 +14,7 @@ Ext.define('Admin.view.Viewport', {
 	items: [
 				{
 					xtype:'tabpanel',
+					id: 'mainPanel',
 			   		resizeTabs: true,
 					enableTabScroll: true,
 					region: 'center',
