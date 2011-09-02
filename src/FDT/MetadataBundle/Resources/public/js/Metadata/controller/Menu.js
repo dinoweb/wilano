@@ -18,6 +18,16 @@ Ext.define('Metadata.controller.Menu', {
     
     init: function() {
                               
+        this.control({
+                        
+                        'viewport > mainMenu > MetadataMenu':
+                        {
+                            itemdblclick: this.onMenuDbClick
+                        }
+                        
+                      });
+        
+        
         this.application.addListener
          ({ 
             'viewPortCreated' : this.addMenu, 
@@ -25,6 +35,21 @@ Ext.define('Metadata.controller.Menu', {
          
 
                   
+    },
+    
+    onMenuDbClick: function(Panel, Record)
+    {        
+        
+        if (Record.isLeaf())
+        {
+        	var controller = this.getController(Record.get('controller'));
+        	/*var controller = Ext.ClassManager.instantiate(Record.get('controller'), {
+                                                                                    record: Record                                                                                 
+                                                                                  });*/
+            controller.init(Record);
+        }
+        
+        
     },
 
     addMenu: function()

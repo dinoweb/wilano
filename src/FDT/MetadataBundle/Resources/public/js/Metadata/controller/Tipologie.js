@@ -1,48 +1,50 @@
 Ext.define('Metadata.controller.Tipologie', {
     extend: 'Ext.app.Controller',
     
+    config: {
+        record: null
+    },
+    
     views:
     [
-        'Metadata.view.Tipologie.Manage'
+        'Tipologie.Manage',
+        'Tipologie.Edit'
     ],
     
-    init: function() {
-                              
-          this.control({
-                        
-                        'viewport > mainMenu > MetadataMenu':
-                        {
-                            itemdblclick: this.onMenuDbClick
-                        },
-                        
-                        '#tipologiemanageaggiungi':
-                        {
-                            click: this.aggiungi
-                        }
-                        
-                      });
+    init: function(Record) {
                   
-
+          this.createPanel(Record);
+          
+          this.control({
+            'tipologieEdit button[action=save]': {
+                click: this.tipologiaEdit
+            }
+        });
                   
     },
         
-    onMenuDbClick: function(Panel, Record)
+    createPanel: function(Record)
     {        
+        var panelId = 'idManage'+Record.get('tipologiaType');
         
-        if (Record.isLeaf())
+        var arrayPanelById = Ext.ComponentQuery.query('#'+panelId);
+        
+        if (arrayPanelById.length > 0)
         {
-        	var view = Ext.widget('tipologiemanage');
-        	view.setTitle('Configurazione '+Record.get('tipologiaType'));
-        	var toolbar = this.createToolbar(Record);
-        	view.addDocked(toolbar);
-        	
-        	var Panels = Ext.ComponentQuery.query('#mainPanel'); 
-            Panels[0].add (view);
-        	
-        	view.show();
+            arrayPanelById[0].destroy( );
         }
         
-        
+        var view = Ext.ClassManager.instantiateByAlias('widget.tipologieManage', {
+                                                                                    id: panelId,
+                                                                                    title: 'Configurazione '+Record.get('tipologiaType')                                                                                  
+                                                                                  });
+    	var toolbar = this.createToolbar(Record);
+    	view.addDocked(toolbar);
+    	
+    	var Panels = Ext.ComponentQuery.query('#mainPanel'); 
+        Panels[0].add (view);
+    	
+    	view.show();
     },
     
     createToolbar : function (Record)
@@ -51,18 +53,16 @@ Ext.define('Metadata.controller.Tipologie', {
                     dock: 'top',
                     items: [
                                 {
-                                    text: 'Button'
+                                    text: 'Aggiungi',
+                                    scope: this,
+                                    icon: '/bundles/fdtadmin/images/icons/add.png',
+                                    cls: 'x-btn-text-icon',
+                                    itemId: 'tipologiemanageaggiungi',
+                                    handler: function (){
+                                        this.aggiungi(Record)
+                                    }
                                 },
-                                {
-                                    xtype: 'splitbutton',
-                                    text : 'Split Button'
-                                },
-                                '->',
-                                {
-                                    xtype    : 'textfield',
-                                    name     : 'field1',
-                                    emptyText: 'enter search term'
-                                }
+                                '-'
                             ]
                     });
 
@@ -70,12 +70,21 @@ Ext.define('Metadata.controller.Tipologie', {
         
     },
     
-    aggiungi: function ()
+    aggiungi: function (Record)
     {
+        var view = Ext.ClassManager.instantiateByAlias('widget.tipologieEdit', {
+                                                                                    title: 'Tipologia '+Record.get('tipologiaType'),
+                                                                                    record: Record                                                                                  
+                                                                                  });
+                
+    },
+    
+    tipologiaEdit: function(button) {
+        var win    = button.up('window'),
+        form   = win.down('form'),
+        values = form.getValues();
         
-        console.log('aggiungi');
-        
-        
+        console.log(values['name']);
     }
     
     

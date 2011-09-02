@@ -8,8 +8,7 @@ Ext.application({
     controllers:
     [
 
-    'Metadata.controller.Menu',
-    'Metadata.controller.Tipologie'
+    'Metadata.controller.Menu'
     
 
     ],

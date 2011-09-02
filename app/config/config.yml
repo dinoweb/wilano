@@ -110,13 +110,13 @@ fdt_admin:
                   text: Prodotti
                   leaf: true
                   tipologiaType: Prodotti
-                  action: Metadata.controller.tipologie.init
+                  controller: Metadata.controller.Tipologie
                 -
                   id: metadataSchede
                   text: Schede
                   leaf: true
                   tipologiaType: Schede
-                  action: Metadata.controller.tipologie.init 
+                  controller: Metadata.controller.Tipologie 
             
 
       parties:
