@@ -1,20 +1,31 @@
 parameters:
     document_saver.class:               FDT\MetadataBundle\Services\DocumentSaver
+    languages.class:                    FDT\MetadataBundle\Services\Languages
 
 services:
+    
     document_saver:
         class:        %document_saver.class%
         arguments:    [@doctrine.odm.mongodb.document_manager, @validator]
+    
     attributi_type:
         class:        %attributi_type_class%
         arguments:    [@doctrine.odm.mongodb.document_manager, %attributi%, %languages%]
+    
+    contenuti.languages:
+        class:        %languages.class%
+        arguments:    [%languages%]
+    
     contenuti.form_builder:
         class:        %form_builder_class%
         arguments:    [@form.factory, @attributi_type, @tree_manager, %formClasses%,  %languages% ]
+    
     contenuti.form_builder_director:
         class:        %form_builder_director_class%
         arguments:    [@contenuti.form_builder]
+    
     contenuti.contenuto_builder:
         class:        %contenuto_builder_class%
         arguments:    [@doctrine.odm.mongodb.document_manager, @attributi_type, @tree_manager, @document_saver, %languages%]
+    
 

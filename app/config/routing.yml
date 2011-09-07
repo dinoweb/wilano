@@ -1,5 +1,8 @@
 FDDTAdmin:
     resource: "@FDTAdminBundle/Resources/config/routing.yml"
 
+FDDTMetadata:
+    resource: "@FDTMetadataBundle/Resources/config/routing.yml"
+
 FDTParties:
     resource: "@FDTPartiesBundle/Resources/config/routing.yml"

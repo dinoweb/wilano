@@ -2,18 +2,19 @@ Ext.define('Metadata.controller.Tipologie', {
     extend: 'Ext.app.Controller',
     
     config: {
-        record: null
+        tipologia: null
     },
     
     views:
     [
         'Tipologie.Manage',
-        'Tipologie.Edit'
+        'Tipologie.Edit',
+        'Tipologie.EditTranslation'
     ],
     
-    init: function(Record) {
+    init: function() {
                   
-          this.createPanel(Record);
+          this.createPanel();
           
           this.control({
             'tipologieEdit button[action=save]': {
@@ -23,9 +24,9 @@ Ext.define('Metadata.controller.Tipologie', {
                   
     },
         
-    createPanel: function(Record)
+    createPanel: function()
     {        
-        var panelId = 'idManage'+Record.get('tipologiaType');
+        var panelId = 'idManage'+this.getTipologia().get('tipologiaType');
         
         var arrayPanelById = Ext.ComponentQuery.query('#'+panelId);
         
@@ -36,9 +37,9 @@ Ext.define('Metadata.controller.Tipologie', {
         
         var view = Ext.ClassManager.instantiateByAlias('widget.tipologieManage', {
                                                                                     id: panelId,
-                                                                                    title: 'Configurazione '+Record.get('tipologiaType')                                                                                  
+                                                                                    title: 'Configurazione '+this.getTipologia().get('tipologiaType')                                                                                  
                                                                                   });
-    	var toolbar = this.createToolbar(Record);
+    	var toolbar = this.createToolbar();
     	view.addDocked(toolbar);
     	
     	var Panels = Ext.ComponentQuery.query('#mainPanel'); 
@@ -47,7 +48,7 @@ Ext.define('Metadata.controller.Tipologie', {
     	view.show();
     },
     
-    createToolbar : function (Record)
+    createToolbar : function ()
     {
       var toolbar = Ext.create('Ext.toolbar.Toolbar', {
                     dock: 'top',
@@ -59,7 +60,7 @@ Ext.define('Metadata.controller.Tipologie', {
                                     cls: 'x-btn-text-icon',
                                     itemId: 'tipologiemanageaggiungi',
                                     handler: function (){
-                                        this.aggiungi(Record)
+                                        this.aggiungi()
                                     }
                                 },
                                 '-'
@@ -70,21 +71,35 @@ Ext.define('Metadata.controller.Tipologie', {
         
     },
     
-    aggiungi: function (Record)
+    aggiungi: function ()
     {
         var view = Ext.ClassManager.instantiateByAlias('widget.tipologieEdit', {
-                                                                                    title: 'Tipologia '+Record.get('tipologiaType'),
-                                                                                    record: Record                                                                                  
+                                                                                    title: 'Tipologia '+this.getTipologia().get('tipologiaType'),
+                                                                                    tipologia: this.getTipologia()                                                                                  
                                                                                   });
+        
+        this.application.resizeWindow(view);
                 
     },
     
+    
     tipologiaEdit: function(button) {
-        var win    = button.up('window'),
-        form   = win.down('form'),
-        values = form.getValues();
+        var win    = button.up('window');
+        if (win) {
+            form   = win.down('form').getForm();
+            if (form.isValid()){
+               values = form.getValues(); 
+               console.log(values);
+               win.destroy();
+            } else {
+                console.log('invalid');
+            }
+            
         
-        console.log(values['name']);
+            
+            
+        }
+        
     }
     
     

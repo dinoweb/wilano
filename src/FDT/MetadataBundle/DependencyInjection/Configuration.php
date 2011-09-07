@@ -19,6 +19,7 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('fdt_metadata');
 
+        $this->addLanguagesSection($rootNode);
         $this->addDocumentSaverSection($rootNode);
         $this->addAttributiTypeSection($rootNode);
         $this->addFormBuilderDirectorSection($rootNode);
@@ -643,6 +644,30 @@ class Configuration implements ConfigurationInterface
                 ->end()
             ->end();
             
+    }
+    
+    private function addLanguagesSection(ArrayNodeDefinition $rootNode)
+    {
+        $rootNode
+            ->addDefaultsIfNotSet()
+            ->children()
+                ->arrayNode('languages')
+                ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('it_it')
+                            ->cannotBeEmpty()
+                            ->defaultValue('Italiano')
+                        ->end()
+                    ->end()
+                    ->children()
+                        ->scalarNode('en_us')
+                            ->cannotBeEmpty()
+                            ->defaultValue('Inglese')
+                        ->end()
+                    ->end()
+                ->end()
+            ->end();
+        
     }
     
 }

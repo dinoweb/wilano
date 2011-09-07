@@ -1,3 +1,7 @@
 FDTMetadataBundle_homepage:
     pattern:  /hello/{name}
     defaults: { _controller: FDTMetadataBundle:Default:index }
+
+FDTMetadataBundle_getLanguages:
+    pattern:  /admin/{bundleName}/getLanguages
+    defaults: { _controller: FDTMetadataBundle:getLanguages:index}

@@ -12,6 +12,13 @@ Ext.application({
     
 
     ],
+    
+    stores:
+    [
+        'Admin.store.SiNo',
+        'Metadata.store.Languages'
+    ],
+    
 
 
     launch: function()
@@ -23,7 +30,22 @@ Ext.application({
 
         this.fireEvent('viewPortCreated');
 
-    }
+    },
+    
+    resizeWindow: function (window)
+    {
+                             
+        var bodyElement = Ext.getBody();
+		
+		var bodyHeight = bodyElement.getHeight ();
+		var bodyWidth = bodyElement.getWidth ();
+	
+		window.setHeight(bodyHeight-20);
+		window.setWidth(bodyWidth/1.5);
+		window.center();
+     
+     
+     },
 
 
 

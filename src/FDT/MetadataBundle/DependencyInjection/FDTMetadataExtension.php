@@ -22,7 +22,7 @@ class FDTMetadataExtension extends Extension
     	
     	//FORM BUILDER PARAMS
     	$container->setParameter('form_builder_director_class', $config['form_builder_director']['form_builder_director_class']);
-    	$container->setParameter('languages', $config['form_builder_director']['languages']);
+    	$container->setParameter('languages', $config['languages']);
     	$container->setParameter('form_builder_class', $config['form_builder']['form_builder_class']);
     	$container->setParameter('formClasses', $config['form_builder']['formClasses']);
     	

@@ -42,11 +42,12 @@ Ext.define('Metadata.controller.Menu', {
         
         if (Record.isLeaf())
         {
-        	var controller = this.getController(Record.get('controller'));
-        	/*var controller = Ext.ClassManager.instantiate(Record.get('controller'), {
-                                                                                    record: Record                                                                                 
-                                                                                  });*/
-            controller.init(Record);
+        	var controllerPath = Record.get('controller');
+        	var controller = Ext.create(controllerPath, {
+                                                            tipologia: Record,
+                                                            application: this.application                                                                                 
+                                                          });
+            controller.init();
         }
         
         
