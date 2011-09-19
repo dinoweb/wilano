@@ -14,14 +14,14 @@ Ext.define('Admin.view.Viewport', {
 	items: [
 				{
 					xtype:'tabpanel',
-					id: 'mainPanel',
+					itemId: 'mainPanel',
 			   		resizeTabs: true,
 					enableTabScroll: true,
 					region: 'center',
 					minTabWidth: 115,
 					tabWidth: 200,
 					activeTab:0,
-					deferredRender: true,
+					deferredRender: false,
 					margins: '0 2 2 2',
 					cmargins: '0 0 0 0',
 					autoTabs: true,

@@ -5,3 +5,7 @@ FDTMetadataBundle_homepage:
 FDTMetadataBundle_getLanguages:
     pattern:  /admin/{bundleName}/getLanguages
     defaults: { _controller: FDTMetadataBundle:getLanguages:index}
+
+FDTMetadataBundle_getTipologie:
+    pattern:  /admin/{bundleName}/{tipologia}/getTipologie
+    defaults: { _controller: FDTMetadataBundle:getTipologie:index}

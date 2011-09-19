@@ -2,7 +2,10 @@ Ext.application({
 
     requires:
     [
-    'Admin.view.Viewport'
+        'Admin.view.Viewport',
+        'Admin.model.BaseModel',
+        'Admin.store.BaseTreeStore',
+        'Admin.StoreBuilder'
     ],
 
     controllers:
@@ -12,6 +15,7 @@ Ext.application({
     
 
     ],
+    
     
     stores:
     [
@@ -46,7 +50,12 @@ Ext.application({
      
      
      },
-
+     
+     generateUniqid : function ()
+     {
+         var newDate = new Date;
+         return newDate.getTime();
+     }
 
 
 

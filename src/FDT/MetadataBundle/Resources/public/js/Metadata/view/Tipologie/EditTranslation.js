@@ -29,24 +29,25 @@ Ext.define('Metadata.view.Tipologie.EditTranslation', {
     
     buildField: function (Language)
     {
-        var Lang = Language.get('value');
+        var lang = Language.get('value');
         var LangName = Language.get('name');
         var Panel = Ext.create('Ext.form.Panel', {
-            title: Language.get('name'),
-            defaults: {
-                        labelAlign: 'top'
-                    },
-			border: 1,
-    		items:[
-    		        {
-                        xtype: 'textfield',
-                        name : Lang+'[Name]',
-                        fieldLabel: 'Name ',
-                        allowBlank: false,
-                        anchor:'100%'
-                    }
-                  ]
-        });
+                    title: Language.get('name'),
+                    defaults: {
+                                labelAlign: 'left'
+                            },
+        			border: 1,
+            		items:[
+            		        {
+                                xtype: 'textfield',
+                                name : lang+'-name',
+                                fieldLabel: 'Name ',
+                                allowBlank: false,
+                                anchor:'100%'
+                            }
+                          ]
+                });
+                
         this.add (Panel);
         
     },

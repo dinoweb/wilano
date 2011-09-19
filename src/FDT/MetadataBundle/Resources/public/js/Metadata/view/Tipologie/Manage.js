@@ -1,12 +1,11 @@
 Ext.define('Metadata.view.Tipologie.Manage', {
-    extend: 'Ext.panel.Panel',
+    extend: 'Ext.TreePanel',
     alias: 'widget.tipologieManage',
     
-
-    requires:
-    [
-        'Admin.view.Menu'
-    ],
-
-	closable: true
+    
+    autoRender: true,
+	closable: true,
+	rootVisible: true,
+	displayField: 'uniqueName',
+	useArrows: true
 });

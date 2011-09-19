@@ -67,6 +67,8 @@ class TipologiaTest extends TestCase
         
         $repository = $this->getDm()->getRepository('FDT\MetadataBundle\Document\Tipologie\TipologiaTranslation');
         $translations = $repository->findTranslations($tipologia1);
+        
+        print_r ($translations);
                 
         $this->assertEquals ('Gioielli', $tipologia1->getName());
         $this->assertEquals ('gioielli-it', $tipologia1->getUniqueSlug());

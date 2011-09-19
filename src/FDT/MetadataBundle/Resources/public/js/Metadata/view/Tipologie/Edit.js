@@ -5,7 +5,7 @@ Ext.define('Metadata.view.Tipologie.Edit', {
     config: {
         tipologia: null
     },
-
+    
     autoShow: true,
     titleCollapse: true,
     autoScroll:true,
@@ -133,6 +133,7 @@ Ext.define('Metadata.view.Tipologie.Edit', {
         this.buttons = [
             {
                 text: 'Save',
+                id: 'buttonSave',
                 action: 'save'
             },
             {
