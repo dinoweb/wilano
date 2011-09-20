@@ -31,6 +31,7 @@ Ext.define('Metadata.controller.Tipologie', {
     {  
         var tipologiaType = this.getTipologia().get('tipologiaType');
         
+        //INIZIALIZZO COSTRUISCO LO STORE
         var storeBuilder = Ext.create ('Admin.StoreBuilder', {
             idString: tipologiaType,
             urlRead: 'metadata/'+tipologiaType+'/getTipologie',
@@ -43,92 +44,31 @@ Ext.define('Metadata.controller.Tipologie', {
         {
             return storeBuilder;
         }
-              
+        //CREO LO STORE        
+        var tipologieStore = storeBuilder.buildStore (tipologiaType);
         
-        var panelId = 'idManage'+tipologiaType;
-        var viewId = 'idView'+tipologiaType;
-        
+        //INIZIALIZZO IL PANNELLO
+        var panelBuilder = Ext.create ('Admin.PanelBuilder', {
+            idString: tipologiaType,
+            title: 'Configurazione '+tipologiaType,
+            store:  tipologieStore,
+            plugins: { ptype: 'treeviewdragdrop', allowParentInserts: true},
+            callerObject: this
+
+        }); 
+        //CREO IL PANNELLO
+        var panel = panelBuilder.buildTreePanel();
         this.getPanelId = function ()
         {
-            return panelId;
-        }
+            return panel.getId();
+        };
+        panel.addListener ('itemdblclick', this.aggiungi, this);
         
-        
-        
-        
-        var arrayPanelById = Ext.ComponentQuery.query('#'+panelId);
-        
-        if (arrayPanelById.length > 0)
-        {
-            arrayPanelById[0].destroy();
-        }
-        
-        
-        var tipologieStore = storeBuilder.buildStore (tipologiaType);
-                                
-        
-        var view = Ext.widget('tipologieManage', {
-                                                    itemId: panelId,
-                                                    title: 'Configurazione '+tipologiaType,
-                                                    store: tipologieStore,
-                                                    viewConfig: {
-                                                                    id: viewId,
-                                                                    plugins: { ptype: 'treeviewdragdrop', allowParentInserts: true},
-                                                                    listeners: {
-                                                                                    drop: function(nodeEl, data) {
-                                                                                        //this.getTreeStore().sync() //DA ATTIVARE SE STORE TYPE rest
-                                                                                    }
-                                                                                }
-                                                                }                                                                                 
-                                                  });
-        
-        view.addListener ('itemdblclick', this.aggiungi, this);
-        
-        
-    	var toolbar = this.createToolbar();
-    	view.addDocked(toolbar);
-    	
-    	view.getView( )
-    	
-        this.getMainPanel().add(view);
-        this.getMainPanel().setActiveTab(view);
     	
     	
     },
     
-    createToolbar : function ()
-    {
-      var toolbar = Ext.create('Ext.toolbar.Toolbar', {
-                    dock: 'top',
-                    items: [
-                                {
-                                    text: 'Aggiungi',
-                                    scope: this,
-                                    icon: '/bundles/fdtadmin/images/icons/add.png',
-                                    cls: 'x-btn-text-icon',
-                                    id: 'aggiungi'+this.getTipologia().get('tipologiaType'),
-                                    handler: function (){
-                                        this.aggiungi()
-                                    }
-                                },
-                                '-',
-                                {
-                                    text: 'Salva',
-                                    scope: this,
-                                    icon: '/bundles/fdtadmin/images/icons/accept.png',
-                                    cls: 'x-btn-text-icon',
-                                    id: 'salva'+this.getTipologia().get('tipologiaType'),
-                                    handler: function (){
-                                        this.salva()
-                                    }
-                                },
-                                '-'
-                            ]
-                    });
-
-      return toolbar;
-        
-    },
+    
     
     aggiungi: function (grid, record)
     {

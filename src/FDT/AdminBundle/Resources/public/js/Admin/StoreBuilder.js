@@ -79,11 +79,23 @@ Ext.define('Admin.StoreBuilder', {
             return model;
         }
         
+        var myRoot = Ext.create(model, {
+            id: idRoot,
+            checked: null,
+            expanded: true,
+            root: true,
+            isFirst: true,
+            leaf: false
+            
+        });
+        myRoot.set(this.getRootField(), this.getRootValue());
+        
         
         var store = Ext.define(name, {
             extend: 'Admin.store.BaseTreeStore',
             storeId: idStore,
             model: model,
+            //root: myRoot,
             proxy:
                     {
                         id: idProxy,
@@ -96,15 +108,10 @@ Ext.define('Admin.StoreBuilder', {
                     }
         });
         
+        
+        
         var store = Ext.create(store);
-        var root = Ext.create(model, {
-            id: idRoot,
-            expanded: true,
-            leaf: false
-            
-        });
-        root.set(this.getRootField(), this.getRootValue());
-        store.setRootNode(root);
+        store.setRootNode(myRoot);
         return store;
         
         

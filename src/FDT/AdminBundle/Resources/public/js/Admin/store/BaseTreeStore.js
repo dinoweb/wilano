@@ -1,7 +1,7 @@
 Ext.define('Admin.store.BaseTreeStore',
 {
     extend: 'Ext.data.TreeStore',    
-    autoLoad: true,
+    autoLoad: false,
     autoSync: true,
     root: 
 	{

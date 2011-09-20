@@ -3,9 +3,12 @@ Ext.application({
     requires:
     [
         'Admin.view.Viewport',
+        'Admin.view.BaseTreePanel',
         'Admin.model.BaseModel',
         'Admin.store.BaseTreeStore',
-        'Admin.StoreBuilder'
+        'Admin.StoreBuilder',
+        'Admin.PanelBuilder'
+        
     ],
 
     controllers:
