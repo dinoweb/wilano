@@ -10,10 +10,13 @@ Ext.define('Admin.store.BaseTreeStore',
 	},
 	proxy:
 	{
-            type:'rest',            
+            type:'ajax',            
             reader: {
-            			type: 'json'
-                    }
-    }
+			    type: 'json'
+            },
+            writer: {
+                type: 'json',
+            }
+    }   
 
 });

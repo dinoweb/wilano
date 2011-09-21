@@ -55,7 +55,7 @@ Ext.define('Metadata.view.Tipologie.EditTranslation', {
     getLanguagesStore: function ()
     {
         
-        var storeLanguages = Ext.data.StoreManager.lookup('Metadata.store.Languages');
+        var storeLanguages = Ext.data.StoreManager.lookup('Admin.store.Languages');
         return storeLanguages;
         
     }

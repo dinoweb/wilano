@@ -2,12 +2,23 @@ Ext.application({
 
     requires:
     [
+        //VIEW
         'Admin.view.Viewport',
         'Admin.view.BaseTreePanel',
+        
+        //MODEL
         'Admin.model.BaseModel',
+        'Admin.model.Config',
+        
+        //STORE
         'Admin.store.BaseTreeStore',
+        'Admin.store.Config',
+        
+        //BUILDER
         'Admin.StoreBuilder',
-        'Admin.PanelBuilder'
+        'Admin.PanelBuilder',
+        'Admin.ConfigBuilder'
+        
         
     ],
 
@@ -18,12 +29,11 @@ Ext.application({
     
 
     ],
-    
-    
+        
     stores:
     [
         'Admin.store.SiNo',
-        'Metadata.store.Languages'
+        'Admin.store.Languages'
     ],
     
 

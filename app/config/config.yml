@@ -82,14 +82,51 @@ stof_doctrine_extensions:
 fdt_doctrine_ext: ~
 
 fdt_admin:
-    pathConfig:
-      paths:
+    configuration:
+      Tipologie:
         -
-          name: Metadata
-          path: /bundles/fdtmetadata/js/Metadata
+          name: id
+          type: string
         -
-          name: Parties
-          path: /bundles/fdtparties/js/Parties
+          name: uniqueName
+          type: string
+        -
+          name: uniqueSlug
+          type: string
+        -
+          name: isActive
+          type: boolean
+          defaultValue: true
+        -
+          name: isPrivate
+          type: boolean
+          defaultValue: false
+        -
+          name: isConfigurable
+          type: boolean
+          defaultValue: false
+        -
+          name: hasPeriod
+          type: boolean
+          defaultValue: false
+        -
+          name: leaf
+          type: boolean
+          defaultValue: true
+        -
+          name: isNew
+          type: boolean
+          defaultValue: false
+        -
+          name: it_it-name
+          type: string
+        -
+          name: en_us-name
+          type: string
+        
+          
+          
+        
           
     menuConfig:
       metadata:

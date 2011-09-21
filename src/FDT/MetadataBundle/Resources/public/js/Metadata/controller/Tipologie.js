@@ -15,19 +15,34 @@ Ext.define('Metadata.controller.Tipologie', {
         'Tipologie.Edit',
         'Tipologie.EditTranslation'
     ],
-    
-     
-
-    
+        
     init: function() {
                   
-          this.createPanel();
+          this.loadConfigurationsAndPanel();
                    
+    },
+    
+    loadConfigurationsAndPanel: function ()
+    {
+        var storeModelConfigConstruct = Ext.create('Admin.ConfigBuilder', {
+            extraParams: {configFor: 'Tipologie'},
+            autoLoad: false,
+            id: 'Tiplogie'
+        });
+        
+        var store = storeModelConfigConstruct.getConfigStore();
+        store.load({
+            scope: this,
+            callback: function(records, operation, success) {
+                this.createPanel(store);
+            }
+            
+        });  
     },
     
     
         
-    createPanel: function()
+    createPanel: function(modelStore)
     {  
         var tipologiaType = this.getTipologia().get('tipologiaType');
         
@@ -37,7 +52,9 @@ Ext.define('Metadata.controller.Tipologie', {
             urlRead: 'metadata/'+tipologiaType+'/getTipologie',
             urlUpdate: 'metadata/'+tipologiaType+'/updateTipologie',
             rootField: 'uniqueName',
-            rootValue: tipologiaType
+            rootValue: tipologiaType,
+            configFor: 'Tipologie',
+            modelStore: modelStore
         
         });
         this.getStoreBuilder = function ()
@@ -55,7 +72,7 @@ Ext.define('Metadata.controller.Tipologie', {
             plugins: { ptype: 'treeviewdragdrop', allowParentInserts: true},
             callerObject: this
 
-        }); 
+        });
         //CREO IL PANNELLO
         var panel = panelBuilder.buildTreePanel();
         this.getPanelId = function ()

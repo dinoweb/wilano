@@ -19,20 +19,20 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('fdt_admin');
 
-        $this->addPathSection($rootNode);
+        $this->addConfigSection($rootNode);
         $this->addMenuSection($rootNode);
 
         return $treeBuilder;
     }
 
-    private function addPathSection(ArrayNodeDefinition $rootNode)
+    private function addConfigSection(ArrayNodeDefinition $rootNode)
     {
         $rootNode
             ->children()
-                ->arrayNode('pathConfig')
+                ->arrayNode('configuration')
                     ->addDefaultsIfNotSet()
                     ->children()
-                        ->arrayNode('paths')
+                        ->arrayNode('Tipologie')
                             ->requiresAtLeastOneElement ()
                             ->prototype('variable')->end()
                         ->end()

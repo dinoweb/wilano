@@ -53,6 +53,7 @@ Ext.define('Admin.PanelBuilder', {
     {
         if (this.getIsUnique())
         {
+            
            var arrayPanelById = Ext.ComponentQuery.query('#'+panelId);
         
            if (arrayPanelById.length > 0)

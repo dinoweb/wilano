@@ -21,8 +21,8 @@ class FDTAdminExtension extends Extension
     	$loader->load('services.yml');
     	
     	$container->setParameter('manage_menu.config', $config['menuConfig']);
-    	    	
-    	$container->setParameter('bundles_config.config', $config['pathConfig']);
+    	    	    	
+    	$container->setParameter('bundles_config.config', $config['configuration']);
     	
     }
     

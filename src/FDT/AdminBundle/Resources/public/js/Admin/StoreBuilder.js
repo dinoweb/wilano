@@ -7,7 +7,9 @@ Ext.define('Admin.StoreBuilder', {
         rootValue: 'contenuto',
         proxyParamName: 'type',
         proxyParam: 'tipo',
-        proxyType: 'ajax'
+        proxyType: 'ajax',
+        configFor: 'Tipologie',
+        modelStore: null
     },
     
     constructor: function(config) {
@@ -16,10 +18,41 @@ Ext.define('Admin.StoreBuilder', {
         return this;
     },
     
+    getConfig: function (typeOfConfig)
+    {
+        var storeConfig = Ext.create('Admin.ConfigBuilder', {
+            extraParams: {configFor: this.getConfigFor(), configType: typeOfConfig},
+            autoLoad: false,
+            id: this.getConfigFor()+'-'+typeOfConfig
+        });
+        
+        var store = storeConfig.getConfigStore();
+        store.load({
+            scope: this,
+            callback: function(records, operation, success) {
+                store.each(this.addField);
+            }
+            
+        });        
+        
+    },
+    
+    addField: function (record)
+    {
+        this.getMyFields().addAll(record.raw);
+        console.log(record.raw);
+        
+    },
+    
     getFields: function ()
     {
-        var fields = 
-        [
+        var configStore = this.getModelStore();
+        console.log(configStore.count());
+        configStore.getProxy().getReader().rawData;
+        
+        
+        var fields = configStore.getProxy().getReader().rawData;
+        /**[
                 {name: 'id', type: 'string'},
                 {name: 'uniqueName', type: 'string'},
                 {
@@ -49,7 +82,7 @@ Ext.define('Admin.StoreBuilder', {
                 {
                     name: 'it_it-name', type: 'string'
                 }
-        ];
+        ];**/
         
         return fields;
     },
@@ -69,11 +102,15 @@ Ext.define('Admin.StoreBuilder', {
         {
             return idStore;
         }
+                
         var idModel = 'idModel'+this.getIdString();
         var idRoot  = 'idRoot'+this.getIdString();
         var idProxy  = 'idProxy'+this.getIdString();
+        var idReader  = 'idReader'+this.getIdString();
+        var idWriter  = 'idWriter'+this.getIdString();
         
         var model = this.modelFactory(idModel, this.getFields());
+
         this.getModel = function ()
         {
             return model;
@@ -88,9 +125,11 @@ Ext.define('Admin.StoreBuilder', {
             leaf: false
             
         });
+
         myRoot.set(this.getRootField(), this.getRootValue());
         
-        
+         
+
         var store = Ext.define(name, {
             extend: 'Admin.store.BaseTreeStore',
             storeId: idStore,
@@ -100,6 +139,14 @@ Ext.define('Admin.StoreBuilder', {
                     {
                         id: idProxy,
                         type: this.getProxyType(),
+                        reader: {
+            			    id: idReader,
+            			    type: 'json'
+                        },
+                        writer: {
+                            id: idWriter,
+                            type: 'json'
+                        },
                         api: {
                             read    : this.getUrlRead(),
                             update  : this.getUrlUpdate(),
@@ -108,7 +155,7 @@ Ext.define('Admin.StoreBuilder', {
                     }
         });
         
-        
+       
         
         var store = Ext.create(store);
         store.setRootNode(myRoot);
@@ -119,6 +166,7 @@ Ext.define('Admin.StoreBuilder', {
     
     buildStore: function (name)
     {
+
         return this.treeStoreFactory(name);
         
     }

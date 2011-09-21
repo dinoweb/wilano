@@ -6,6 +6,6 @@ FDTAdmin_getMenu:
     pattern:  /admin/{bundleName}/getMenu
     defaults: { _controller: FDTAdminBundle:GetMenu:index}
 
-admin_bundlesConfig:
-    pattern:  /admin/getBundlesConfig/
-    defaults: { _controller: FDTAdminBundle:GetBundlesConfig:index }
+admin_config:
+    pattern:  /admin/getConfig/
+    defaults: { _controller: FDTAdminBundle:GetConfig:index }
