@@ -9,7 +9,8 @@ Ext.define('Admin.StoreBuilder', {
         proxyParam: 'tipo',
         proxyType: 'ajax',
         configFor: 'Tipologie',
-        modelStore: null
+        configStore: null,
+        fieldsCollection: null
     },
     
     constructor: function(config) {
@@ -18,73 +19,28 @@ Ext.define('Admin.StoreBuilder', {
         return this;
     },
     
-    getConfig: function (typeOfConfig)
-    {
-        var storeConfig = Ext.create('Admin.ConfigBuilder', {
-            extraParams: {configFor: this.getConfigFor(), configType: typeOfConfig},
-            autoLoad: false,
-            id: this.getConfigFor()+'-'+typeOfConfig
-        });
-        
-        var store = storeConfig.getConfigStore();
-        store.load({
-            scope: this,
-            callback: function(records, operation, success) {
-                store.each(this.addField);
-            }
-            
-        });        
-        
-    },
     
-    addField: function (record)
+    addFieldToCollection: function (record)
     {
-        this.getMyFields().addAll(record.raw);
-        console.log(record.raw);
+        if(record.get('useForModel'))
+        {
+            this.getFieldsCollection().add({
+                name: record.get('name'),
+                type: record.get('type'),
+                defaultValue: record.get('defaultValue')
+            });
+        }
         
     },
     
     getFields: function ()
     {
-        var configStore = this.getModelStore();
-        console.log(configStore.count());
-        configStore.getProxy().getReader().rawData;
-        
-        
-        var fields = configStore.getProxy().getReader().rawData;
-        /**[
-                {name: 'id', type: 'string'},
-                {name: 'uniqueName', type: 'string'},
-                {
-                    name: 'uniqueSlug', type: 'string'
-                },
-                {
-                    name: 'isActive', type: 'boolean', defaultValue: true
-                },
-                {
-                    name: 'isPrivate', type: 'boolean', defaultValue: false
-                },
-                {
-                    name: 'isConfigurable', type: 'boolean', defaultValue: false
-                },
-                {
-                    name: 'hasPeriod', type: 'boolean', defaultValue: false
-                },
-                {
-                    name: 'leaf', type: 'boolean', defaultValue: true
-                },
-                {
-                    name: 'isNew', type: 'boolean', defaultValue: false
-                },
-                {
-                    name: 'en_us-name', type: 'string', label: 'Palla'
-                },
-                {
-                    name: 'it_it-name', type: 'string'
-                }
-        ];**/
-        
-        return fields;
+        var configStore = this.getConfigStore();
+        this.setFieldsCollection(new Ext.util.MixedCollection(false, function(el){
+                                                                        return el.name;
+                                                                    }));
+        configStore.each(this.addFieldToCollection, this);
+        return this.getFieldsCollection().items;
     },
     
     // Generate a model dynamically, provide fields

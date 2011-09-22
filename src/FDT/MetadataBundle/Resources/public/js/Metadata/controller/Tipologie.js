@@ -54,7 +54,7 @@ Ext.define('Metadata.controller.Tipologie', {
             rootField: 'uniqueName',
             rootValue: tipologiaType,
             configFor: 'Tipologie',
-            modelStore: modelStore
+            configStore: modelStore
         
         });
         this.getStoreBuilder = function ()
@@ -70,7 +70,8 @@ Ext.define('Metadata.controller.Tipologie', {
             title: 'Configurazione '+tipologiaType,
             store:  tipologieStore,
             plugins: { ptype: 'treeviewdragdrop', allowParentInserts: true},
-            callerObject: this
+            callerObject: this,
+            configStore: modelStore
 
         });
         //CREO IL PANNELLO

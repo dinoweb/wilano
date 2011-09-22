@@ -6,7 +6,9 @@ Ext.define('Admin.PanelBuilder', {
         plugins: null,
         idTargetPanel: 'mainPanel',
         isUnique: true,
-        callerObject: null
+        callerObject: null,
+        configStore: null,
+        columsCollection: null
     },
     
     constructor: function(config) {
@@ -15,17 +17,32 @@ Ext.define('Admin.PanelBuilder', {
         return this;
     },
     
+    addColumnToCollection: function (record)
+    {
+        if(record.get('useForColumn'))
+        {
+            this.getColumsCollection().add({
+                    xtype: record.get('xtype'),
+                    text: record.get('text'),
+                    flex: record.get('flex'),
+                    sortable: record.get('sortable'),
+                    dataIndex: record.get('name'),
+                    hidden: record.get('hidden')
+            });
+            
+        }
+        
+        
+    },
+    
     getColumns: function ()
     {
-        var columns = [
-	    	{xtype: 'treecolumn', text: 'Tipologia', flex: 2, sortable: false, dataIndex: 'uniqueName'},
-		    {text: 'Attivo', flex: 1, sortable: false, dataIndex: 'isActive'},
-		    {text: 'Privato', flex: 1, sortable: false, dataIndex: 'isPrivate'},
-		    {text: 'Configurabile', flex: 1, sortable: false, dataIndex: 'isConfigurable'},
-		    {text: 'Ha Periodo', flex: 1, sortable: false, dataIndex: 'hasPeriod'}
-		];
-        
-        return columns;
+        var configStore = this.getConfigStore();
+        this.setColumsCollection(new Ext.util.MixedCollection(false, function(el){
+                                                                        return el.dataIndex;
+                                                                    }));
+        configStore.each(this.addColumnToCollection, this);
+        return this.getColumsCollection().items;
     },
     
     // Generate a model dynamically, provide fields
@@ -39,11 +56,15 @@ Ext.define('Admin.PanelBuilder', {
         return Ext.define(this.getIdString(), {
             extend: 'Admin.view.BaseTreePanel',
             id: panelId,
+            columns: this.getColumns(),
+            columnLines: true,
             title: this.getTitle(),
             store: this.getStore(),
             viewConfig: {
-                id: viewId,
-                plugins: this.getPlugins()
+                    id: viewId,
+                    stripeRows: true,
+                    padding: '0 0 0 5',
+                    plugins: this.getPlugins()
                 }
             } 
         );
