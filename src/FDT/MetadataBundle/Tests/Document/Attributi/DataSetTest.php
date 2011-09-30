@@ -111,8 +111,7 @@ class DataSetTest extends TestCase
         
         $dataSet = $this->getSaver()->save($dataSet);
         
-        $this->assertTrue ($dataSet->hasOption($option));
-        
+            
         $this->assertEquals (3, $dataSet->getOptions()->count ());
         
         $arrayOptions = $dataSet->getOptions()->toArray ();

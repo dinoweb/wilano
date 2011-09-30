@@ -9,3 +9,7 @@ FDTMetadataBundle_getLanguages:
 FDTMetadataBundle_getTipologie:
     pattern:  /admin/{bundleName}/{tipologia}/getTipologie
     defaults: { _controller: FDTMetadataBundle:getTipologie:index}
+
+FDTMetadataBundle_updateTipologie:
+    pattern:  /admin/{bundleName}/{tipologia}/updateTipologie/{id}
+    defaults: { _controller: FDTMetadataBundle:updateTipologie:index, id: false}

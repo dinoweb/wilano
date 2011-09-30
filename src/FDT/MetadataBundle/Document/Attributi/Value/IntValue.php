@@ -2,14 +2,19 @@
 namespace FDT\MetadataBundle\Document\Attributi\Value;
 
 use FDT\MetadataBundle\Document\Attributi\BaseAttributoValue;
+use Symfony\Component\Validator\Constraints as Assert;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
 /**
- * @MongoDB\EmbeddedDocument
+ * @MongoDB\Document
  */
 class IntValue extends BaseAttributoValue
 {
-    /** @MongoDB\float */
-    private $value;
+    /**
+     * @MongoDB\float
+     * @Assert\NotBlank()
+     * @var float
+     */
+    protected $value;
 }

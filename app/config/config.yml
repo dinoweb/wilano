@@ -1,6 +1,7 @@
 imports:
     - { resource: parameters.ini }
     - { resource: security.yml }
+    - { resource: '@FDTAdminBundle/Resources/config/config.yml' } 
     
 framework:
     secret:          %secret%
@@ -74,154 +75,11 @@ stof_doctrine_extensions:
         default: ~
     mongodb:
         default:
-          translatable : true
           sluggable: true
           timestampable: true
+          translatable : true
+          
 
 
 fdt_doctrine_ext: ~
-
-fdt_admin:
-    configuration:
-      Tipologie:
-        -
-          name: id
-          type: string
-          text: Id
-          flex: 1
-          sortable: false
-          hidden: true
-          useForColumn: true
-          useForModel: true
-        -
-          name: uniqueName
-          type: string
-          xtype: treecolumn
-          text: Tipologia
-          flex: 2
-          sortable: false
-          hidden: false
-          useForColumn: true
-          useForModel: true
-          
-        -
-          name: uniqueSlug
-          type: string
-          text: Unique Slug
-          sortable: false
-          hidden: true
-          useForColumn: true
-          useForModel: true
-        -
-          name: isActive
-          type: boolean
-          defaultValue: true
-          text: Attivo
-          flex: 1
-          sortable: false
-          hidden: false
-          useForColumn: true
-          useForModel: true
-        -
-          name: isPrivate
-          type: boolean
-          defaultValue: false
-          text: Privato
-          flex: 1
-          sortable: false
-          hidden: false
-          useForColumn: true
-          useForModel: true
-        -
-          name: isConfigurable
-          type: boolean
-          defaultValue: false
-          text: Configurabile
-          flex: 1
-          sortable: false
-          hidden: false
-          useForColumn: true
-          useForModel: true
-        -
-          name: hasPeriod
-          type: boolean
-          defaultValue: false
-          text: Ha Periodo
-          flex: 1
-          sortable: false
-          hidden: false
-          useForColumn: true
-          useForModel: true
-        -
-          name: leaf
-          type: boolean
-          defaultValue: true
-          useForColumn: false
-          useForModel: true
-        -
-          name: isNew
-          type: boolean
-          defaultValue: false
-          useForColumn: false
-          useForModel: true
-        -
-          name: it_it-name
-          type: string
-          useForColumn: false
-          useForModel: true
-        -
-          name: en_us-name
-          type: string
-          useForColumn: false
-          useForModel: true
-        
-          
-          
-        
-          
-    menuConfig:
-      metadata:
-        -
-          id: metadataContenuti
-          text: Contenuti
-          leaf: false
-          action: open
-          children:
-            -
-              id: metadataTipologieContenuti
-              text: Tipologie
-              leaf: false
-              action: open
-              children:
-                -
-                  id: metadataProdotti
-                  text: Prodotti
-                  leaf: true
-                  tipologiaType: Prodotti
-                  controller: Metadata.controller.Tipologie
-                -
-                  id: metadataSchede
-                  text: Schede
-                  leaf: true
-                  tipologiaType: Schede
-                  controller: Metadata.controller.Tipologie 
-            
-
-      parties:
-        -
-          id: Parties
-          text: Parties
-          leaf: true
-          action: Parties.controller.Init
-        -
-          id: PartiesSettingsMenu
-          text: Settings
-          leaf: false
-          action: open
-          children:
-            -
-              id: PariesRoles
-              text: Ruoli
-              leaf: true
-              action: Palla
       

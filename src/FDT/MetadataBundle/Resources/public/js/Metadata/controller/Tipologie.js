@@ -46,6 +46,11 @@ Ext.define('Metadata.controller.Tipologie', {
     {  
         var tipologiaType = this.getTipologia().get('tipologiaType');
         
+        this.getModelStore = function ()
+        {
+            return modelStore;
+        }
+        
         //INIZIALIZZO COSTRUISCO LO STORE
         var storeBuilder = Ext.create ('Admin.StoreBuilder', {
             idString: tipologiaType,
@@ -53,6 +58,7 @@ Ext.define('Metadata.controller.Tipologie', {
             urlUpdate: 'metadata/'+tipologiaType+'/updateTipologie',
             rootField: 'uniqueName',
             rootValue: tipologiaType,
+            proxyType: 'rest',
             configFor: 'Tipologie',
             configStore: modelStore
         
@@ -64,12 +70,13 @@ Ext.define('Metadata.controller.Tipologie', {
         //CREO LO STORE        
         var tipologieStore = storeBuilder.buildStore (tipologiaType);
         
+        
         //INIZIALIZZO IL PANNELLO
         var panelBuilder = Ext.create ('Admin.PanelBuilder', {
             idString: tipologiaType,
             title: 'Configurazione '+tipologiaType,
             store:  tipologieStore,
-            plugins: { ptype: 'treeviewdragdrop', allowParentInserts: true},
+            plugins: { ptype: 'treeviewdragdrop', allowParentInserts: true, allowContainerDrop: true, enableDrag: true},
             callerObject: this,
             configStore: modelStore
 
@@ -90,10 +97,21 @@ Ext.define('Metadata.controller.Tipologie', {
     
     aggiungi: function (grid, record)
     {
+        var tipologiaType = this.getTipologia().get('tipologiaType');
+        
+        //INIZIALIZZO IL PANNELLO
+        var formBuilder = Ext.create ('Admin.FormBuilder', {
+            idString: tipologiaType,
+            configStore: this.getModelStore()
+
+        });
+        var form = formBuilder.getForm ();
+        
         var view = Ext.ClassManager.instantiateByAlias('widget.tipologieEdit', {
                                                                                     id: 'editTipologia'+this.getTipologia().get('tipologiaType'),
                                                                                     title: 'Tipologia '+this.getTipologia().get('tipologiaType'),
-                                                                                    tipologia: this.getTipologia()                                                                                  
+                                                                                    tipologia: this.getTipologia(),
+                                                                                    items: form                                                                               
                                                                                   });
         
         if (Ext.typeOf(record) === 'undefined')
@@ -102,11 +120,12 @@ Ext.define('Metadata.controller.Tipologie', {
            record.set('uniqueName', 'Palla new');
         }
         
-        view.down('form').loadRecord(record);
+        form.loadRecord(record);
+        form.focusFirstField (true);
         
         this.application.resizeWindow(view);
         
-        view.query('#buttonSave')[0].addListener ('click', this.tipologiaEdit, this);
+        Ext.getCmp('buttonSave').addListener ('click', this.tipologiaEdit, this);
                                 
     },
     
@@ -131,6 +150,11 @@ Ext.define('Metadata.controller.Tipologie', {
                {
                    record.setId (this.application.generateUniqid());
                    record.set ('isNew', true);
+                   record.set ('leaf', false);
+                   record.set ('expanded', true);
+                   record.set ('loaded', true);
+                   
+                    
                    var tree = Ext.ComponentQuery.query('#'+this.getPanelId())[0];
                    var selModel = tree.getSelectionModel();
                    var node = selModel.getLastSelected();
@@ -141,13 +165,14 @@ Ext.define('Metadata.controller.Tipologie', {
                    node.appendChild(record);
                    tree.getView().refresh();
                    node.expand();
+                   selModel.select(record);
 
                };
 
                win.destroy();
                this.salva();
             } else {
-                console.log('invalid');
+                win.down('form').focusFirstField (true);
             }
             
         

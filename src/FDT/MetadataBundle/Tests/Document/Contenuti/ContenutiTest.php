@@ -17,40 +17,6 @@ class ContenutoTest extends TestCase
 
     }
 
-
-    public function testNuovoProdotto ()
-    {
-        $orecchini =  $this->getDm()->getRepository('FDT\MetadataBundle\Document\Tipologie\Prodotti')->getByMyUniqueId('orecchini');
-        
-        $prodotto = new Prodotti ();
-        $prodotto->setNames (array('it_it'=>'Palla it', 'en_us'=>'Palla en'));
-        $prodotto->setTipologia ($orecchini);
-        
-        $attributo = new BaseAttributoValue;
-        $attributo->addNames (array('it_it'=>'Palla it', 'en_us'=>'Palla en'));
-        $attributo->addSlugs (array('it_it'=>'palla-it', 'en_us'=>'palla-it'));
-        $attributo->setConfigId ('configid');
-        $attributo->setAttributoId ('setAttributoId');
-        $attributo->setAttributoTipo ('setAttributoTipo');
-        $attributo->setUniqueSlug ('setUniqueSlug');
-        $attributo->setValue ('setValue');
-        $attributo = $this->getSaver()->save($attributo, FALSE);
-        
-        $prodotto->addAttributoValue ($attributo);
-        
-        $prodotto = $this->getSaver()->save($prodotto);
-        
-        
-        $prodottoResult =  $this->getDm()->getRepository('FDT\MetadataBundle\Document\Contenuti\Prodotti')->findOneById(1);
-        
-        $this->assertArrayHasKey('en_us', $prodottoResult->getNames());
-        $this->assertEquals('Palla it', $prodottoResult->getNameLocale('it_it'));
-        $this->assertEquals('Palla it', $prodottoResult->getNameLocale('culo'));
-        $this->assertEquals('Palla en', $prodottoResult->getNameLocale('en_us'));
-        
-        $this->assertEquals(1, $prodottoResult->getAttributi()->count());
-        
-    }
     
     public function testNuovoProdottoDaForm()
     {
@@ -105,6 +71,7 @@ class ContenutoTest extends TestCase
        $contenuto = $contenutoBuilder->build ($formData);
        
        $prodottoResult =  $this->getDm()->getRepository('FDT\MetadataBundle\Document\Contenuti\Prodotti')->findOneById(1);
+       
        
        $this->assertArrayHasKey('en_us', $prodottoResult->getNames());
        $this->assertEquals('Palla', $prodottoResult->getNameLocale('it_it'));

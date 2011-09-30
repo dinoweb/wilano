@@ -21,7 +21,6 @@ class DataSet implements Translatable
     /** 
     * @MongoDB\String
     * @Gedmo\Translatable
-    * @Gedmo\Sluggable(slugField="slug")
     * @Assert\NotBlank()
     * 
     */
@@ -29,21 +28,20 @@ class DataSet implements Translatable
     
     /** 
     * @MongoDB\String
-    * @Gedmo\Sluggable(slugField="uniqueSlug")
     * @Assert\NotBlank()
     */
     private $uniqueName;
     
     /**
      * @MongoDB\String
-     * @Gedmo\Slug
+     * @Gedmo\Slug(fields={"uniqueName"})
      */
     private $uniqueSlug;
     
     /**
      * @MongoDB\String
      * @Gedmo\Translatable
-     * @Gedmo\Slug(updatable=false)
+     * @Gedmo\Slug(fields={"name"}, updatable=false)
      */
     private $slug;
     
@@ -211,11 +209,19 @@ class DataSet implements Translatable
         if ($key !== false) {
             return $this->options->get($key);
         }
+        return false;
     }
 
     public function hasOption(Option $option)
     {
-        return $this->options->contains($option);
+        $option = $this->getOption($option);
+        
+        if ($option)
+        {
+            return true;
+        }
+        
+        return false;
     }
     
     

@@ -45,7 +45,6 @@ Ext.define('Admin.PanelBuilder', {
         return this.getColumsCollection().items;
     },
     
-    // Generate a model dynamically, provide fields
     panelFactory: function () {
             
         var panelId = 'manage'+this.getIdString();
@@ -64,7 +63,12 @@ Ext.define('Admin.PanelBuilder', {
                     id: viewId,
                     stripeRows: true,
                     padding: '0 0 0 5',
-                    plugins: this.getPlugins()
+                    plugins: this.getPlugins(),
+                    listeners: {
+                            drop: function(nodeEl, data) {
+                            this.getStore().sync() //DA ATTIVARE SE STORE TYPE rest
+                        }
+                    }
                 }
             } 
         );

@@ -25,3 +25,6 @@ monolog:
 
 assetic:
     use_controller: true
+
+doctrine_mongodb:
+    default_database: wilano_dev

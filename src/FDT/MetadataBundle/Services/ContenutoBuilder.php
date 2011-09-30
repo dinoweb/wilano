@@ -125,7 +125,7 @@ class ContenutoBuilder
         $attributoValueDocument = new $valueDocumentClass();
         $attributoValueDocument->build ($attributoData);
         
-        $attributoValueDocument = $this->getDocumentSaver()->save($attributoValueDocument, FALSE);
+        //$attributoValueDocument = $this->getDocumentSaver()->save($attributoValueDocument, FALSE);
                 
         return $attributoValueDocument;
         

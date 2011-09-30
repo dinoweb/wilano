@@ -7,7 +7,7 @@ use Gedmo\Translatable\Translatable;
 use FDT\MetadataBundle\Validator as MyAssert;
 
 /**
- * @MongoDB\Document(collection="attributi", repositoryClass="FDT\MetadataBundle\Document\Attributi\AttributiRepository"))
+ * @MongoDB\Document(collection="attributi", repositoryClass="FDT\MetadataBundle\Document\Attributi\AttributiRepository")
  * @Gedmo\TranslationEntity(class="FDT\MetadataBundle\Document\Attributi\AttributoTranslation")
  */
  
@@ -19,7 +19,6 @@ class Attributo implements Translatable
     /** 
     * @MongoDB\String
     * @Gedmo\Translatable
-    * @Gedmo\Sluggable(slugField="slug")
     * @Assert\NotBlank()
     * 
     */
@@ -27,21 +26,20 @@ class Attributo implements Translatable
     
     /** 
     * @MongoDB\String
-    * @Gedmo\Sluggable(slugField="uniqueSlug")
     * @Assert\NotBlank()
     */
     private $uniqueName;
     
     /**
      * @MongoDB\String
-     * @Gedmo\Slug
+     * @Gedmo\Slug(fields={"uniqueName"})
      */
     private $uniqueSlug;
     
     /**
      * @MongoDB\String
      * @Gedmo\Translatable
-     * @Gedmo\Slug(updatable=false)
+     * @Gedmo\Slug(fields={"name"}, updatable=false)
      */
     private $slug;
     

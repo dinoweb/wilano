@@ -77,7 +77,7 @@ class BaseContenuto implements BaseNode
     private $name = array ();
     
     /**
-    * @MongoDB\EmbedMany(targetDocument="FDT\MetadataBundle\Document\Attributi\BaseAttributoValue")
+    * @MongoDB\ReferenceMany(targetDocument="FDT\MetadataBundle\Document\Attributi\BaseAttributoValue", cascade={"all"})
     */
     private $attributiValues = array();
     

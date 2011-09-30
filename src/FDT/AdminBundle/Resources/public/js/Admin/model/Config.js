@@ -11,8 +11,15 @@ Ext.define('Admin.model.Config',
         {name: 'flex', type: 'int', defaultValue: 1},
         {name: 'sortable', type: 'boolean', defaultValue: false},
         {name: 'hidden', type: 'boolean', defaultValue: true},
+        {name: 'fieldXtype', type: 'string', defaultValue: 'textfield'},
+        {name: 'allowBlank', type: 'boolean', defaultValue: false},
+        {name: 'anchor', type: 'string', defaultValue: '100%'},
+        {name: 'store', type: 'string', defaultValue: null},
+        {name: 'isTranslated', type: 'boolean', defaultValue: false},
+        {name: 'queryMode', type: 'string', defaultValue: 'local'},
         {name: 'useForColumn', type: 'boolean', defaultValue: true},
-        {name: 'useForModel', type: 'boolean', defaultValue: true}
+        {name: 'useForModel', type: 'boolean', defaultValue: true},
+        {name: 'useForForm', type: 'boolean', defaultValue: false}
         
     ]
 });

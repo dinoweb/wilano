@@ -5,6 +5,7 @@ Ext.application({
         //VIEW
         'Admin.view.Viewport',
         'Admin.view.BaseTreePanel',
+        'Admin.view.BaseFormPanel',
         
         //MODEL
         'Admin.model.BaseModel',
@@ -17,7 +18,8 @@ Ext.application({
         //BUILDER
         'Admin.StoreBuilder',
         'Admin.PanelBuilder',
-        'Admin.ConfigBuilder'
+        'Admin.ConfigBuilder',
+        'Admin.FormBuilder'
         
         
     ],

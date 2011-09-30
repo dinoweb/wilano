@@ -51,32 +51,182 @@ class TipologiaTest extends TestCase
         
     }
     
-    public function testTranslation()
+    public function testNotAddSameChild ()
     {
         $tipologia1 = new Prodotti ();
         $tipologia1->setName ('Gioielli');
         $tipologia1->setUniqueName ('Gioielli');
+        
+        $tipologia2 = new Prodotti ();
+        $tipologia2->setName ('Orecchini');
+        $tipologia2->setUniqueName ('Orecchini');
+        
+        $nodeRoot = $this->getTreeManager ()->getNode ($tipologia1);
+                        
+        $nodeRoot->addChild ($tipologia2);
+        
+        $this->getSaver()->save($tipologia2);
+        
+        $descendants = $nodeRoot->getDescendants ();
+        
+        $this->assertEquals (1, $descendants->count());
+        
+        $nodeRoot->addChild ($tipologia2);
+        $nodeRoot->addChild ($tipologia2);
+                
+        $this->getSaver()->save($tipologia2);
+        
+        $repository = $this->getDm()->getRepository('FDT\MetadataBundle\Document\Tipologie\Prodotti');
+        
+        $this->getDm()->clear ();
+        
+        $tipologiaResult = $repository->getByMyUniqueId ($tipologia1->getId(), 'id');
+        
+        $nodeTipologiaResult = $this->getTreeManager ()->getNode ($tipologiaResult);
+        
+        
+        
+        $descendants = $nodeTipologiaResult->getDescendants (1);
+        
+        $ancestors = $tipologia2->getAncestors ();
+        
+        $this->assertEquals (1, $descendants->count());
+        $this->assertEquals (1, $ancestors->count());
+        
+        
+    }
+    
+    public function testMovingNode ()
+    {
+        $repository = $this->getDm()->getRepository('FDT\MetadataBundle\Document\Tipologie\Prodotti');
+        
+        $gioielli = new Prodotti ();
+        $gioielli->setName ('Gioielli');
+        $gioielli->setUniqueName ('Gioielli');
+        
+        $nodeGioielli = $this->getTreeManager ()->getNode ($gioielli);
+        
+        $collane = new Prodotti ();
+        $collane->setName ('Collane');
+        $collane->setUniqueName ('Collane');
+        
+        $nodeCollane = $this->getTreeManager ()->getNode ($collane);
+        
+        
+        $orecchini = new Prodotti ();
+        $orecchini->setName ('Orecchini');
+        $orecchini->setUniqueName ('Orecchini');
+        
+        $nodeOrecchini = $this->getTreeManager ()->getNode ($orecchini);
+        
+        //AGGIUNGO COLLANE A GIOIELLI
+        $nodeGioielli->addChild($collane);
+        
+        $this->getSaver()->save($collane);
+        
+        $this->assertEquals (1, $nodeGioielli->getDescendants()->count());
+        $this->assertEquals (1, $collane->getAncestors()->count());
+        
+        
+        //AGGIUNGO ORECCHINI A GIOIELLI
+        $nodeGioielli->addChild($orecchini);
+        
+        $this->getSaver()->save($orecchini);
+        
+        $this->assertEquals (2, $nodeGioielli->getDescendants()->count());
+        $this->assertEquals (1, $collane->getAncestors()->count());
+        $this->assertEquals (1, $orecchini->getAncestors()->count());
+        
+        //SPOSTO ORECCHINI SOTTO COLLANE
+        $nodeCollane->addChild ($orecchini);
+        $this->getSaver()->save($orecchini);
+        
+        $this->assertEquals (1, $nodeGioielli->getDescendants()->count());
+        $this->assertEquals (1, $collane->getAncestors()->count());
+        $this->assertEquals (2, $orecchini->getAncestors()->count());
+        
+        //SPOSTO ORECCHINI SOTTO GIOIELLI
+        $nodeGioielli->addChild ($orecchini);
+        $this->getSaver()->save($orecchini);
+        
+        $this->assertEquals (2, $nodeGioielli->getDescendants()->count());
+        $this->assertEquals (1, $collane->getAncestors()->count());
+        $this->assertEquals (1, $orecchini->getAncestors()->count());
+        
+        //SPOSTO ORECCHINI SOTTO COLLANE
+        $nodeCollane->addChild ($orecchini);
+        $this->getSaver()->save($orecchini);
+        
+        $this->assertEquals (1, $nodeGioielli->getDescendants()->count());
+        $this->assertEquals (2, $nodeGioielli->getDescendants('ALL')->count());
+        $this->assertEquals (1, $collane->getAncestors()->count());
+        $this->assertEquals (2, $orecchini->getAncestors()->count());
+        
+        //SPOSTO COLLANE COME ROOT
+        $nodeCollane->setAsRoot();
+        $this->getSaver()->save($collane);
+        
+        $this->assertEquals (0, $nodeGioielli->getDescendants()->count());
+        $this->assertEquals (1, $nodeCollane->getDescendants()->count());
+        $this->assertEquals (0, $collane->getAncestors()->count());
+        $this->assertEquals (1, $orecchini->getAncestors()->count());
+        
+        
+        
+    
+    
+    
+    }
+    
+    public function testTranslation()
+    {
+        $tipologia1 = new Prodotti ();
+        $tipologia1->setName ('Gioielli');
+        $tipologia1->setDescrizione ('Gioielli');
+        $tipologia1->setUniqueName ('Gioielli uniqueName');
        	
        	$tipologia1 = $this->getSaver()->save($tipologia1);
        	
        	$tipologia1->setTranslatableLocale('it_it');
        	$tipologia1->setName('Gioielli It');
-        $tipologia1->setUniqueName ('Gioielli it');
         
         $tipologia1 = $this->getSaver()->save($tipologia1);
         
         $repository = $this->getDm()->getRepository('FDT\MetadataBundle\Document\Tipologie\TipologiaTranslation');
         $translations = $repository->findTranslations($tipologia1);
-        
-        print_r ($translations);
-                
-        $this->assertEquals ('Gioielli', $tipologia1->getName());
-        $this->assertEquals ('gioielli-it', $tipologia1->getUniqueSlug());
-        $this->assertEquals ('gioielli', $tipologia1->getSlug());
+                        
+        $this->assertEquals ('Gioielli It', $tipologia1->getName());
+        $this->assertEquals ('gioielli-it', $tipologia1->getSlug());
         $this->assertArrayHasKey('en_us', $translations);
         $this->assertArrayHasKey('it_it', $translations);
         $this->assertEquals('gioielli', $translations['en_us']['slug']);
         $this->assertEquals('gioielli-it', $translations['it_it']['slug']);
+    }
+    
+    public function testUpdateTipologia ()
+    {
+        $tipologia1 = new Prodotti ();
+        $tipologia1->setName ('Gioielli');
+        $tipologia1->setDescrizione ('Gioielli');
+        $tipologia1->setUniqueName ('Gioielli uniqueName');
+        
+        $tipologia1 = $this->getSaver()->save($tipologia1);
+        
+        $repository = $this->getDm()->getRepository('FDT\MetadataBundle\Document\Tipologie\Prodotti');
+        
+        $tipologia2 = $repository->getByMyUniqueId ($tipologia1->getId(), 'id');
+        
+        $this->assertEquals('Gioielli uniqueName', $tipologia2->getUniqueName());
+        
+        $tipologia2->setUniqueName ('Palla uniqueName');
+        
+        $tipologia2 = $this->getSaver()->save($tipologia2);
+        
+        $tipologia3 = $repository->findOneById ($tipologia2->getId(), 'id');
+        
+        $this->assertEquals('Palla uniqueName', $tipologia3->getUniqueName());
+                
+        //$tipologia1->setUniqueName ('Gioielli uniqueName');
     }
     
     private function getTreeManager ()
@@ -89,17 +239,6 @@ class TipologiaTest extends TestCase
         return $this->getDm(); 
     }
     
-    public function tearDown ()
-    {
     
-        $job = $this->getDm()->createQueryBuilder('FDT\MetadataBundle\Document\Tipologie\Prodotti')
-               ->findAndRemove()
-               ->getQuery()
-               ->execute();
-    
-    
-    
-    }
-
 
 }

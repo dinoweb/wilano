@@ -46,12 +46,16 @@ class DocumentSaver
         {
           throw new ValidatorErrorException ($errorList->__toString ());
         }
+
         $this->getDm()->persist($document);
         
         if ($doFlush)
         {
-           $this->getDm()->flush (); 
+           $this->getDm()->flush ();
+           $this->getDm()->refresh($document);
         }
+        
+        
        	
        	//$this->getDm()->clear();
        	

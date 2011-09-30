@@ -20,32 +20,37 @@ class AttributoTest extends TestCase
        	$attributo->setUniqueName ('Peso visibile');
        	$attributo->setTipo ('weight');
        	
+       	$attributoResult = $this->getSaver()->save($attributo);
+       	//$this->getDm()->persist($attributo);
+       	//$this->getDm()->flush();
+       	//$this->getDm()->clear();
        	
-       	$this->getSaver()->save($attributo);
+       	$this->assertTrue ($attributo->isActive());
        	
-       	$attributoResult = $this->getDm()->createQueryBuilder('FDT\MetadataBundle\Document\Attributi\Attributo')
+       	$attributo2 = $this->getDm()->createQueryBuilder('FDT\MetadataBundle\Document\Attributi\Attributo')
                            ->field('uniqueSlug')->equals('peso-visibile')
                            ->getQuery()
                            ->getSingleResult();
+       	
+       	$attributo2->setIsActive(false);
+       	$attributo2->setName ('Peso');
+       	$attributo2->setDescrizione ('Descrizione');
+       	$attributo2->setUniqueName ('Peso visibile aggiornato');
+       	$attributoResult2 = $this->getSaver()->save($attributo2);
        	       	
-       	$this->assertTrue ($attributoResult->isActive());
+       	$this->assertFalse ($attributo2->isActive());
        	
-       	$attributoResult->setIsActive(false);
-       	$attributo->setName ('Peso');
-       	$this->getSaver()->save($attributoResult);
-       	
-       	
-       	$attributoResult2 = $this->getDm()->createQueryBuilder('FDT\MetadataBundle\Document\Attributi\Attributo')
-                           ->field('uniqueSlug')->equals('peso-visibile')
+       	$attributo3 = $this->getDm()->createQueryBuilder('FDT\MetadataBundle\Document\Attributi\Attributo')
+                           ->field('uniqueSlug')->equals('peso-visibile-aggiornato')
                            ->getQuery()
                            ->getSingleResult();
-       	       	
-       	$this->assertFalse ($attributoResult2->isActive());
+       	$this->assertFalse ($attributo3->isActive());
+       	
        	
        	$repository = $this->getDm()->getRepository('FDT\MetadataBundle\Document\Attributi\AttributoTranslation');
         $translations = $repository->findTranslations($attributoResult2);
                 
-        $this->assertEquals('peso-visibile', $attributoResult2->getUniqueSlug());
+        $this->assertEquals('peso-visibile-aggiornato', $attributoResult2->getUniqueSlug());
         $this->assertArrayHasKey('en_us', $translations);
         $this->assertEquals('peso', $translations['en_us']['slug']);
         
@@ -57,7 +62,6 @@ class AttributoTest extends TestCase
        	$attributo2->setDescrizione ('descrizione');
        	
        	$this->getSaver()->save($attributo2);
-       	$this->getDm()->clear();
        	
        	$this->assertEquals('peso-visibile-1', $attributo2->getUniqueSlug());
        	
@@ -76,7 +80,6 @@ class AttributoTest extends TestCase
        	
        	$this->getSaver()->save($attributo);
 
-       	$this->getDm()->clear();
        	
        	
        	$repository = $this->getDm()->getRepository('FDT\MetadataBundle\Document\Attributi\AttributoTranslation');
@@ -181,7 +184,7 @@ class AttributoTest extends TestCase
        	
        	$attributoSaved = $this->getSaver()->save($attributo);
        	
-       	$this->assertEquals('peso-palla', $attributoSaved->getSlug());
+       	$this->assertEquals('peso', $attributoSaved->getSlug());
        	
        	$attributoResult = $this->getDm()->createQueryBuilder('FDT\MetadataBundle\Document\Attributi\Attributo')
                            ->field('uniqueSlug')->equals('peso-visibile')
@@ -189,7 +192,7 @@ class AttributoTest extends TestCase
                            ->getSingleResult();
         
         
-       	$this->assertEquals('peso-palla', $attributoResult->getSlug());
+       	$this->assertEquals('peso', $attributoResult->getSlug());
        	
        	
     }

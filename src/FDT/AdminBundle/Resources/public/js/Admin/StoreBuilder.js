@@ -44,7 +44,7 @@ Ext.define('Admin.StoreBuilder', {
     },
     
     // Generate a model dynamically, provide fields
-    modelFactory: function (name, fields) {
+    modelFactory: function (name, fields, root) {
         return Ext.define(name, {
             extend: 'Admin.model.BaseModel',
             fields: fields
@@ -71,26 +71,18 @@ Ext.define('Admin.StoreBuilder', {
         {
             return model;
         }
-        
-        var myRoot = Ext.create(model, {
-            id: idRoot,
-            checked: null,
-            expanded: true,
-            root: true,
-            isFirst: true,
-            leaf: false
-            
-        });
-
-        myRoot.set(this.getRootField(), this.getRootValue());
-        
-         
-
+                 
         var store = Ext.define(name, {
             extend: 'Admin.store.BaseTreeStore',
             storeId: idStore,
             model: model,
-            //root: myRoot,
+            root: {
+                id: idRoot,
+                checked: null,
+                expanded: false,
+                isFirst: true,
+                leaf: false
+            },
             proxy:
                     {
                         id: idProxy,
@@ -103,6 +95,18 @@ Ext.define('Admin.StoreBuilder', {
                             id: idWriter,
                             type: 'json'
                         },
+                        afterRequest: function(request,success){
+                            if(request.method == 'PUT' && success){
+                                 Ext.Msg.alert('OK', 'Record aggiornato correttamente');
+                            }
+                            if(request.method == 'POST' && success){
+                                 Ext.Msg.alert('Ok', 'Record aggiunto correttamente');
+                            }
+                            if (!success){
+                                Ext.Msg.alert('KO', 'Record NON salvato');
+                            }
+                            
+                        },
                         api: {
                             read    : this.getUrlRead(),
                             update  : this.getUrlUpdate(),
@@ -114,7 +118,6 @@ Ext.define('Admin.StoreBuilder', {
        
         
         var store = Ext.create(store);
-        store.setRootNode(myRoot);
         return store;
         
         

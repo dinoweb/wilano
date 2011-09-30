@@ -35,7 +35,6 @@ class BaseTipologia implements BaseNode, Translatable
     /** 
     * @MongoDB\String
     * @Gedmo\Translatable
-    * @Gedmo\Sluggable(slugField="slug")
     * @Assert\NotBlank()
     * 
     */
@@ -43,8 +42,6 @@ class BaseTipologia implements BaseNode, Translatable
     
     /** 
     * @MongoDB\String
-    * @Gedmo\Translatable
-    * @Gedmo\Sluggable(slugField="uniqueSlug")
     * @Assert\NotBlank()
     * 
     */
@@ -54,16 +51,21 @@ class BaseTipologia implements BaseNode, Translatable
     /**
      * @MongoDB\String
      * @Gedmo\Translatable
-     * @Gedmo\Slug(updatable=false)
+     * @Gedmo\Slug(fields={"name"})
      */
     private $slug;
     
      /**
      * @MongoDB\String
-     * @Gedmo\Slug
+     * @Gedmo\Slug(fields={"uniqueName"})
      */
     private $uniqueSlug;
     
+    /**
+     * @MongoDB\String
+     * @Gedmo\Translatable
+     */
+    private $descrizione;
     
     /**
      * @MongoDB\ReferenceMany(targetDocument="BaseTipologia", cascade="all")
@@ -82,6 +84,18 @@ class BaseTipologia implements BaseNode, Translatable
     */
     protected $locale;
     
+    /** @MongoDB\Boolean*/
+    private $isActive = true;
+    
+    /** @MongoDB\Boolean*/
+    private $isPrivate = false;
+    
+    /** @MongoDB\Boolean*/
+    private $isConfigurable = false;
+    
+    /** @MongoDB\Boolean*/
+    private $hasPeriod = false;
+        
     
     /**
      * @MongoDB\ReferenceMany(targetDocument="FDT\MetadataBundle\Document\Attributi\Config", cascade="all", sort={"ordine"="asc"})
@@ -309,8 +323,24 @@ class BaseTipologia implements BaseNode, Translatable
         return $this->id;
     }
     
+    public function clearAncestors ()
+    {
+    
+        $this->ancestors = new ArrayCollection (array());
+    
+    }
+    
+    public function removeAncestor ($ancestor)
+    {
+        return $this->getAncestors()->removeElement($ancestor);
+    }
+    
     public function addAncestor($ancestor)
     {
+        if ($this->ancestors->contains($ancestor))
+        {
+            return false;
+        }
         $this->ancestors->add($ancestor);
     }
 
@@ -332,9 +362,14 @@ class BaseTipologia implements BaseNode, Translatable
         }
     }
     
-    public function setParent($ancestor)
+    public function removeParent()
+    {
+        $this->parent = NULL;
+    }
+    
+    public function setParent($parent)
     {       
-       $this->parent = $ancestor;
+       $this->parent = $parent;
     }
     
     public function getParent()
@@ -364,6 +399,20 @@ class BaseTipologia implements BaseNode, Translatable
     {
     
         $this->name = $name;
+    
+    }
+    
+    /**
+     * setDescrizione function.
+     * 
+     * @access public
+     * @param mixed $name
+     * @return void
+     */
+    public function setDescrizione ($descrizione)
+    {
+    
+        $this->descrizione = $descrizione;
     
     }
     
@@ -437,6 +486,47 @@ class BaseTipologia implements BaseNode, Translatable
         $arrayCalledClass = explode('\\', $calledClass);
         return $arrayCalledClass[count($arrayCalledClass) - 1];
     }
+    
+    public function setIsActive($value)
+    {
+        $this->isActive = $value;
+    }
+    
+    public function getIsActive()
+    {
+        return $this->isActive;
+    }
+    
+    public function setIsPrivate($value)
+    {
+        $this->isPrivate = $value;
+    }
+    
+    public function getIsPrivate()
+    {
+        return $this->isPrivate;
+    }
+    
+    public function setIsConfigurable($value)
+    {
+        $this->isConfigurable = $value;
+    }
+    
+    public function getIsConfigurable()
+    {
+        return $this->isConfigurable;
+    }
+    
+    public function setHasPeriod($value)
+    {
+        $this->hasPeriod = $value;
+    }
+    
+    public function getHasPeriod()
+    {
+        return $this->hasPeriod;
+    }
+    
     
 
 }

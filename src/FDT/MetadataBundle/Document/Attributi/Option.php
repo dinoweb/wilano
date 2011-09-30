@@ -20,7 +20,6 @@ class Option
     /** 
     * @MongoDB\String
     * @Gedmo\Translatable
-    * @Gedmo\Sluggable(slugField="slug")
     * @Assert\NotBlank()
     * 
     */
@@ -29,7 +28,7 @@ class Option
     /**
      * @MongoDB\String
      * @Gedmo\Translatable
-     * @Gedmo\Slug(updatable=false)
+     * @Gedmo\Slug(fields={"name"}, updatable=false)
      */
     protected $slug;
 

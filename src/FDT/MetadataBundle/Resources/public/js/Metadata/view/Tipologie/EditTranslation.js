@@ -1,22 +1,17 @@
 Ext.define('Metadata.view.Tipologie.EditTranslation', {
-    extend: 'Ext.TabPanel',
+    extend: 'Ext.form.FieldSet',
     alias: 'widget.tipologieEditTranslation',
     
-    title: 'Testi',
-    border: 1,
+    title: 'Traduzioni',
     xtype:'form',
-	closable: false,
-	minTabWidth: 115,
-	enableTabScroll: true,
+	collapsible: true,
 	autoScroll: false,
-	defaults: {autoHeight:true, bodyStyle:'padding:10px'},
-	deferredRender: false,
+	defaults: {autoHeight:true, bodyStyle:'padding:5px'},
 	anchor: '100%',
 	initComponent: function() {
 
 	    this.callParent(arguments);
         this.getTranslationForm();
-        this.setActiveTab(0);
 	    
 	},
 	

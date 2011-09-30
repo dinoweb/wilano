@@ -3,10 +3,19 @@ namespace FDT\MetadataBundle\Document\Attributi;
 
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * @MongoDB\EmbeddedDocument
+ * @MongoDB\Document(collection="attributi.value")
+ * @MongoDb\InheritanceType("SINGLE_COLLECTION")
+ * @MongoDb\DiscriminatorField(fieldName="type")
+ * @MongoDb\DiscriminatorMap({
+                                "HashValue"="FDT\MetadataBundle\Document\Attributi\Value\HashValue",
+                                "IntValue"="FDT\MetadataBundle\Document\Attributi\Value\IntValue",
+                                "MisuraValue"="FDT\MetadataBundle\Document\Attributi\Value\MisuraValue",
+                                "TextValue"="FDT\MetadataBundle\Document\Attributi\Value\TextValue"
+                            })
  */
 class BaseAttributoValue
 {
@@ -92,13 +101,8 @@ class BaseAttributoValue
      * @access private
      */
     private $name = array ();
-
-    /**
-     * @MongoDB\String
-     * @Assert\NotBlank()
-     * @var string
-     */
-    private $value;
+    
+    
 
     public function  __toString()
     {
@@ -341,8 +345,10 @@ class BaseAttributoValue
      */
     public function setValue($value)
     {
-        return $this->value = $value;
+        $this->value = $value;
     }
+    
+    
     
     /**
      * Get $value
