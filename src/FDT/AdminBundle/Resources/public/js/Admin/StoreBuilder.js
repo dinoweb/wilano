@@ -3,11 +3,12 @@ Ext.define('Admin.StoreBuilder', {
         idString: 'Manca id',
         urlRead: 'read',
         urlUpdate: 'update',
+        urlCreate: 'create',
         rootField: 'text',
         rootValue: 'contenuto',
         proxyParamName: 'type',
         proxyParam: 'tipo',
-        proxyType: 'ajax',
+        proxyType: 'rest',
         configFor: 'Tipologie',
         configStore: null,
         fieldsCollection: null
@@ -52,7 +53,19 @@ Ext.define('Admin.StoreBuilder', {
     },
     
     // Generate a model dynamically, provide fields
+    proxyFactory: function () {
+        return Ext.define('MyProxy', {
+            extend: 'Ext.data.proxy.Rest',
+            config: {
+                builderObject: this
+            }
+        });
+    },
+    
+    // Generate a model dynamically, provide fields
     treeStoreFactory: function (name) {
+        
+        var builderClass = this;
         var idStore = 'idStore'+this.getIdString();
         this.getIdStore = function ()
         {
@@ -71,10 +84,34 @@ Ext.define('Admin.StoreBuilder', {
         {
             return model;
         }
+        
+        var proxyConstructor = this.proxyFactory();
+        
+        var proxy = Ext.create(proxyConstructor, {
+                id: idProxy,
+                builderObject: this,
+                reader: {
+    			    id: idReader,
+    			    type: 'json'
+                },
+                writer: {
+                    id: idWriter,
+                    type: 'json'
+                },
+                afterRequest: this.manageResponse,
+                api: {
+                    read    : this.getUrlRead(),
+                    update  : this.getUrlUpdate(),
+                    create  : this.getUrlCreate(),
+                    destroy : this.getUrlUpdate()
+                }      
+        
+        });
                  
         var store = Ext.define(name, {
             extend: 'Admin.store.BaseTreeStore',
             storeId: idStore,
+            clearOnLoad: true,
             model: model,
             root: {
                 id: idRoot,
@@ -83,45 +120,67 @@ Ext.define('Admin.StoreBuilder', {
                 isFirst: true,
                 leaf: false
             },
-            proxy:
-                    {
-                        id: idProxy,
-                        type: this.getProxyType(),
-                        reader: {
-            			    id: idReader,
-            			    type: 'json'
-                        },
-                        writer: {
-                            id: idWriter,
-                            type: 'json'
-                        },
-                        afterRequest: function(request,success){
-                            if(request.method == 'PUT' && success){
-                                 Ext.Msg.alert('OK', 'Record aggiornato correttamente');
-                            }
-                            if(request.method == 'POST' && success){
-                                 Ext.Msg.alert('Ok', 'Record aggiunto correttamente');
-                            }
-                            if (!success){
-                                Ext.Msg.alert('KO', 'Record NON salvato');
-                            }
-                            
-                        },
-                        api: {
-                            read    : this.getUrlRead(),
-                            update  : this.getUrlUpdate(),
-                            create  : this.getUrlUpdate()
-                        }
-                    }
+            myReload: function (){
+                var updatedRecords = store.getUpdatedRecords();
+                var newRecords = store.getNewRecords();
+                var recordsToBeManaged = Ext.Array.merge (updatedRecords, newRecords);
+                console.log (recordsToBeManaged);
+            },
+            proxy: proxy
+                    
         });
         
        
         
         var store = Ext.create(store);
+        this.getStore = function(){
+            return store;
+        }
         return store;
         
         
     },
+    
+    refreshData: function ()
+    {
+        var updatedRecords = this.getStore().getUpdatedRecords();
+        var newRecords = this.getStore().getNewRecords();
+        var recordsToBeManaged = Ext.Array.merge (updatedRecords, newRecords);
+        if (recordsToBeManaged.length)
+        {
+            
+            lastRecord = recordsToBeManaged.pop();
+            node = this.getStore().getNodeById (lastRecord.getId( ));
+            if (node.parentNode)
+            {
+                this.getStore().load({ 
+                            action: 'read',
+                            scope: this,
+                            node: node.parentNode, 
+                            callback: function (){
+                                //console.log ('refresh');
+                            }
+                });    
+            }
+        }
+    },
+    
+    manageResponse: function(request,success){
+        
+        if(request.method == 'PUT' && success){
+             this.getBuilderObject ().refreshData();
+             Ext.Msg.alert('OK', this.getReader().jsonData['message']);
+        }
+        if(request.method == 'POST' && success){
+             this.getBuilderObject ().refreshData();
+             Ext.Msg.alert('OK', this.getReader().jsonData['message']);
+        }
+        if (!success){
+            Ext.Msg.alert('KO', 'Il server non risponde correttamente');
+        }
+        
+    },
+    
     
     buildStore: function (name)
     {

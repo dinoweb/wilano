@@ -30,7 +30,12 @@ class BaseTipologia implements BaseNode, Translatable
     /**
      * @MongoDB\Int
      */
-    private $level;
+    private $level = 0;
+    
+    /**
+     * @MongoDB\Int
+     */
+    private $index = 0;
     
     /** 
     * @MongoDB\String
@@ -39,6 +44,22 @@ class BaseTipologia implements BaseNode, Translatable
     * 
     */
     private $name;
+    
+    /**
+     * @var timestamp $created
+     *
+     * @MongoDB\Date
+     * @Gedmo\Timestampable(on="create")
+     */
+    private $created;
+
+    /**
+     * @var date $updated
+     *
+     * @MongoDB\Date
+     * @Gedmo\Timestampable(on="update")
+     */
+    private $updated;
     
     /** 
     * @MongoDB\String
@@ -311,6 +332,18 @@ class BaseTipologia implements BaseNode, Translatable
     }
     
     //METODI NECESSARI ALLA GESTIONE DEL TREE
+    public function setIndex($index)
+    {	
+        $this->index = $index;
+    }
+
+    
+    
+    public function getIndex()
+    {	
+        return $this->index;
+    }
+    
     
     public function getLevel()
     {	
@@ -525,6 +558,16 @@ class BaseTipologia implements BaseNode, Translatable
     public function getHasPeriod()
     {
         return $this->hasPeriod;
+    }
+    
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    public function getUpdated()
+    {
+        return $this->updated;
     }
     
     

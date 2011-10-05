@@ -63,15 +63,11 @@ Ext.define('Admin.PanelBuilder', {
                     id: viewId,
                     stripeRows: true,
                     padding: '0 0 0 5',
-                    plugins: this.getPlugins(),
-                    listeners: {
-                            drop: function(nodeEl, data) {
-                            this.getStore().sync() //DA ATTIVARE SE STORE TYPE rest
-                        }
-                    }
-                }
-            } 
-        );
+                    loadMask: true,
+                    plugins: this.getPlugins()
+            }
+        });
+                
     },
     
     removeSamePanel: function (panelId)

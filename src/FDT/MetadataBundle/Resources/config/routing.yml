@@ -11,5 +11,5 @@ FDTMetadataBundle_getTipologie:
     defaults: { _controller: FDTMetadataBundle:getTipologie:index}
 
 FDTMetadataBundle_updateTipologie:
-    pattern:  /admin/{bundleName}/{tipologia}/updateTipologie/{id}
-    defaults: { _controller: FDTMetadataBundle:updateTipologie:index, id: false}
+    pattern:  /admin/{bundleName}/{tipologia}/manageTipologie/{id}
+    defaults: { _controller: contenuti.manageTipologie:indexAction, id: false}

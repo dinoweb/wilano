@@ -1,6 +1,7 @@
 parameters:
     document_saver.class:               FDT\MetadataBundle\Services\DocumentSaver
     languages.class:                    FDT\MetadataBundle\Services\Languages
+    contenuti.manageTipologie:          FDT\MetadataBundle\Services\Controller\ManageTipologie
 
 services:
     
@@ -15,6 +16,14 @@ services:
     contenuti.languages:
         class:        %languages.class%
         arguments:    [%languages%]
+    
+    contenuti.response:
+        class:        Symfony\Component\HttpFoundation\Response
+    
+    contenuti.manageTipologie:
+        class:        %contenuti.manageTipologie%
+        scope:        request
+        arguments:    [@document_saver, @tree_manager, @request, @contenuti.response]
     
     contenuti.form_builder:
         class:        %form_builder_class%

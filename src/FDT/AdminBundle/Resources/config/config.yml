@@ -119,6 +119,13 @@ fdt_admin:
                     useForColumn: false
                     useForModel: true
                     useForForm: false
+                parentId:
+                    name: parentId
+                    type: string
+                    defaultValue: null
+                    useForColumn: false
+                    useForModel: true
+                    useForForm: false
 
     menuConfig:
         metadata:

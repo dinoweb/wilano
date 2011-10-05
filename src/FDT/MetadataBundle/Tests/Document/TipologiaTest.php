@@ -119,6 +119,12 @@ class TipologiaTest extends TestCase
         
         $nodeOrecchini = $this->getTreeManager ()->getNode ($orecchini);
         
+        $orecchiniArgento = new Prodotti ();
+        $orecchiniArgento->setName ('Orecchini Argento');
+        $orecchiniArgento->setUniqueName ('OrecchiniArgento');
+        
+        $nodeOrecchiniArgento = $this->getTreeManager ()->getNode ($orecchiniArgento);
+        
         //AGGIUNGO COLLANE A GIOIELLI
         $nodeGioielli->addChild($collane);
         
@@ -126,6 +132,7 @@ class TipologiaTest extends TestCase
         
         $this->assertEquals (1, $nodeGioielli->getDescendants()->count());
         $this->assertEquals (1, $collane->getAncestors()->count());
+        $this->assertEquals (0, $orecchini->getAncestors()->count());
         
         
         //AGGIUNGO ORECCHINI A GIOIELLI
@@ -136,6 +143,17 @@ class TipologiaTest extends TestCase
         $this->assertEquals (2, $nodeGioielli->getDescendants()->count());
         $this->assertEquals (1, $collane->getAncestors()->count());
         $this->assertEquals (1, $orecchini->getAncestors()->count());
+        
+        //AGGIUNGO ORECCHINI ARGENTO a ORECCHINI
+        $nodeOrecchini->addChild($orecchiniArgento);
+        
+        $this->getSaver()->save($orecchiniArgento);
+        
+        $this->assertEquals (2, $nodeGioielli->getDescendants()->count());
+        $this->assertEquals (3, $nodeGioielli->getDescendants('ALL')->count());
+        $this->assertEquals (1, $collane->getAncestors()->count());
+        $this->assertEquals (1, $orecchini->getAncestors()->count());
+        $this->assertEquals (2, $orecchiniArgento->getAncestors()->count());
         
         //SPOSTO ORECCHINI SOTTO COLLANE
         $nodeCollane->addChild ($orecchini);
@@ -158,9 +176,10 @@ class TipologiaTest extends TestCase
         $this->getSaver()->save($orecchini);
         
         $this->assertEquals (1, $nodeGioielli->getDescendants()->count());
-        $this->assertEquals (2, $nodeGioielli->getDescendants('ALL')->count());
+        $this->assertEquals (3, $nodeGioielli->getDescendants('ALL')->count());
         $this->assertEquals (1, $collane->getAncestors()->count());
         $this->assertEquals (2, $orecchini->getAncestors()->count());
+        $this->assertEquals (3, $orecchiniArgento->getAncestors()->count());
         
         //SPOSTO COLLANE COME ROOT
         $nodeCollane->setAsRoot();
@@ -170,6 +189,7 @@ class TipologiaTest extends TestCase
         $this->assertEquals (1, $nodeCollane->getDescendants()->count());
         $this->assertEquals (0, $collane->getAncestors()->count());
         $this->assertEquals (1, $orecchini->getAncestors()->count());
+        $this->assertEquals (2, $orecchiniArgento->getAncestors()->count());
         
         
         

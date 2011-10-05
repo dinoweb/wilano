@@ -2,7 +2,7 @@ Ext.define('Admin.store.BaseTreeStore',
 {
     extend: 'Ext.data.TreeStore',    
     autoLoad: false,
-    autoSync: true,
+    autoSync: false,
     root: 
 	{
 	   text: "Metadata",
@@ -10,7 +10,7 @@ Ext.define('Admin.store.BaseTreeStore',
 	},
 	proxy:
 	{
-            type:'ajax',            
+            type:'rest',            
             reader: {
 			    type: 'json'
             },

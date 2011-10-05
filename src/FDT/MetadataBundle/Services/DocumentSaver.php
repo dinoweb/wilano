@@ -17,7 +17,7 @@ class DocumentSaver
 	
 	}
     
-    private function getDm ()
+    public function getDm ()
     {
         
     	return $this->documentManager;

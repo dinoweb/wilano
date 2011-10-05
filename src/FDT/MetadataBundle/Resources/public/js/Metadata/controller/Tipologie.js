@@ -54,8 +54,9 @@ Ext.define('Metadata.controller.Tipologie', {
         //INIZIALIZZO COSTRUISCO LO STORE
         var storeBuilder = Ext.create ('Admin.StoreBuilder', {
             idString: tipologiaType,
-            urlRead: 'metadata/'+tipologiaType+'/getTipologie',
-            urlUpdate: 'metadata/'+tipologiaType+'/updateTipologie',
+            urlRead: 'metadata/'+tipologiaType+'/manageTipologie',
+            urlUpdate: 'metadata/'+tipologiaType+'/manageTipologie',
+            urlCreate: 'metadata/'+tipologiaType+'/manageTipologie',
             rootField: 'uniqueName',
             rootValue: tipologiaType,
             proxyType: 'rest',
@@ -76,7 +77,7 @@ Ext.define('Metadata.controller.Tipologie', {
             idString: tipologiaType,
             title: 'Configurazione '+tipologiaType,
             store:  tipologieStore,
-            plugins: { ptype: 'treeviewdragdrop', allowParentInserts: true, allowContainerDrop: true, enableDrag: true},
+            plugins: { ptype: 'treeviewdragdrop', allowParentInserts: true, allowContainerDrop: true, enableDrag: true, expandDelay: 20000},
             callerObject: this,
             configStore: modelStore
 
@@ -88,6 +89,8 @@ Ext.define('Metadata.controller.Tipologie', {
             return panel.getId();
         };
         panel.addListener ('itemdblclick', this.aggiungi, this);
+        panel.addListener('itemmove', this.salva , this);
+        panel.expandAll();
         
     	
     	
@@ -129,14 +132,16 @@ Ext.define('Metadata.controller.Tipologie', {
                                 
     },
     
+    
     salva: function ()
     {
         var store = Ext.data.StoreManager.lookup(this.getStoreBuilder().getIdStore());
-        store.sync();
-        
+        store.sync();        
+                
         
     },
     
+        
     tipologiaEdit: function(button) {
         var win    = button.up('window');
         if (win) {
