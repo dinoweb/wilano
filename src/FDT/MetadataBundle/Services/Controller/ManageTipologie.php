@@ -2,9 +2,6 @@
 
 namespace FDT\MetadataBundle\Services\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Request;
 
 class ManageTipologie
 {
@@ -14,12 +11,15 @@ class ManageTipologie
     private $treeManager;
     private $request;
     private $response;
+    private $languages;
+    private $requestData;
     
     
     public function __construct(\FDT\MetadataBundle\Services\DocumentSaver $documentSaver,
                                 \FDT\doctrineExtensions\NestedSet\TreeManager $treeManager, 
-                                Request $request,
-                                Response $response
+                                \Symfony\Component\HttpFoundation\Request $request,
+                                \Symfony\Component\HttpFoundation\Response $response,
+                                \FDT\MetadataBundle\Services\Languages $languagesManager
                                )
     {
         $this->documentSaver = $documentSaver;
@@ -27,91 +27,35 @@ class ManageTipologie
         $this->treeManager = $treeManager;
         $this->request = $request;
         $this->response = $response;
+        $this->languages = $languagesManager;
         
-    
+        $this->setRequestData ();
     
     }
-        
-    private function getLanguageFromString($string)
-    {
-        preg_match('/-([a-z]{2}_[a-z]{2})-([a-zA-Z]+$)/', $string, $matches);
-        return ($matches);
-    }
     
-    
-    private function normalizeData ($requestData)
+    private function setRequestData ()
     {
-        $arrayKeys = array_keys ($requestData);
-        $arrayTranslations = array('Translation'=>array());
-        
-        $arrayTranslationKeys= array_filter ($arrayKeys, function ($key) use ($requestData){
-                                                                    $translationStringNumber =  preg_match('/^Translation-/', $key);
-                                                                    
-                                                                    if ($translationStringNumber > 0)
-                                                                    {
-                                                                      return true; 
-                                                                    }
-   
-                                                                    return false;
-                                                                    
-                                                                }
-                                                    
-        );
-        
-        if (count ($arrayTranslationKeys) > 0)
+        $requestData = json_decode($this->request->getContent (), true);
+        if (!is_null($requestData))
         {
-            foreach ($arrayTranslationKeys as $translationKey)
-            {
-                $arrayTranslationString = $this->getLanguageFromString($translationKey);
-                $requestData['Translations'][$arrayTranslationString[1]][$arrayTranslationString[2]] = $requestData[$translationKey];
-                unset ($requestData[$translationKey]);
-            }
+            $this->requestData = $this->languages->normalizeTranslationsDataFromForm ($requestData);
         }
-        
-        
-        
-        return ($requestData);
         
     }
     
     private function getData ()
     {
-        $requestData = json_decode($this->request->getContent (), true);
-        $requestData = $this->normalizeData ($requestData);
-        return $requestData;
-    	
-    	    	
+        return $this->requestData;    	    	
     }
     
-    private function manageTree($tipologia, array $requestData)
+    private function saveTipologia($tipologia)
     {
-        $documentSaver = $this->documentSaver;
-        $repository = $this->documentManager->getRepository('FDT\\MetadataBundle\\Document\\Tipologie\\'.$this->getTipologia());
-        $treeManager = $this->treeManager;
         
-        //$tipologia = $documentSaver->save($tipologia);
+        $tipologiaOk = $this->treeManager->manageTreeMovements($tipologia, $this->getData(), $this->getRepository());
         
-        if ($requestData['parentId'] != 'idRoot'.$this->getTipologia())
-        {
+        $tipologia = $this->documentSaver->save($tipologiaOk);            
             
-            $parentRecord = $repository->getByMyUniqueId ($requestData['parentId'], 'id');
-                
-            $parentNode = $treeManager->getNode ($parentRecord);
-        
-            $parentNode->addChild ($tipologia);
-            
-            $tipologia = $documentSaver->save($tipologia);
-            
-        }
-        else
-        {
-            $nodeTipologia = $treeManager->getNode ($tipologia);
-            $nodeTipologia->setAsRoot ();
-            $tipologia = $documentSaver->save($tipologia);
-        }
-            
-            
-            return $tipologia;    
+        return $tipologia;    
     }
     
     private function getTipologie ($node)
@@ -150,13 +94,28 @@ class ManageTipologie
         
         if (isset($data['Translations']))
         {
+            $repository = $this->getTranslationRepository();
+            $useLocale = $this->languages->getUserLocale ();
+            
             foreach ($data['Translations'] as $langKey=>$arrayFields)
-            {
-                $tipologia->setTranslatableLocale($langKey);
+            {   
+                
                 foreach ($arrayFields as $key=>$value)
                 {
-                    $setFunction = 'set'.ucfirst($key);
-                    $tipologia->$setFunction($value);
+                    if ($useLocale == $langKey)
+                    {
+                        $setFunction = 'set'.ucfirst($key);
+                        $tipologia->$setFunction($value);
+                    
+                    }
+                    else
+                    {
+                        $repository->translate($tipologia, $key, $langKey, $value);
+                    }
+                    
+                    
+                    
+                    
                 }
                 
             }
@@ -164,6 +123,18 @@ class ManageTipologie
         }
         
         return  $tipologia; 
+    }
+    
+    private function getTranslationRepository ()
+    {
+        return $this->documentManager->getRepository('FDT\MetadataBundle\Document\Tipologie\TipologiaTranslation');
+    }
+    
+    private function getRepository ()
+    {
+    
+        return $this->documentManager->getRepository('FDT\\MetadataBundle\\Document\\Tipologie\\'.$this->getTipologia());
+        
     }
     
     private function prepareArray($tipologia)
@@ -187,23 +158,9 @@ class ManageTipologie
             $arrayTipologia['parentId'] = $tipologia->getParent ()->getId();
         }
         
-        $repository = $this->documentManager->getRepository('FDT\MetadataBundle\Document\Tipologie\TipologiaTranslation');
-        $translations = $repository->findTranslations($tipologia);
-        
-        if (count ($translations) > 0)
-        {   
-        //print_r($translations);         
-            foreach ($translations as $keyLang=>$arrayValue)
-            {
-                foreach ($arrayValue as $name=>$value)
-                {
-                    $stringLangName = 'Translation-'.$keyLang.'-'.$name;
-                    $arrayTipologia[$stringLangName] = $value;
-                }
-            }
-        }
-        
-        return $arrayTipologia;
+        $arrayTranslations = $this->languages->prepareTranslationDataForForms($tipologia, $this->getTranslationRepository());
+                
+        return array_merge($arrayTipologia, $arrayTranslations);
     }
     
     private function executeAdd()
@@ -213,7 +170,7 @@ class ManageTipologie
         $className = 'FDT\\MetadataBundle\\Document\\Tipologie\\'.$tipologia;
         $tipologia = new $className;
         $tipologia = $this->setDataTipologia ($tipologia, $requestData);
-        $tipologiaOk = $this->manageTree($tipologia, $requestData);
+        $tipologiaOk = $this->saveTipologia($tipologia);
         $response = array ('success'=>true, 'message'=>'Tipologie aggiornate con successo');
         return $response;        
         
@@ -225,7 +182,9 @@ class ManageTipologie
         $requestData = $this->getData();
         $tipologia = $repository->getByMyUniqueId ($requestData['id'], 'id');
         $tipologia = $this->setDataTipologia ($tipologia, $requestData);
-        $tipologiaOk = $this->manageTree($tipologia, $requestData);
+        $tipologiaOk = $this->saveTipologia($tipologia);
+        
+        //$tipologiaOk = $this->manageTree($tipologia, $requestData);
         $response = array ('success'=>true, 'message'=>'Tipologie aggiornate con successo');
         return $response;
     }

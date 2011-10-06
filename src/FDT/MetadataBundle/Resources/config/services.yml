@@ -15,7 +15,7 @@ services:
     
     contenuti.languages:
         class:        %languages.class%
-        arguments:    [%languages%]
+        arguments:    [%languages%, @session]
     
     contenuti.response:
         class:        Symfony\Component\HttpFoundation\Response
@@ -23,7 +23,7 @@ services:
     contenuti.manageTipologie:
         class:        %contenuti.manageTipologie%
         scope:        request
-        arguments:    [@document_saver, @tree_manager, @request, @contenuti.response]
+        arguments:    [@document_saver, @tree_manager, @request, @contenuti.response, @contenuti.languages]
     
     contenuti.form_builder:
         class:        %form_builder_class%

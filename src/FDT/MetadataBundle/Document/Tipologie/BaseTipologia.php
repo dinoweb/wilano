@@ -69,13 +69,6 @@ class BaseTipologia implements BaseNode, Translatable
     private $uniqueName;
     
     
-    /**
-     * @MongoDB\String
-     * @Gedmo\Translatable
-     * @Gedmo\Slug(fields={"name"})
-     */
-    private $slug;
-    
      /**
      * @MongoDB\String
      * @Gedmo\Slug(fields={"uniqueName"})
@@ -418,7 +411,7 @@ class BaseTipologia implements BaseNode, Translatable
     
     public function getStringForPath()
     {
-       return $this->getSlug();
+       return $this->getId();
     }
            
     /**
@@ -491,10 +484,6 @@ class BaseTipologia implements BaseNode, Translatable
     
     }
     
-    public function getSlug()
-    {
-        return $this->slug;
-    }
     
     
     /**

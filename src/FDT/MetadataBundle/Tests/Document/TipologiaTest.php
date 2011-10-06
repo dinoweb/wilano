@@ -216,11 +216,10 @@ class TipologiaTest extends TestCase
         $translations = $repository->findTranslations($tipologia1);
                         
         $this->assertEquals ('Gioielli It', $tipologia1->getName());
-        $this->assertEquals ('gioielli-it', $tipologia1->getSlug());
         $this->assertArrayHasKey('en_us', $translations);
         $this->assertArrayHasKey('it_it', $translations);
-        $this->assertEquals('gioielli', $translations['en_us']['slug']);
-        $this->assertEquals('gioielli-it', $translations['it_it']['slug']);
+        $this->assertEquals('Gioielli', $translations['en_us']['name']);
+        $this->assertEquals('Gioielli It', $translations['it_it']['name']);
     }
     
     public function testUpdateTipologia ()

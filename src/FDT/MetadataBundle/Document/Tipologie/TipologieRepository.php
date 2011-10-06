@@ -10,6 +10,7 @@ class TipologieRepository extends BaseRepository
     {
         $cursor = $this->createQueryBuilder()
                      ->field('level')->equals(0)
+                     ->sort ('index', 'asc')->sort('updated', 'desc')
                      ->getQuery()
                      ->execute();
         
