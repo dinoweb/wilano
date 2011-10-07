@@ -10,7 +10,7 @@ use FDT\AdminBundle\Tests\TestCase\TestCase;
 
 class TipologiaTest extends TestCase
 {
-
+	
     /**
      * 
      */
@@ -228,7 +228,7 @@ class TipologiaTest extends TestCase
         $tipologia1->setName ('Gioielli');
         $tipologia1->setDescrizione ('Gioielli');
         $tipologia1->setUniqueName ('Gioielli uniqueName');
-        
+                
         $tipologia1 = $this->getSaver()->save($tipologia1);
         
         $repository = $this->getDm()->getRepository('FDT\MetadataBundle\Document\Tipologie\Prodotti');
