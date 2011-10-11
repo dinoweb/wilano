@@ -2,10 +2,18 @@
 namespace FDT\MetadataBundle\Document\Attributi;
 
 use FDT\MetadataBundle\Document\BaseRepository;
-use FDT\MetadataBundle\Document\Attributi\Attributo;
-
 
 class AttributiRepository extends BaseRepository
 {    
-    
+    public function retriveRecords(array $limit)
+    {
+        $cursor = $this->createQueryBuilder()
+                     ->limit ($limit['limit'])->skip($limit['skip'])
+                     ->getQuery()
+                     ->execute();
+        
+        
+            
+        return $cursor;
+    }
 }

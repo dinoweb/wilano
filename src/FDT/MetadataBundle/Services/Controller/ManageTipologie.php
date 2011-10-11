@@ -27,16 +27,6 @@ class ManageTipologie extends AbstractRestController
     
     }
     
-    private function setRequestData ()
-    {
-        $requestData = json_decode($this->request->getContent (), true);
-        if (!is_null($requestData))
-        {
-            $this->requestData = $this->languages->normalizeTranslationsDataFromForm ($requestData);
-        }
-        
-    }
-    
     private function getData ()
     {
         return $this->requestData;    	    	

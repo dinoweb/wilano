@@ -26,20 +26,11 @@ class ManageAttributiController extends TestCase
         $this->assertEquals(200, $this->getClient()->getResponse()->getStatusCode());
         $this->assertTrue($this->getClient()->getResponse()->headers->contains('Content-Type', 'application/json'));
         
-        $arrayTipologie = json_decode ($this->getClient()->getResponse()->getContent(), true);
-                        
-       	$this->assertEquals(200, $this->getClient()->getResponse()->getStatusCode());
+        $arrayAttributi = json_decode ($this->getClient()->getResponse()->getContent(), true);
+                               	
+       	$this->assertEquals (1, count($arrayAttributi));
+       	$this->assertEquals ('Gioielli', $arrayAttributi[0]['uniqueName']);
        	
-       	$this->assertEquals (1, count($arrayTipologie));
-       	$this->assertEquals ('Gioielli', $arrayTipologie[0]['uniqueName']);
-       	
-       	//GET CHILDREN 
-       	$crawler = $this->getClient()->request('GET', '/admin/metadata/Prodotti/manageTipologie?node='.$arrayTipologie[0]['id']);
-       	
-       	$arrayTipologieChildren = json_decode ($this->getClient()->getResponse()->getContent(), true);
-       	       	
-       	$this->assertEquals (1, count($arrayTipologieChildren));
-       	$this->assertEquals ('Orecchini', $arrayTipologieChildren[0]['uniqueName']);
     }
     
     

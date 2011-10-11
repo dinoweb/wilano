@@ -29,7 +29,16 @@ abstract class AbstractRestController
     
     }
     
-    private function setRequestData ()
+    protected function getLimitData ()
+    {
+        $arrayLimit = array();
+        $arrayLimit['limit'] = $this->request->query->get('limit', 20);
+        $arrayLimit['skip'] = $this->request->query->get('start', 0);
+        
+        return $arrayLimit;
+    }
+    
+    protected function setRequestData ()
     {
         $requestData = json_decode($this->request->getContent (), true);
         if (!is_null($requestData))

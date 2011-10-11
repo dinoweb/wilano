@@ -5,6 +5,11 @@ namespace FDT\MetadataBundle\Services\Controller;
 class ManageAttributi extends AbstractRestController
 {
     
+    private function getRepository ()
+    {
+        return $this->documentManager->getRepository('FDT\\MetadataBundle\\Document\\Attributi\\Attributo');
+    }
+    
     protected function executeAdd()
     {
     }
@@ -15,6 +20,9 @@ class ManageAttributi extends AbstractRestController
     
     protected function executeGet()
     {
+        $arrayResponse = $this->getRepository()->retriveRecords ($this->getLimitData ());
+        return $arrayResponse->count ();
+        
     }
     
     protected function executeNone ()
