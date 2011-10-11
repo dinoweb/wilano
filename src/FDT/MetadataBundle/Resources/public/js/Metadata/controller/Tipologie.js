@@ -69,7 +69,7 @@ Ext.define('Metadata.controller.Tipologie', {
             return storeBuilder;
         }
         //CREO LO STORE        
-        var tipologieStore = storeBuilder.buildStore (tipologiaType);
+        var tipologieStore = storeBuilder.buildStore (tipologiaType, 'treeStore');
         
         
         //INIZIALIZZO IL PANNELLO
@@ -83,7 +83,7 @@ Ext.define('Metadata.controller.Tipologie', {
 
         });
         //CREO IL PANNELLO
-        var panel = panelBuilder.buildTreePanel();
+        var panel = panelBuilder.buildPanel('treePanel');
         this.getPanelId = function ()
         {
             return panel.getId();
@@ -110,13 +110,14 @@ Ext.define('Metadata.controller.Tipologie', {
         });
         var form = formBuilder.getForm ();
         
-        var view = Ext.ClassManager.instantiateByAlias('widget.tipologieEdit', {
-                                                                                    id: 'editTipologia'+this.getTipologia().get('tipologiaType'),
-                                                                                    title: 'Tipologia '+this.getTipologia().get('tipologiaType'),
-                                                                                    tipologia: this.getTipologia(),
-                                                                                    items: form                                                                               
-                                                                                  });
+        var view = Ext.create('Admin.view.BaseWindow', {
+                                                            id: 'editTipologia'+this.getTipologia().get('tipologiaType'),
+                                                            title: 'Tipologia '+this.getTipologia().get('tipologiaType'),
+                                                            items: form                                                                               
+                                                           }
+                                           );
         
+                
         if (Ext.typeOf(record) === 'undefined')
         {
            var record = Ext.create(this.getStoreBuilder().getModel());

@@ -3,17 +3,10 @@
 namespace FDT\MetadataBundle\Services\Controller;
 
 
-class ManageTipologie
+class ManageTipologie extends AbstractRestController
 {
-    private $tipologia;
-    private $documentSaver;
-    private $documentManager;
-    private $treeManager;
-    private $request;
-    private $response;
-    private $languages;
-    private $requestData;
-    
+
+    protected $treeManager;
     
     public function __construct(\FDT\MetadataBundle\Services\DocumentSaver $documentSaver,
                                 \FDT\doctrineExtensions\NestedSet\TreeManager $treeManager, 
@@ -22,14 +15,15 @@ class ManageTipologie
                                 \FDT\MetadataBundle\Services\Languages $languagesManager
                                )
     {
-        $this->documentSaver = $documentSaver;
-        $this->documentManager = $documentSaver->getDm();
-        $this->treeManager = $treeManager;
-        $this->request = $request;
-        $this->response = $response;
-        $this->languages = $languagesManager;
         
-        $this->setRequestData ();
+        parent::__construct (
+            $documentSaver,
+            $request,
+            $response,
+            $languagesManager
+        );
+        
+        $this->treeManager = $treeManager;
     
     }
     
@@ -163,7 +157,7 @@ class ManageTipologie
         return array_merge($arrayTipologia, $arrayTranslations);
     }
     
-    private function executeAdd()
+    protected function executeAdd()
     {
         $requestData = $this->getData();
         $tipologia = $this->getTipologia();
@@ -176,7 +170,7 @@ class ManageTipologie
         
     }
     
-    private function executeUpdate()
+    protected function executeUpdate()
     {
         $repository = $this->documentManager->getRepository('FDT\\MetadataBundle\\Document\\Tipologie\\'.$this->getTipologia());
         $requestData = $this->getData();
@@ -189,7 +183,7 @@ class ManageTipologie
         return $response;
     }
     
-    private function executeGet()
+    protected function executeGet()
     {
         $arrayResponse = array();
         
@@ -207,35 +201,11 @@ class ManageTipologie
         return $arrayResponse;
     }
     
-    private function executeNone ()
+    protected function executeNone ()
     {
         return false;
     }
     
-    private function executeAction ()
-    {
-        $method = $this->request->getMethod();
-        
-        switch ($method) {
-            case 'POST':
-                $result = $this->executeAdd ();
-            break;
-            
-            case 'PUT':
-                $result = $this->executeUpdate ();
-            break;
-            
-            case 'GET':
-                $result = $this->executeGet ();
-            break;
-            
-            default:
-                $result = $this->executeNone ();
-            break;
-        }
-        
-        return $result;
-    }
     
     private function setTipologia($tipologia)
     {

@@ -1,7 +1,9 @@
 parameters:
     document_saver.class:               FDT\MetadataBundle\Services\DocumentSaver
     languages.class:                    FDT\MetadataBundle\Services\Languages
-    contenuti.manageTipologie:          FDT\MetadataBundle\Services\Controller\ManageTipologie
+    contenuti.abstractRestClass:             FDT\MetadataBundle\Services\Controller\AbstractRestController
+    contenuti.manageTipologieClass:          FDT\MetadataBundle\Services\Controller\ManageTipologie
+    contenuti.manageAttributiClass:          FDT\MetadataBundle\Services\Controller\ManageAttributi
 
 services:
     
@@ -20,10 +22,21 @@ services:
     contenuti.response:
         class:        Symfony\Component\HttpFoundation\Response
     
+    contenuti.abstractRest:
+        class:        %contenuti.abstractRestClass%
+        abstract:     true
+        scope:        request
+        arguments:    [@document_saver, @request, @contenuti.response, @contenuti.languages]
+    
     contenuti.manageTipologie:
-        class:        %contenuti.manageTipologie%
+        class:        %contenuti.manageTipologieClass%
         scope:        request
         arguments:    [@document_saver, @tree_manager, @request, @contenuti.response, @contenuti.languages]
+    
+    contenuti.manageAttributi:
+        parent:       contenuti.abstractRest 
+        class:        %contenuti.manageAttributiClass%
+        scope:        request    
     
     contenuti.form_builder:
         class:        %form_builder_class%

@@ -5,7 +5,9 @@ Ext.application({
         //VIEW
         'Admin.view.Viewport',
         'Admin.view.BaseTreePanel',
+        'Admin.view.BaseGridPanel',
         'Admin.view.BaseFormPanel',
+        'Admin.view.BaseWindow',
         
         //MODEL
         'Admin.model.BaseModel',
@@ -13,6 +15,7 @@ Ext.application({
         
         //STORE
         'Admin.store.BaseTreeStore',
+        'Admin.store.BaseStore',
         'Admin.store.Config',
         
         //BUILDER

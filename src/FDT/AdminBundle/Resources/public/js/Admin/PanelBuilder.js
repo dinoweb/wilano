@@ -45,28 +45,73 @@ Ext.define('Admin.PanelBuilder', {
         return this.getColumsCollection().items;
     },
     
-    panelFactory: function () {
-            
+    getPanelId: function ()
+    {
         var panelId = 'manage'+this.getIdString();
+        return panelId;
+    },
+    
+    getViewId: function ()
+    {
         var viewId = 'viewManage'+this.getIdString();
-        
-        this.removeSamePanel (panelId);
-        
+        return viewId;
+    },
+    
+    
+    generateTreePanel: function ()
+    {        
         return Ext.define(this.getIdString(), {
             extend: 'Admin.view.BaseTreePanel',
-            id: panelId,
+            id: this.getPanelId(),
             columns: this.getColumns(),
             columnLines: true,
             title: this.getTitle(),
             store: this.getStore(),
             viewConfig: {
-                    id: viewId,
+                    id: this.getViewId(),
                     stripeRows: true,
                     padding: '0 0 0 5',
                     loadMask: true,
                     plugins: this.getPlugins()
             }
         });
+    
+    },
+    
+    generateGridPanel: function ()
+    {
+        
+        return Ext.define(this.getIdString(), {
+            extend: 'Admin.view.BaseGridPanel',
+            id: this.getPanelId(),
+            columns: this.getColumns(),
+            columnLines: true,
+            title: this.getTitle(),
+            store: this.getStore(),
+            viewConfig: {
+                    id: this.getViewId(),
+                    stripeRows: true,
+                    loadMask: true,
+                    plugins: this.getPlugins()
+            }
+        });
+    
+    },
+    
+    panelFactory: function (tipo) {
+        this.removeSamePanel (this.getPanelId());    
+        if (tipo == 'treePanel')
+        {
+            var panel = this.generateTreePanel ();
+        }
+        
+        
+        if (tipo == 'gridPanel')
+        {
+            var panel = this.generateGridPanel ();
+        }
+        
+        return panel;
                 
     },
     
@@ -142,9 +187,9 @@ Ext.define('Admin.PanelBuilder', {
         
     },
     
-    buildTreePanel: function ()
+    buildPanel: function (tipo)
     {
-        var panelConstruct = this.panelFactory();
+        var panelConstruct = this.panelFactory(tipo);
         var panel = Ext.create(panelConstruct);
     	this.addToolbar(panel);
         this.insertPanel (panel);

@@ -6,10 +6,10 @@ FDTMetadataBundle_getLanguages:
     pattern:  /admin/{bundleName}/getLanguages
     defaults: { _controller: FDTMetadataBundle:getLanguages:index}
 
-FDTMetadataBundle_getTipologie:
-    pattern:  /admin/{bundleName}/{tipologia}/getTipologie
-    defaults: { _controller: FDTMetadataBundle:getTipologie:index}
-
-FDTMetadataBundle_updateTipologie:
+FDTMetadataBundle_manageTipologie:
     pattern:  /admin/{bundleName}/{tipologia}/manageTipologie/{id}
     defaults: { _controller: contenuti.manageTipologie:indexAction, id: false}
+
+FDTMetadataBundle_manageAttributi:
+    pattern:  /admin/{bundleName}/manageAttributi/{id}
+    defaults: { _controller: contenuti.manageAttributi:indexAction, id: false}

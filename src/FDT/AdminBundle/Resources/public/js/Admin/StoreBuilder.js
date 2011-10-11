@@ -4,12 +4,6 @@ Ext.define('Admin.StoreBuilder', {
         urlRead: 'read',
         urlUpdate: 'update',
         urlCreate: 'create',
-        rootField: 'text',
-        rootValue: 'contenuto',
-        proxyParamName: 'type',
-        proxyParam: 'tipo',
-        proxyType: 'rest',
-        configFor: 'Tipologie',
         configStore: null,
         fieldsCollection: null
     },
@@ -62,28 +56,22 @@ Ext.define('Admin.StoreBuilder', {
         });
     },
     
-    // Generate a model dynamically, provide fields
-    treeStoreFactory: function (name) {
-        
-        var builderClass = this;
-        var idStore = 'idStore'+this.getIdString();
-        this.getIdStore = function ()
-        {
-            return idStore;
-        }
-                
+    generateModel: function ()
+    {
         var idModel = 'idModel'+this.getIdString();
-        var idRoot  = 'idRoot'+this.getIdString();
-        var idProxy  = 'idProxy'+this.getIdString();
-        var idReader  = 'idReader'+this.getIdString();
-        var idWriter  = 'idWriter'+this.getIdString();
-        
         var model = this.modelFactory(idModel, this.getFields());
-
         this.getModel = function ()
         {
             return model;
         }
+        return model;
+    },
+    
+    generateProxy: function ()
+    {
+        var idProxy  = 'idProxy'+this.getIdString();
+        var idReader  = 'idReader'+this.getIdString();
+        var idWriter  = 'idWriter'+this.getIdString();
         
         var proxyConstructor = this.proxyFactory();
         
@@ -107,35 +95,79 @@ Ext.define('Admin.StoreBuilder', {
                 }      
         
         });
-                 
+        
+        return proxy;
+    
+    },
+    
+    getIdStore: function ()
+    {
+         var idStore = 'idStore'+this.getIdString();
+         return idStore;
+    
+    },
+    
+    getIdRoot: function ()
+    {
+         var idRoot  = 'idRoot'+this.getIdString();
+         return idRoot;
+    
+    },
+    
+    generateTreeStoreConstruct: function (name)
+    {
+    
         var store = Ext.define(name, {
             extend: 'Admin.store.BaseTreeStore',
-            storeId: idStore,
+            storeId: this.getIdStore(),
             clearOnLoad: true,
-            model: model,
+            model: this.generateModel(),
             root: {
-                id: idRoot,
+                id: this.getIdRoot(),
                 checked: null,
                 expanded: false,
                 isFirst: true,
                 leaf: false
             },
-            myReload: function (){
-                var updatedRecords = store.getUpdatedRecords();
-                var newRecords = store.getNewRecords();
-                var recordsToBeManaged = Ext.Array.merge (updatedRecords, newRecords);
-                console.log (recordsToBeManaged);
-            },
-            proxy: proxy
+            proxy: this.generateProxy ()
                     
         });
         
-       
+        return store;
+    
+    },
+    
+    generateStoreConstruct: function (name)
+    {
+        var store = Ext.define(name, {
+            extend: 'Admin.store.BaseStore',
+            storeId: this.getIdStore(),
+            model: this.generateModel(),
+            proxy: this.generateProxy ()
+                    
+        });
+        return store;
+    
+    },
+    
+    // Generate a model dynamically, provide fields
+    storeFactory: function (name, tipo) {
+                         
+        if (tipo == 'treeStore')
+        {
+            var store = this.generateTreeStoreConstruct (name);
+        }
+        
+        if (tipo == 'store')
+        {
+            var store = this.generateStoreConstruct (name);
+        }
         
         var store = Ext.create(store);
         this.getStore = function(){
             return store;
         }
+        
         return store;
         
         
@@ -182,10 +214,9 @@ Ext.define('Admin.StoreBuilder', {
     },
     
     
-    buildStore: function (name)
+    buildStore: function (name, tipo)
     {
-
-        return this.treeStoreFactory(name);
+        return this.storeFactory(name, tipo);
         
     }
 });

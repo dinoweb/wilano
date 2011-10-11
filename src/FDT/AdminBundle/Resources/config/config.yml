@@ -1,5 +1,65 @@
 fdt_admin:
     configuration:
+        Attributi:
+            fields:
+                Traduzioni:
+                    name:
+                        name: name
+                        type: string
+                        text: Name
+                        useForColumn: true
+                        useForModel: true
+                        useForForm: true
+                id:
+                    name: id
+                    type: string
+                    text: id
+                    flex: 1
+                    sortable: false
+                    hidden: true
+                    useForColumn: true
+                    useForModel: true
+                    useForForm: false
+                uniqueName:
+                    name: uniqueName
+                    type: string
+                    text: Attributo
+                    flex: 2
+                    sortable: false
+                    hidden: false,
+                    useForColumn: true
+                    useForModel: true
+                    useForForm: true
+                uniqueSlug:
+                    name: uniqueSlug
+                    type: string
+                    text: Unique Slug
+                    sortable: false
+                    hidden: true
+                    useForColumn: true
+                    useForModel: true
+                    useForForm: true
+                isActive:
+                    name: isActive
+                    type: boolean
+                    defaultValue: true
+                    text: Attivo
+                    flex: 1
+                    sortable: false
+                    hidden: false
+                    fieldXtype: combo
+                    store: Admin.store.SiNo
+                    anchor: 40%
+                    useForColumn: true
+                    useForModel: true
+                    useForForm: true
+                isNew:
+                    name: isNew
+                    type: boolean
+                    defaultValue: false
+                    useForColumn: false
+                    useForModel: true
+                    useForForm: false
         Tipologie:
             fields:
                 Traduzioni: 
@@ -152,7 +212,25 @@ fdt_admin:
                       text: Schede
                       leaf: true
                       tipologiaType: Schede
-                      controller: Metadata.controller.Tipologie 
+                      controller: Metadata.controller.Tipologie
+            -
+              id: metadataAttributi
+              text: Gestione Attributi
+              leaf: false
+              action: open
+              children:
+                -
+                  id: manageAttributi
+                  text: Attributi
+                  leaf: true
+                  controller: Metadata.controller.Attributi
+                -
+                  id: manageDataset
+                  text: Data set
+                  leaf: true
+                  controller: Metadata.controller.Dataset
+                      
+                      
 
 
         parties:
