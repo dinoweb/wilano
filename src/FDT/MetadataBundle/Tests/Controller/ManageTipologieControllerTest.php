@@ -38,11 +38,12 @@ class ManageControlleTipologie extends TestCase
        	$crawler = $this->getClient()->request('GET', '/admin/metadata/Prodotti/manageTipologie?node='.$arrayTipologie['results'][0]['id']);
        	
        	$arrayTipologieChildren = json_decode ($this->getClient()->getResponse()->getContent(), true);
-       	       	
+       	       	       	
        	$this->assertEquals (3, count($arrayTipologieChildren));
        	$this->assertEquals (1, count($arrayTipologie['total']));
        	$this->assertTrue($arrayTipologie['success']);
        	$this->assertEquals ('Orecchini', $arrayTipologieChildren['results'][0]['uniqueName']);
+       	$this->assertEquals ('Orecchini name', $arrayTipologieChildren['results'][0]['Translation-en_us-name']);
     }
     
     public function testAddAndMoveNewTipologia ()

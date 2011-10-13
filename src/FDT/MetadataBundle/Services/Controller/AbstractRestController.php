@@ -96,6 +96,15 @@ abstract class AbstractRestController
         return $this->requestData;    	    	
     }
     
+    protected function getArrayResponseGet (array $arrayData)
+    {
+        $arrayResponse['success'] = true;
+        $arrayResponse['total'] = count ($arrayData);
+        $arrayResponse['results'] = $arrayData;
+        
+        return $arrayResponse;
+    }
+    
     abstract protected function executeAdd();
     
     abstract protected function executeUpdate();

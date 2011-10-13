@@ -115,7 +115,7 @@ class ManageTipologie extends AbstractRestController
     {
         $requestData = $this->getData();
         $tipologia = $this->getTipologia();
-        $className = 'FDT\\MetadataBundle\\Document\\Tipologie\\'.$tipologia;
+        $className = $this->getFullClassName();
         $tipologia = new $className;
         $tipologia = $this->setDataTipologia ($tipologia, $requestData);
         $tipologiaOk = $this->saveTipologia($tipologia);
@@ -126,7 +126,7 @@ class ManageTipologie extends AbstractRestController
     
     protected function executeUpdate()
     {
-        $repository = $this->documentManager->getRepository('FDT\\MetadataBundle\\Document\\Tipologie\\'.$this->getTipologia());
+        $repository = $this->getRepository();
         $requestData = $this->getData();
         $tipologia = $repository->getByMyUniqueId ($requestData['id'], 'id');
         $tipologia = $this->setDataTipologia ($tipologia, $requestData);
@@ -136,7 +136,7 @@ class ManageTipologie extends AbstractRestController
         $response = array ('success'=>true, 'message'=>'Tipologie aggiornate con successo');
         return $response;
     }
-    
+        
     protected function executeGet()
     {
         $arrayResponse = array();
@@ -153,12 +153,8 @@ class ManageTipologie extends AbstractRestController
             
         }
         
-        $arrayResponse['success'] = true;
-        $arrayResponse['total'] = count ($arrayData);
-        $arrayResponse['results'] = $arrayData;
-        
-        
-        return $arrayResponse;
+        return $this->getArrayResponseGet ($arrayData);
+
     }
     
     protected function executeNone ()
