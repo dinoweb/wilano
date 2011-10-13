@@ -1,9 +1,10 @@
 parameters:
     document_saver.class:               FDT\MetadataBundle\Services\DocumentSaver
     languages.class:                    FDT\MetadataBundle\Services\Languages
-    contenuti.abstractRestClass:             FDT\MetadataBundle\Services\Controller\AbstractRestController
-    contenuti.manageTipologieClass:          FDT\MetadataBundle\Services\Controller\ManageTipologie
-    contenuti.manageAttributiClass:          FDT\MetadataBundle\Services\Controller\ManageAttributi
+    contenuti.abstractRestClass:        FDT\MetadataBundle\Services\Controller\AbstractRestController
+    contenuti.manageTipologieClass:     FDT\MetadataBundle\Services\Controller\ManageTipologie
+    contenuti.manageAttributiClass:     FDT\MetadataBundle\Services\Controller\ManageAttributi
+    contenuti.attributi.type:           
 
 services:
     
@@ -49,5 +50,9 @@ services:
     contenuti.contenuto_builder:
         class:        %contenuto_builder_class%
         arguments:    [@doctrine.odm.mongodb.document_manager, @attributi_type, @tree_manager, @document_saver, %languages%]
+    validator.unique.attributi_dataSetIsOk:
+                class: FDT\MetadataBundle\Validator\DataSetIsOkValidator
+                tags:
+                    - { name: validator.constraint_validator, alias: attributi_dataSetIsOk }
     
 

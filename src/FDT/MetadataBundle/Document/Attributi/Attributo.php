@@ -46,7 +46,6 @@ class Attributo implements Translatable
     /** 
     * @MongoDB\String
     * @Gedmo\Translatable
-    * @Assert\NotBlank()
     */
     private $descrizione;
     
@@ -71,6 +70,22 @@ class Attributo implements Translatable
      * @access private
      */
     private $dataSet;
+    
+    /**
+     * @var timestamp $created
+     *
+     * @MongoDB\Date
+     * @Gedmo\Timestampable(on="create")
+     */
+    private $created;
+
+    /**
+     * @var date $updated
+     *
+     * @MongoDB\Date
+     * @Gedmo\Timestampable(on="update")
+     */
+    private $updated;
       
 
     /**
@@ -235,6 +250,16 @@ class Attributo implements Translatable
         }
         
         return FALSE;
+    }
+    
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    public function getUpdated()
+    {
+        return $this->updated;
     }
 
 }

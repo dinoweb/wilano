@@ -69,6 +69,23 @@ class AttributoTest extends TestCase
     
     }
     
+    public function testAttributoAsArray ()
+    {
+        
+        $attributo = new Attributo ();
+       	$attributo->setName ('Peso palla');
+       	$attributo->setDescrizione ('Descrizione');
+       	$attributo->setUniqueName ('Peso visibile');
+       	$attributo->setTipo ('weight');
+       	
+       	$attributo = $this->getSaver()->save($attributo);
+       	
+       	$attributoArray = $this->getDm()->getRepository('FDT\MetadataBundle\Document\Attributi\Attributo')->toArray ($attributo);
+       	
+       	$this->assertEquals ('peso-visibile', $attributoArray['uniqueSlug']);
+    
+    }
+    
     public function testAddAttributoTranslation ()
     {
     	

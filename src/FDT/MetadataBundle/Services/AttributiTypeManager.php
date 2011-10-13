@@ -125,4 +125,23 @@ class AttributiTypeManager
         
         return $configArray['hasTranslation'];
     }
+    
+    public function getAttributiForSelect($returnJson = false)
+    {
+        $arrayType = array ();
+        
+        foreach ($this->getAttributiTypeConfig() as $key=>$arrayAttributoConfig)
+        {
+            $arrayType[] = array ('name'=>$arrayAttributoConfig['name'], 'value'=>$key);
+        }
+        
+        if ($returnJson)
+        {
+            return json_encode ($arrayType);
+        }
+        
+        return $arrayType;
+        
+    }
+    
 }

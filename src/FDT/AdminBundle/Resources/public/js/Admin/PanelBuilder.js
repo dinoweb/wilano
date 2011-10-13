@@ -88,6 +88,12 @@ Ext.define('Admin.PanelBuilder', {
             columnLines: true,
             title: this.getTitle(),
             store: this.getStore(),
+            dockedItems: [{
+                xtype: 'pagingtoolbar',
+                store: this.getStore(),   // same store GridPanel is using
+                dock: 'bottom',
+                displayInfo: true
+            }],
             viewConfig: {
                     id: this.getViewId(),
                     stripeRows: true,

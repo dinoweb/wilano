@@ -80,11 +80,15 @@ Ext.define('Admin.StoreBuilder', {
                 builderObject: this,
                 reader: {
     			    id: idReader,
-    			    type: 'json'
+    			    type: 'json',
+    			    type: 'json',
+                    root: 'results',
+                    totalProperty: 'total',
+                    successProperty: 'success'
                 },
                 writer: {
                     id: idWriter,
-                    type: 'json'
+                    type: 'json',
                 },
                 afterRequest: this.manageResponse,
                 api: {
@@ -142,6 +146,7 @@ Ext.define('Admin.StoreBuilder', {
         var store = Ext.define(name, {
             extend: 'Admin.store.BaseStore',
             storeId: this.getIdStore(),
+            pageSize: 25,
             model: this.generateModel(),
             proxy: this.generateProxy ()
                     

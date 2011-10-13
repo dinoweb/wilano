@@ -28,8 +28,9 @@ class ManageAttributiController extends TestCase
         
         $arrayAttributi = json_decode ($this->getClient()->getResponse()->getContent(), true);
                                	
-       	$this->assertEquals (1, count($arrayAttributi));
-       	$this->assertEquals ('Gioielli', $arrayAttributi[0]['uniqueName']);
+       	$this->assertEquals (7, $arrayAttributi['total']);
+       	$this->assertEquals (7, count($arrayAttributi['results']));
+       	$this->assertEquals ('Peso', $arrayAttributi['results'][0]['uniqueName']);
        	
     }
     

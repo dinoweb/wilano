@@ -5,15 +5,24 @@ use FDT\MetadataBundle\Document\BaseRepository;
 
 class AttributiRepository extends BaseRepository
 {    
-    public function retriveRecords(array $limit)
+    
+    public function generateCursor(array $limit)
     {
         $cursor = $this->createQueryBuilder()
                      ->limit ($limit['limit'])->skip($limit['skip'])
+                     ->sort ('updated', 'desc')
                      ->getQuery()
                      ->execute();
         
         
             
-        return $cursor;
+        $this->setCursor ($cursor);
+        
+        return $this;
+        
     }
+    
+    
+    
+    
 }

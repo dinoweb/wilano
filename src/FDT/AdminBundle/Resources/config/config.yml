@@ -53,6 +53,20 @@ fdt_admin:
                     useForColumn: true
                     useForModel: true
                     useForForm: true
+                tipo:
+                    name: tipo
+                    type: string
+                    defaultValue: text
+                    text: Tipo
+                    flex: 1
+                    sortable: false
+                    hidden: false
+                    fieldXtype: combo
+                    store: Metadata.store.Attributi.Tipo
+                    anchor: 40%
+                    useForColumn: true
+                    useForModel: true
+                    useForForm: true
                 isNew:
                     name: isNew
                     type: boolean

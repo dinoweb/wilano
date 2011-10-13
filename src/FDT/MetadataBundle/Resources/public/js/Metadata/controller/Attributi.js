@@ -1,5 +1,10 @@
 Ext.define('Metadata.controller.Attributi', {
     extend: 'Ext.app.Controller',
+    
+    stores:
+    [
+        'Metadata.store.Attributi.Tipo'
+    ],
         
     refs: [     
         {ref:'mainPanel', selector: '#mainPanel'}

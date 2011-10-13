@@ -29,6 +29,11 @@ abstract class AbstractRestController
     
     }
     
+    protected function getRepository ()
+    {
+        return $this->documentManager->getRepository($this->getFullClassName())->setLanguages($this->languages);
+    }
+    
     protected function getLimitData ()
     {
         $arrayLimit = array();
@@ -46,6 +51,49 @@ abstract class AbstractRestController
             $this->requestData = $this->languages->normalizeTranslationsDataFromForm ($requestData);
         }
         
+    }
+    
+    protected function manageTranslationsData ($document, $data)
+    {
+        if (!isset($data['Translations']))
+        {
+            return $document;
+        }
+        
+        $repository = $this->getTranslationRepository();
+        $useLocale = $this->languages->getUserLocale ();
+        
+        foreach ($data['Translations'] as $langKey=>$arrayFields)
+        {   
+            
+            foreach ($arrayFields as $key=>$value)
+            {
+                if ($useLocale == $langKey)
+                {
+                    $setFunction = 'set'.ucfirst($key);
+                    $document->$setFunction($value);
+                
+                }
+                else
+                {
+                    $repository->translate($document, $key, $langKey, $value);
+                }
+                
+                
+                
+                
+            }
+            
+        }
+        return $document;
+        
+        
+        
+    }
+    
+    protected function getData ()
+    {
+        return $this->requestData;    	    	
     }
     
     abstract protected function executeAdd();

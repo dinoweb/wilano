@@ -12,7 +12,3 @@ services:
     bundles_config:
         class:        %bundles_config.class%
         arguments:    [%bundles_config.config%]
-    validator.unique.attributi_dataSetIsOk:
-                class: FDT\MetadataBundle\Validator\DataSetIsOkValidator
-                tags:
-                    - { name: validator.constraint_validator, alias: attributi_dataSetIsOk }

@@ -27,10 +27,6 @@ class ManageTipologie extends AbstractRestController
     
     }
     
-    private function getData ()
-    {
-        return $this->requestData;    	    	
-    }
     
     private function saveTipologia($tipologia)
     {
@@ -76,62 +72,30 @@ class ManageTipologie extends AbstractRestController
         $tipologia->setHasPeriod ($data['hasPeriod']);
         $tipologia->setIndex ($data['index']);
         
-        if (isset($data['Translations']))
-        {
-            $repository = $this->getTranslationRepository();
-            $useLocale = $this->languages->getUserLocale ();
-            
-            foreach ($data['Translations'] as $langKey=>$arrayFields)
-            {   
-                
-                foreach ($arrayFields as $key=>$value)
-                {
-                    if ($useLocale == $langKey)
-                    {
-                        $setFunction = 'set'.ucfirst($key);
-                        $tipologia->$setFunction($value);
-                    
-                    }
-                    else
-                    {
-                        $repository->translate($tipologia, $key, $langKey, $value);
-                    }
-                    
-                    
-                    
-                    
-                }
-                
-            }
-            
-        }
+        $tipologia = $this->manageTranslationsData ($tipologia, $data);
         
         return  $tipologia; 
     }
     
-    private function getTranslationRepository ()
+    public function getTranslationRepository ()
     {
         return $this->documentManager->getRepository('FDT\MetadataBundle\Document\Tipologie\TipologiaTranslation');
     }
     
-    private function getRepository ()
+    protected function getFullClassName ()
     {
-    
-        return $this->documentManager->getRepository('FDT\\MetadataBundle\\Document\\Tipologie\\'.$this->getTipologia());
+        
+        return 'FDT\\MetadataBundle\\Document\\Tipologie\\'.$this->getTipologia();
         
     }
+    
     
     private function prepareArray($tipologia)
     {
         
-        $arrayTipologia = array(
-            'id'=>$tipologia->getId(),
-            'uniqueName'=>$tipologia->getUniqueName(),
-            'uniqueSlug'=>$tipologia->getUniqueSlug(),
-            'isActive'=>$tipologia->getIsActive(),
-            'isPrivate'=>$tipologia->getIsPrivate(),
-            'isConfigurable'=>$tipologia->getIsConfigurable(),
-            'hasPeriod'=>$tipologia->getHasPeriod(),            
+        $arrayTipologia = $this->getRepository()->toArray ($tipologia);
+        
+        $arrayTipologiaForTree = array(           
             'leaf'=>false,
             'parentId'=>null,
             
@@ -139,12 +103,12 @@ class ManageTipologie extends AbstractRestController
         
         if ($tipologia->getLevel () > 0)
         {
-            $arrayTipologia['parentId'] = $tipologia->getParent ()->getId();
+            $arrayTipologiaForTree['parentId'] = $tipologia->getParent ()->getId();
         }
         
-        $arrayTranslations = $this->languages->prepareTranslationDataForForms($tipologia, $this->getTranslationRepository());
-                
-        return array_merge($arrayTipologia, $arrayTranslations);
+        $arrayTipologia = array_merge ($arrayTipologia, $arrayTipologiaForTree);
+        
+        return $arrayTipologia;
     }
     
     protected function executeAdd()
@@ -176,6 +140,7 @@ class ManageTipologie extends AbstractRestController
     protected function executeGet()
     {
         $arrayResponse = array();
+        $arrayData = array ();
         
         $node = $this->request->query->get('node', 'idRoot');
         $tipologie = $this->getTipologie($node);
@@ -183,10 +148,15 @@ class ManageTipologie extends AbstractRestController
         if ($tipologie->count() > 0)
         {
             foreach ($tipologie as $key => $value) {
-                $arrayResponse[] = $this->prepareArray ($value);
+                $arrayData[] = $this->prepareArray ($value);
             }
             
         }
+        
+        $arrayResponse['success'] = true;
+        $arrayResponse['total'] = count ($arrayData);
+        $arrayResponse['results'] = $arrayData;
+        
         
         return $arrayResponse;
     }

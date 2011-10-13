@@ -29,16 +29,20 @@ class ManageControlleTipologie extends TestCase
                         
        	$this->assertEquals(200, $this->getClient()->getResponse()->getStatusCode());
        	
-       	$this->assertEquals (1, count($arrayTipologie));
-       	$this->assertEquals ('Gioielli', $arrayTipologie[0]['uniqueName']);
+       	$this->assertEquals (3, count($arrayTipologie));
+       	$this->assertEquals (1, count($arrayTipologie['total']));
+       	$this->assertTrue($arrayTipologie['success']);
+       	$this->assertEquals ('Gioielli', $arrayTipologie['results'][0]['uniqueName']);
        	
        	//GET CHILDREN 
-       	$crawler = $this->getClient()->request('GET', '/admin/metadata/Prodotti/manageTipologie?node='.$arrayTipologie[0]['id']);
+       	$crawler = $this->getClient()->request('GET', '/admin/metadata/Prodotti/manageTipologie?node='.$arrayTipologie['results'][0]['id']);
        	
        	$arrayTipologieChildren = json_decode ($this->getClient()->getResponse()->getContent(), true);
        	       	
-       	$this->assertEquals (1, count($arrayTipologieChildren));
-       	$this->assertEquals ('Orecchini', $arrayTipologieChildren[0]['uniqueName']);
+       	$this->assertEquals (3, count($arrayTipologieChildren));
+       	$this->assertEquals (1, count($arrayTipologie['total']));
+       	$this->assertTrue($arrayTipologie['success']);
+       	$this->assertEquals ('Orecchini', $arrayTipologieChildren['results'][0]['uniqueName']);
     }
     
     public function testAddAndMoveNewTipologia ()
@@ -76,11 +80,11 @@ class ManageControlleTipologie extends TestCase
 		
 		$crawler = $this->getClient()->request('GET', '/admin/metadata/Prodotti/manageTipologie?node=idRootProdotti');
     	$arrayTipologie = json_decode ($this->getClient()->getResponse()->getContent(), true);
-    	$this->assertEquals (2, count($arrayTipologie));
+    	$this->assertEquals (2, count($arrayTipologie['results']));
     	
     	//MOVE COLLANE COME FIGLIO DI GIOIELLI
-    	$idGioielli = $arrayTipologie[0]['id'];
-    	$idCollane = $arrayTipologie[1]['id'];
+    	$idGioielli = $arrayTipologie['results'][0]['id'];
+    	$idCollane = $arrayTipologie['results'][1]['id'];
     	
     	$collane = array (
     		'id'=>$idCollane,
@@ -109,11 +113,11 @@ class ManageControlleTipologie extends TestCase
     	
     	$crawler = $this->getClient()->request('GET', '/admin/metadata/Prodotti/manageTipologie?node=idRootProdotti');
     	$arrayTipologie = json_decode ($this->getClient()->getResponse()->getContent(), true);
-    	$this->assertEquals (1, count($arrayTipologie));
+    	$this->assertEquals (1, count($arrayTipologie['results']));
     	    	
     	$crawler = $this->getClient()->request('GET', '/admin/metadata/Prodotti/manageTipologie?node='.$idGioielli);
     	$arrayChild = json_decode ($this->getClient()->getResponse()->getContent(), true);
-    	$this->assertEquals (2, count($arrayChild));
+    	$this->assertEquals (2, count($arrayChild['results']));
     	
     }
     
