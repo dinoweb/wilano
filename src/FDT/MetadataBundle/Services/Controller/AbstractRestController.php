@@ -2,7 +2,9 @@
 
 namespace FDT\MetadataBundle\Services\Controller;
 
-
+/**
+ * 
+ */
 abstract class AbstractRestController
 {
     protected $documentSaver;
@@ -29,11 +31,22 @@ abstract class AbstractRestController
     
     }
     
+    abstract protected function getFullClassName();
+    abstract protected function setDatiDocument($document, $data);
+    
+    /**
+     *
+     * @return type Repository
+     */
     protected function getRepository ()
     {
         return $this->documentManager->getRepository($this->getFullClassName())->setLanguages($this->languages);
     }
     
+    /**
+     *
+     * @return type array
+     */
     protected function getLimitData ()
     {
         $arrayLimit = array();
@@ -43,6 +56,10 @@ abstract class AbstractRestController
         return $arrayLimit;
     }
     
+    /**
+     * inizializza l'array con i dati passati fal form
+     * @return void
+     */
     protected function setRequestData ()
     {
         $requestData = json_decode($this->request->getContent (), true);
@@ -53,6 +70,12 @@ abstract class AbstractRestController
         
     }
     
+    /**
+     *
+     * @param type $document
+     * @param type array $data
+     * @return type Document
+     */
     protected function manageTranslationsData ($document, $data)
     {
         if (!isset($data['Translations']))
@@ -60,7 +83,7 @@ abstract class AbstractRestController
             return $document;
         }
         
-        $repository = $this->getTranslationRepository();
+        $repository = $this->getRepository()->getTranslationRepository(get_class($document));
         $useLocale = $this->languages->getUserLocale ();
         
         foreach ($data['Translations'] as $langKey=>$arrayFields)
@@ -96,6 +119,11 @@ abstract class AbstractRestController
         return $this->requestData;    	    	
     }
     
+    /**
+     *
+     * @param array $arrayData
+     * @return array Response
+     */
     protected function getArrayResponseGet (array $arrayData)
     {
         $arrayResponse['success'] = true;
@@ -105,17 +133,54 @@ abstract class AbstractRestController
         return $arrayResponse;
     }
     
-    abstract protected function executeAdd();
+    protected function executeAdd()
+    {
+        $requestData = $this->getData();
+        $className = $this->getFullClassName();
+        $document = new $className;
+        $document = $this->setDatiDocument ($document, $requestData);
+        $documentOk = $this->saveDocument($document);
+        $response = array ('success'=>true, 'message'=>'Record aggiunto con successo');
+        return $response;   
+    }
     
-    abstract protected function executeUpdate();
+    protected function executeUpdate()
+    {
+        $repository = $this->getRepository();
+        $requestData = $this->getData();
+        $document = $repository->getByMyUniqueId ($requestData['id'], 'id');
+        $document = $this->setDatiDocument ($document, $requestData);
+        $documentOk = $this->saveDocument($document);
+        
+        //$tipologiaOk = $this->manageTree($tipologia, $requestData);
+        $response = array ('success'=>true, 'message'=>'Record aggiornato con successo');
+        return $response;
+    }
     
-    abstract protected function executeGet();
+    protected function executeGet()
+    {
+        $arrayResponse = $this->getRepository()->generateCursor ($this->getLimitData ())->returnAsArray();
+        return $arrayResponse;
+        
+    }
     
     protected function executeNone ()
     {
         return false;
     }
     
+    protected function saveDocument($document)
+    {
+                
+        $document = $this->documentSaver->save($document);            
+            
+        return $document;    
+    }
+    
+    /**
+     *
+     * @return type array
+     */
     protected function executeAction ()
     {
         $method = $this->request->getMethod();
@@ -139,6 +204,24 @@ abstract class AbstractRestController
         }
         
         return $result;
+    }
+    
+    /**
+     *
+     * @param type string $bundleName
+     * @param type string $tipologia
+     * @return type Symfony\Component\HttpFoundation\Response
+     */
+    public function indexAction($bundleName = NULL, $tipologia = NULL)
+    {
+        $arrayResponse = $this->executeAction();
+                
+        
+        $jsonResponse = json_encode($arrayResponse);
+        $this->response->setContent($jsonResponse);
+        $this->response->headers->set('Content-Type', 'application/json');
+    
+        return ($this->response);
     }
     
     

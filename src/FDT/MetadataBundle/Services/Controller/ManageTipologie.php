@@ -26,9 +26,30 @@ class ManageTipologie extends AbstractRestController
         $this->treeManager = $treeManager;
     
     }
+        
+    protected function getFullClassName ()
+    {
+        
+        return 'FDT\\MetadataBundle\\Document\\Tipologie\\'.$this->getTipologia();
+        
+    }
     
+    protected function setDatiDocument ($tipologia, $data)
+    {
+        
+        $tipologia->setUniqueName ($data['uniqueName']);
+        $tipologia->setIsActive ($data['isActive']);
+        $tipologia->setIsPrivate ($data['isPrivate']);
+        $tipologia->setIsConfigurable ($data['isConfigurable']);
+        $tipologia->setHasPeriod ($data['hasPeriod']);
+        $tipologia->setIndex ($data['index']);
+        
+        $tipologia = $this->manageTranslationsData ($tipologia, $data);
+        
+        return  $tipologia; 
+    }
     
-    private function saveTipologia($tipologia)
+    protected function saveDocument($tipologia)
     {
         
         $tipologiaOk = $this->treeManager->manageTreeMovements($tipologia, $this->getData(), $this->getRepository());
@@ -40,7 +61,7 @@ class ManageTipologie extends AbstractRestController
     
     private function getTipologie ($node)
     {
-        $repository = $this->documentManager->getRepository('FDT\\MetadataBundle\\Document\\Tipologie\\'.$this->getTipologia());
+        $repository = $this->getRepository();
         
         if ($node == 'idRoot'.$this->getTipologia() or $node == 'idRoot')
         {
@@ -62,31 +83,10 @@ class ManageTipologie extends AbstractRestController
     	    	
     }
     
-    private function setDataTipologia ($tipologia, $data)
-    {
-        
-        $tipologia->setUniqueName ($data['uniqueName']);
-        $tipologia->setIsActive ($data['isActive']);
-        $tipologia->setIsPrivate ($data['isPrivate']);
-        $tipologia->setIsConfigurable ($data['isConfigurable']);
-        $tipologia->setHasPeriod ($data['hasPeriod']);
-        $tipologia->setIndex ($data['index']);
-        
-        $tipologia = $this->manageTranslationsData ($tipologia, $data);
-        
-        return  $tipologia; 
-    }
-    
-    public function getTranslationRepository ()
-    {
-        return $this->documentManager->getRepository('FDT\MetadataBundle\Document\Tipologie\TipologiaTranslation');
-    }
-    
-    protected function getFullClassName ()
-    {
-        
-        return 'FDT\\MetadataBundle\\Document\\Tipologie\\'.$this->getTipologia();
-        
+    private function hasChildren ($tipologia)
+    {   
+        $node = $this->treeManager->getNode ($tipologia);
+        return $node->hasChildren ();
     }
     
     
@@ -95,8 +95,11 @@ class ManageTipologie extends AbstractRestController
         
         $arrayTipologia = $this->getRepository()->toArray ($tipologia);
         
+        $loaded = $this->hasChildren ($tipologia)? false: true;
+        
         $arrayTipologiaForTree = array(           
             'leaf'=>false,
+            'loaded'=>$loaded,
             'parentId'=>null,
             
         );
@@ -111,31 +114,6 @@ class ManageTipologie extends AbstractRestController
         return $arrayTipologia;
     }
     
-    protected function executeAdd()
-    {
-        $requestData = $this->getData();
-        $tipologia = $this->getTipologia();
-        $className = $this->getFullClassName();
-        $tipologia = new $className;
-        $tipologia = $this->setDataTipologia ($tipologia, $requestData);
-        $tipologiaOk = $this->saveTipologia($tipologia);
-        $response = array ('success'=>true, 'message'=>'Tipologie aggiornate con successo');
-        return $response;        
-        
-    }
-    
-    protected function executeUpdate()
-    {
-        $repository = $this->getRepository();
-        $requestData = $this->getData();
-        $tipologia = $repository->getByMyUniqueId ($requestData['id'], 'id');
-        $tipologia = $this->setDataTipologia ($tipologia, $requestData);
-        $tipologiaOk = $this->saveTipologia($tipologia);
-        
-        //$tipologiaOk = $this->manageTree($tipologia, $requestData);
-        $response = array ('success'=>true, 'message'=>'Tipologie aggiornate con successo');
-        return $response;
-    }
         
     protected function executeGet()
     {
@@ -173,7 +151,7 @@ class ManageTipologie extends AbstractRestController
         return $this->tipologia;
     }
     
-    public function indexAction($bundleName, $tipologia)
+    public function execute($bundleName, $tipologia)
     {
         $this->setTipologia($tipologia);
         $arrayResponse = $this->executeAction();

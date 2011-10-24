@@ -71,7 +71,7 @@ class ManageControlleTipologie extends TestCase
 			array(),
 			$content = $jsonNewTipologia
 		);
-		
+
 		$arrayResponse = json_decode ($this->getClient()->getResponse()->getContent(), true);
 		$this->assertTrue($arrayResponse['success']);
 		

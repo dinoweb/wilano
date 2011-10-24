@@ -9,12 +9,6 @@ Ext.define('Metadata.controller.Tipologie', {
         {ref:'mainPanel', selector: '#mainPanel'}
     ],
     
-    views:
-    [
-        'Tipologie.Manage',
-        'Tipologie.Edit',
-        'Tipologie.EditTranslation'
-    ],
         
     init: function() {
                   
@@ -90,7 +84,7 @@ Ext.define('Metadata.controller.Tipologie', {
         };
         panel.addListener ('itemdblclick', this.aggiungi, this);
         panel.addListener('itemmove', this.salva , this);
-        panel.expandAll();
+        //panel.expandAll();
         
     	
     	

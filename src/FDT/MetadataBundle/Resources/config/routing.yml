@@ -12,7 +12,7 @@ FDTMetadataBundle_getAttributiTipo:
 
 FDTMetadataBundle_manageTipologie:
     pattern:  /admin/{bundleName}/{tipologia}/manageTipologie/{id}
-    defaults: { _controller: contenuti.manageTipologie:indexAction, id: false}
+    defaults: { _controller: contenuti.manageTipologie:execute, id: false}
 
 FDTMetadataBundle_manageAttributi:
     pattern:  /admin/{bundleName}/manageAttributi/{id}

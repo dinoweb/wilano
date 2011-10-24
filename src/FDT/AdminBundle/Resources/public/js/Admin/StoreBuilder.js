@@ -125,6 +125,7 @@ Ext.define('Admin.StoreBuilder', {
             extend: 'Admin.store.BaseTreeStore',
             storeId: this.getIdStore(),
             clearOnLoad: true,
+            autoLoad: false,
             model: this.generateModel(),
             root: {
                 id: this.getIdRoot(),

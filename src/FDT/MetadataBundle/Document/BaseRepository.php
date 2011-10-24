@@ -36,7 +36,10 @@ class BaseRepository extends DocumentRepository
         return $this->languagesManager;
     }
     
-    private function getTranslationRepository ($document)
+    /**
+     * 
+     */
+    public function getTranslationRepository ($document)
     {
         $documentManager = $this->getDocumentManager();
         $classMetadata = $documentManager->getClassMetadata($document);                
@@ -49,8 +52,7 @@ class BaseRepository extends DocumentRepository
         }
         
         $parentClass = $reflClass->getParentClass();
-
-
+        
         if ($parentClass)
         {
             return $this->getTranslationRepository ($parentClass->getName());
@@ -107,7 +109,7 @@ class BaseRepository extends DocumentRepository
         $referencesArray = array ();
         if ($refernceData)
         {
-            $referencesArray[] = $this->toArray ($refernceData);
+            $referencesArray = $this->toArray ($refernceData);
         }
         
         return $referencesArray;
