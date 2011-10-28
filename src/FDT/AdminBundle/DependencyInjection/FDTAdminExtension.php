@@ -15,7 +15,7 @@ class FDTAdminExtension extends Extension
     	$processor = new Processor();
         $configuration = new Configuration(true);
         $config = $processor->processConfiguration($configuration, $configs);
-                            	    	
+           	    	
     	
     	$loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
     	$loader->load('services.yml');

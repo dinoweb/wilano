@@ -4,6 +4,7 @@ parameters:
     contenuti.abstractRestClass:        FDT\MetadataBundle\Services\Controller\AbstractRestController
     contenuti.manageTipologieClass:     FDT\MetadataBundle\Services\Controller\ManageTipologie
     contenuti.manageAttributiClass:     FDT\MetadataBundle\Services\Controller\ManageAttributi
+    contenuti.manageDatasetClass:       FDT\MetadataBundle\Services\Controller\ManageDataset
     contenuti.attributi.type:           
 
 services:
@@ -37,6 +38,11 @@ services:
     contenuti.manageAttributi:
         parent:       contenuti.abstractRest 
         class:        %contenuti.manageAttributiClass%
+        scope:        request
+    
+    contenuti.manageDataset:
+        parent:       contenuti.abstractRest 
+        class:        %contenuti.manageDatasetClass%
         scope:        request    
     
     contenuti.form_builder:

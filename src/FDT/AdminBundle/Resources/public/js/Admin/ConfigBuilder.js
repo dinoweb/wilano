@@ -11,26 +11,12 @@ Ext.define('Admin.ConfigBuilder', {
         return this;
     },
     
-    modelFactory: function () {
+    modelFactory: function (extraParams) {
+        console.log(extraParams);
         return Ext.define('ConfigurazioneModel', {
             extend: 'Admin.model.Config',
-            id: 'ConfigurazioneModel'
-        });
-    },
-    
-    getConfigStore: function ()
-    {
-        var model = this.modelFactory();
-        //var modelInstance = Ext.create(model);
-        //console.log(modelInstance.fields);
-        
-        var storeConfig = Ext.define('ConfigurazioneStore', {
-            extend: 'Admin.store.Config',
-            model: model,
-            id: this.getIdString(),
-            autoLoad: this.getAutoLoad(),
+            id: 'ConfigurazioneModel',
             proxy: {
-                extraParams: this.getExtraParams(),
                 type: 'ajax',
                 api: {
                     read: 'getConfig'
@@ -41,8 +27,21 @@ Ext.define('Admin.ConfigBuilder', {
                 writer: {
                     type: 'json',
                 }
-                
             }
+        });
+    },
+    
+    getConfigStore: function ()
+    {
+        var model = this.modelFactory(this.getExtraParams());
+        //var modelInstance = Ext.create(model);
+        //console.log(modelInstance.fields);
+        
+        var storeConfig = Ext.define('ConfigurazioneStore', {
+            extend: 'Admin.store.Config',
+            model: model,
+            id: this.getIdString(),
+            autoLoad: this.getAutoLoad()
         });
         
         var store = Ext.create(storeConfig);

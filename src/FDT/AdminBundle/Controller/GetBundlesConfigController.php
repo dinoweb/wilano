@@ -8,8 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use FDT\AdminBundle\Services\GetBundlesConfig;
 
 class GetBundlesConfigController extends Controller
-{
-    
+{   
     private function getArrayBundlesConfig ()
     {
     	$bundlesConfig = $this->get('bundles_config');

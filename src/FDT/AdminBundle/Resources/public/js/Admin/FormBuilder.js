@@ -111,7 +111,6 @@ Ext.define('Admin.FormBuilder', {
                                                                     }));
         configStore.filter('isTranslated', false);
         configStore.each(this.addFieldToCollection, this);
-        
         configStore.clearFilter();
     },
     
@@ -120,13 +119,8 @@ Ext.define('Admin.FormBuilder', {
         
         var configStore = this.getConfigStore();
         this.buildBaseFields(configStore);
-        
-        if (configStore.hasTranslation())
-        {
-            this.buildTranslation(configStore);
+        this.buildTranslation(configStore);
             
-        }
-        
         configStore.clearFilter();
         
         return this.getFieldsCollection().items;
@@ -145,8 +139,7 @@ Ext.define('Admin.FormBuilder', {
     
     getForm: function ()
     {
-        var baseForm = this.formFactory();
-        
+        var baseForm = this.formFactory();        
         var form = Ext.create(baseForm);
         return form;
         

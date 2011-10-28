@@ -42,7 +42,8 @@ Ext.define('Admin.StoreBuilder', {
     modelFactory: function (name, fields, root) {
         return Ext.define(name, {
             extend: 'Admin.model.BaseModel',
-            fields: fields
+            fields: fields,
+            proxy: this.generateProxy ()
         });
     },
     
@@ -78,9 +79,9 @@ Ext.define('Admin.StoreBuilder', {
         var proxy = Ext.create(proxyConstructor, {
                 id: idProxy,
                 builderObject: this,
+                url: this.getUrlRead(),
                 reader: {
     			    id: idReader,
-    			    type: 'json',
     			    type: 'json',
                     root: 'results',
                     totalProperty: 'total',
@@ -88,7 +89,7 @@ Ext.define('Admin.StoreBuilder', {
                 },
                 writer: {
                     id: idWriter,
-                    type: 'json',
+                    type: 'json'
                 },
                 afterRequest: this.manageResponse,
                 api: {
@@ -133,8 +134,7 @@ Ext.define('Admin.StoreBuilder', {
                 expanded: false,
                 isFirst: true,
                 leaf: false
-            },
-            proxy: this.generateProxy ()
+            }
                     
         });
         
@@ -148,8 +148,7 @@ Ext.define('Admin.StoreBuilder', {
             extend: 'Admin.store.BaseStore',
             storeId: this.getIdStore(),
             pageSize: 25,
-            model: this.generateModel(),
-            proxy: this.generateProxy ()
+            model: this.generateModel()
                     
         });
         return store;
@@ -173,7 +172,6 @@ Ext.define('Admin.StoreBuilder', {
         this.getStore = function(){
             return store;
         }
-        
         return store;
         
         

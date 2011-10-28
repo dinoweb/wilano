@@ -1,25 +1,12 @@
 Ext.define('Admin.model.Config',
 {
     extend: 'Ext.data.Model',
-    idProperty: 'name',
     fields: [
-        {name: 'name', type: 'string'},
-        {name: 'type', type: 'string'},
-        {name: 'defaultValue'},
-        {name: 'xtype', type: 'string'},
-        {name: 'text', type: 'string'},
-        {name: 'flex', type: 'int', defaultValue: 1},
-        {name: 'sortable', type: 'boolean', defaultValue: false},
-        {name: 'hidden', type: 'boolean', defaultValue: true},
-        {name: 'fieldXtype', type: 'string', defaultValue: 'textfield'},
-        {name: 'allowBlank', type: 'boolean', defaultValue: false},
-        {name: 'anchor', type: 'string', defaultValue: '100%'},
-        {name: 'store', type: 'string', defaultValue: null},
-        {name: 'isTranslated', type: 'boolean', defaultValue: false},
-        {name: 'queryMode', type: 'string', defaultValue: 'local'},
-        {name: 'useForColumn', type: 'boolean', defaultValue: true},
-        {name: 'useForModel', type: 'boolean', defaultValue: true},
-        {name: 'useForForm', type: 'boolean', defaultValue: false}
-        
+        {name: 'document', type: 'string'}
+    ],
+    associations: [
+        {type: 'hasMany', model: 'Admin.model.Campi', name: 'campi', primaryKey: 'document', foreignKey: 'document'},
+        {type: 'hasMany', model: 'Admin.model.Associazioni', name: 'associazioni'}
     ]
+    
 });

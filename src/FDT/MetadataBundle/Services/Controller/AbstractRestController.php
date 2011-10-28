@@ -171,7 +171,6 @@ abstract class AbstractRestController
     
     protected function saveDocument($document)
     {
-                
         $document = $this->documentSaver->save($document);            
             
         return $document;    

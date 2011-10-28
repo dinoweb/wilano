@@ -12,6 +12,8 @@ Ext.application({
         //MODEL
         'Admin.model.BaseModel',
         'Admin.model.Config',
+        'Admin.model.Campi',
+        'Admin.model.Associazioni',
         
         //STORE
         'Admin.store.BaseTreeStore',

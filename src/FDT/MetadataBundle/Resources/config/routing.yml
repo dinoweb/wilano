@@ -17,3 +17,6 @@ FDTMetadataBundle_manageTipologie:
 FDTMetadataBundle_manageAttributi:
     pattern:  /admin/{bundleName}/manageAttributi/{id}
     defaults: { _controller: contenuti.manageAttributi:indexAction, id: false}
+FDTMetadataBundle_manageDataset:
+    pattern:  /admin/{bundleName}/manageDataset/{id}
+    defaults: { _controller: contenuti.manageDataset:indexAction, id: false}

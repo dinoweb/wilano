@@ -19,7 +19,7 @@ class DataSetFixtures extends AbstractFixture implements FixtureInterface, Order
         $dataSet = new DataSet ();
        	$dataSet->setName ('Nazioni');
        	$dataSet->setDescrizione ('nazioni per le spedizioni');
-       	$dataSet->setUniqueName ('Peso tradotto');
+       	$dataSet->setUniqueName ('Nazioni');
        	$manager->persist($dataSet);
        	
        	$option = new Option;

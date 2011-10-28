@@ -30,20 +30,8 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->arrayNode('configuration')
-                    ->addDefaultsIfNotSet()
-                    ->children()
-                        ->arrayNode('Tipologie')
-                            ->requiresAtLeastOneElement ()
-                            ->prototype('variable')->end()
-                        ->end()
-                    ->end()
-                    ->children()
-                        ->arrayNode('Attributi')
-                            ->requiresAtLeastOneElement ()
-                            ->prototype('variable')->end()
-                        ->end()
-                    ->end()
-                ->end()
+                ->useAttributeAsKey ('document', false)
+                ->prototype('variable')->end()
             ->end();
             
             /*

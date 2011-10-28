@@ -156,6 +156,7 @@ Ext.define('Admin.PanelBuilder', {
     {
       var toolbar = Ext.create('Ext.toolbar.Toolbar', {
                     dock: 'top',
+                    id: 'mainToolbar'+this.getIdString(),
                     items: [
                                 {
                                     text: 'Aggiungi',

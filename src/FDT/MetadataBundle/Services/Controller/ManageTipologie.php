@@ -63,7 +63,7 @@ class ManageTipologie extends AbstractRestController
     {
         $repository = $this->getRepository();
         
-        if ($node == 'idRoot'.$this->getTipologia() or $node == 'idRoot')
+        if ($node == 'idRootTipologie' or $node == 'idRoot')
         {
             
             return $repository->getRoots();
@@ -153,6 +153,7 @@ class ManageTipologie extends AbstractRestController
     
     public function execute($bundleName, $tipologia)
     {
+
         $this->setTipologia($tipologia);
         $arrayResponse = $this->executeAction();
                 

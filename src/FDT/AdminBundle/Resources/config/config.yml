@@ -1,7 +1,98 @@
 fdt_admin:
     configuration:
+        Options:
+            document: Options
+            campi:
+                Traduzioni:
+                    name:
+                        name: name
+                        type: string
+                        text: Name
+                        useForColumn: true
+                        useForModel: true
+                        useForForm: true
+                id:
+                    name: id
+                    type: string
+                    text: id
+                    flex: 1
+                    sortable: false
+                    hidden: true
+                    useForColumn: true
+                    useForModel: true
+                    useForForm: false
+                value:
+                    name: value
+                    type: string
+                    text: Value
+                    flex: 2
+                    sortable: false
+                    hidden: false,
+                    useForColumn: true
+                    useForModel: true
+                    useForForm: true
+                isNew:
+                    name: isNew
+                    type: boolean
+                    defaultValue: false
+                    useForColumn: false
+                    useForModel: true
+                    useForForm: false
+        Dataset:
+            document: Dataset
+            associazioni:
+                Options:
+                    name: options
+                    document: Options
+                    type: hasMany
+            campi:
+                Traduzioni:
+                    name:
+                        name: name
+                        type: string
+                        text: Name
+                        useForColumn: true
+                        useForModel: true
+                        useForForm: true
+                id:
+                    name: id
+                    type: string
+                    text: id
+                    flex: 1
+                    sortable: false
+                    hidden: true
+                    useForColumn: true
+                    useForModel: true
+                    useForForm: false
+                uniqueName:
+                    name: uniqueName
+                    type: string
+                    text: Dataset
+                    flex: 2
+                    sortable: false
+                    hidden: false,
+                    useForColumn: true
+                    useForModel: true
+                    useForForm: true
+                uniqueSlug:
+                    name: uniqueSlug
+                    type: string
+                    text: Unique Slug
+                    sortable: false
+                    hidden: true
+                    useForColumn: true
+                    useForModel: true
+                    useForForm: true
+                isNew:
+                    name: isNew
+                    type: boolean
+                    defaultValue: false
+                    useForColumn: false
+                    useForModel: true
+                    useForForm: false
         Attributi:
-            fields:
+            document: Attributi
+            campi:
                 Traduzioni:
                     name:
                         name: name
@@ -75,7 +166,8 @@ fdt_admin:
                     useForModel: true
                     useForForm: false
         Tipologie:
-            fields:
+            document: Tipologie
+            campi:
                 Traduzioni: 
                     name:
                         name: name

@@ -48,7 +48,6 @@ class DataSet implements Translatable
     /** 
     * @MongoDB\String
     * @Gedmo\Translatable
-    * @Assert\NotBlank()
     */
     private $descrizione;
     
@@ -165,7 +164,8 @@ class DataSet implements Translatable
     public function getOptions($toArray = FALSE, $indexBy = 'slug')
     {
         if (count($this->options) <= 0) {
-            throw new DatasetNoOptionsException(sprintf('Il dataset %s non contine opzioni', $this->getName()));
+            //throw new DatasetNoOptionsException(sprintf('Il dataset %s non contine opzioni', $this->getName()));
+            return false;
             
         }
         $optionsArrayCollection = $this->sortByOneKey($this->options, 'ordine', $asc = true);

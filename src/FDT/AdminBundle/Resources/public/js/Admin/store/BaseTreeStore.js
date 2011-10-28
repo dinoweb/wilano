@@ -7,16 +7,6 @@ Ext.define('Admin.store.BaseTreeStore',
 	{
 	   text: "Metadata",
 	   expanded: false
-	},
-	proxy:
-	{
-            type:'rest',            
-            reader: {
-			    type: 'json'
-            },
-            writer: {
-                type: 'json',
-            }
-    }   
+	}  
 
 });
