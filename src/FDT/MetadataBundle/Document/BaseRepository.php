@@ -3,6 +3,7 @@ namespace FDT\MetadataBundle\Document;
 
 use Doctrine\ODM\MongoDB\DocumentRepository;
 use Doctrine\Common\Annotations\AnnotationReader;
+use Doctrine\Common\Collections\ArrayCollection;
 use FDT\MetadataBundle\Exception\ValidatorErrorException;
 use Metadata\ClassMetadata;
 
@@ -152,10 +153,18 @@ class BaseRepository extends DocumentRepository
     }
     
     
-    public function toArray ($document, $deep = false)
+    public function toArray ($document, $deep = false, $documentToWorkOn = false)
     {
-        $classMetadata = $this->getClassMetadata();                
-        
+        if ($documentToWorkOn)
+        {
+            $documentManager = $this->getDocumentManager();
+            $classMetadata = $documentManager->getClassMetadata($documentToWorkOn);
+        }
+        else
+        {
+             $classMetadata = $this->getClassMetadata();  
+        }
+                
         $arrayDocument = array();
         
         foreach ($classMetadata->getReflectionProperties() as $property)
@@ -195,7 +204,7 @@ class BaseRepository extends DocumentRepository
     
     }
     
-    public function returnAsArray ($deep = false)
+    public function returnAsArray ($deep = false, $documentToWorkOn = false)
     {
         $arrayResult = array ();
         
@@ -207,11 +216,45 @@ class BaseRepository extends DocumentRepository
         {
             foreach ($cursor as $document)
             {
-             $arrayResult['results'][] = $this->toArray($document, $deep);
+             $arrayResult['results'][] = $this->toArray($document, $deep, $documentToWorkOn);
             }
         }
         
         return $arrayResult;
+    
+    }
+    
+    public function generateRelatedData (array $limit, array $requestConfig)
+    {
+        
+        $document = $this->getByMyUniqueId ($requestConfig['ownerId'], 'id');
+        
+        $getRelatedRecordsFunction = $requestConfig['getRelationFunction'];
+        
+        $relatedRecords = $document->$getRelatedRecordsFunction();
+                
+        if (!$relatedRecords)
+        {
+            
+            $collection = new ArrayCollection();
+        
+        }
+        else if ($relatedRecords and get_class($relatedRecords) != 'Doctrine\Common\Collections\ArrayCollection')
+        {
+        
+            $collection = new ArrayCollection();
+            
+            $collection->add ($relatedRecords);
+        }
+        else
+        {
+            $collection = $relatedRecords;
+        }
+        
+        
+        $this->setCursor ($collection);
+        
+        return $this;
     
     }
     

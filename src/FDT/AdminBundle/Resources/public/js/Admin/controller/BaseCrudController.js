@@ -1,6 +1,11 @@
 Ext.define('Admin.controller.BaseCrudController', {
     extend: 'Ext.app.Controller',
-
+    
+    config: {
+        namespace: false,
+        application: false
+    },
+    
     refs: [
     {
         ref:'mainPanel',
@@ -73,7 +78,8 @@ Ext.define('Admin.controller.BaseCrudController', {
             urlRead: this.getRestUrl(),
             urlUpdate: this.getRestUrl(),
             urlCreate: this.getRestUrl(),
-            configStore: campiStore
+            configStore: campiStore,
+            extraParams: this.getExtraParams()
 
         });
         this.getStoreBuilder = function ()
@@ -93,9 +99,10 @@ Ext.define('Admin.controller.BaseCrudController', {
         
         //INIZIALIZZO IL PANNELLO
         var panelBuilder = Ext.create ('Admin.PanelBuilder', {
-            idString: id,
+            idString: this.getNamespace()+id,
             title: 'Configurazione '+id,
             store:  this.createStore(id, campiStore),
+            idTargetPanel: this.getIdTargetPanel(),
             plugins: plugins,
             callerObject: this,
             configStore: campiStore
@@ -104,19 +111,88 @@ Ext.define('Admin.controller.BaseCrudController', {
         return panelBuilder;
     },
     
+    addListenerToPanel: function (panel)
+    {
+        
+        panel.addListener ('itemdblclick', this.aggiungi, this);
+        this.addPanelListener (panel);
+    
+    },
+    
     createPanel: function(campiStore)
     {
         //CREO IL PANNELLO
+        var targetPanel = this.buildTargetPanel();
         var plugins = { ptype: 'treeviewdragdrop', allowParentInserts: true, allowContainerDrop: true, enableDrag: true, expandDelay: 20000};
         var panelBuilder = this.getPanelBuilder(this.getControllerName(), campiStore, plugins);
         var panel = panelBuilder.buildPanel(this.getPanelType());
+        this.addToolbar (panel);
         this.addToolbarItems (panel);
         this.getPanelId = function ()
         {
             return panel.getId();
         };
-        panel.addListener ('itemdblclick', this.aggiungi, this);
+        this.addListenerToPanel (panel);
+        
+        this.postCreatePanel (panel);
 
+    },
+    
+    buildToolbar : function ()
+    {
+      var toolbar = Ext.create('Ext.toolbar.Toolbar', {
+                    dock: 'top',
+                    id: 'mainToolbar'+this.getControllerName(),
+                    items: [
+                                {
+                                    text: 'Aggiungi',
+                                    scope: this,
+                                    icon: '/bundles/fdtadmin/images/icons/add.png',
+                                    cls: 'x-btn-text-icon',
+                                    id: 'aggiungi'+this.getControllerName(),
+                                    handler: function (){
+                                        this.aggiungi()
+                                    }
+                                },
+                                '-',
+                                {
+                                    text: 'Salva',
+                                    scope: this,
+                                    icon: '/bundles/fdtadmin/images/icons/accept.png',
+                                    cls: 'x-btn-text-icon',
+                                    id: 'salva'+this.getControllerName(),
+                                    handler: function (){
+                                        this.salva()
+                                    }
+                                },
+                                '-'
+                            ]
+                    });
+
+      return toolbar;
+        
+    },
+    
+    addToolbar: function (panel)
+    {
+        var toolbar = this.buildToolbar();
+        panel.addDocked(toolbar);
+        
+    },
+    
+    buildTargetPanel: function ()
+    {
+        
+    },
+    
+    getExtraParams: function ()
+    {
+        return  {};
+    },
+    
+    getIdTargetPanel: function ()
+    {
+        return  'mainPanel';
     },
     
     getPanelType: function ()
@@ -132,6 +208,22 @@ Ext.define('Admin.controller.BaseCrudController', {
     addToolbarItems: function (panel)
     {
         
+    },
+    
+    addPanelListener: function (panel)
+    {
+        
+    },
+    
+    postCreatePanel: function (panel)
+    {
+        return false;
+    },
+    
+    getSelectedRow: function (panel)
+    {
+        var selModel = panel.getSelectionModel();
+        return selModel.getLastSelected();        
     },
 
     aggiungi: function (grid, record)
@@ -151,21 +243,54 @@ Ext.define('Admin.controller.BaseCrudController', {
             items: form
         }
         );
+        
+        this.resizeWindow(view);
 
         if (Ext.typeOf(record) === 'undefined')
         {
             var record = Ext.create(this.getStoreBuilder().getModel());
-            record.set('uniqueName', 'Palla new');
-            record.set('uniqueSlug', 'Palla slug');
         }
 
         form.loadRecord(record);
+        form.getEl().on('keyup', this.onFormElKeyUp, this);
+        this.getButtonForEnter().addListener ('click', this.editAction, this);
+        
         form.focusFirstField (true);
+        
+        return form;
 
-        this.application.resizeWindow(view);
-
-        Ext.getCmp('buttonSave').addListener ('click', this.editAction, this);
-
+    },
+    
+    getIdButtonForEnter: function ()
+    {
+        
+        return 'buttonSave';
+    
+    },
+    
+    getButtonForEnter: function ()
+    {
+        
+        return Ext.getCmp(this.getIdButtonForEnter());
+    
+    },
+    
+    
+    fireEventOnFormEnter: function ()
+    {
+        this.getButtonForEnter().fireEvent('click', this.getButtonForEnter());
+    },
+    
+    onFormElKeyUp: function(e, el)
+	{
+		if (e.getKey() === e.ENTER) {
+			this.fireEventOnFormEnter ();
+		}
+	},
+    
+    resizeWindow: function (window)
+    {
+        this.application.resizeWindow(window);
     },
 
     salva: function ()
@@ -191,7 +316,6 @@ Ext.define('Admin.controller.BaseCrudController', {
                     var grid = Ext.ComponentQuery.query('#'+this.getPanelId())[0];
                     grid.getStore().insert(0, record);
                     grid.getView().refresh();
-                    console.log('salva');
 
 
                 };

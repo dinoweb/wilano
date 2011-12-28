@@ -5,7 +5,8 @@ Ext.define('Admin.StoreBuilder', {
         urlUpdate: 'update',
         urlCreate: 'create',
         configStore: null,
-        fieldsCollection: null
+        fieldsCollection: null,
+        extraParams: false
     },
     
     constructor: function(config) {
@@ -80,6 +81,7 @@ Ext.define('Admin.StoreBuilder', {
                 id: idProxy,
                 builderObject: this,
                 url: this.getUrlRead(),
+                extraParams: this.getExtraParams(),
                 reader: {
     			    id: idReader,
     			    type: 'json',

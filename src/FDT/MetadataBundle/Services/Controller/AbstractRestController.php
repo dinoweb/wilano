@@ -1,6 +1,7 @@
 <?php
 
 namespace FDT\MetadataBundle\Services\Controller;
+use Doctrine\Common\Annotations\AnnotationReader;
 
 /**
  * 
@@ -38,9 +39,43 @@ abstract class AbstractRestController
      *
      * @return type Repository
      */
+    protected function getRelatedRepository ()
+    {
+        return $this->documentManager->getRepository($this->getFullRelatedClassName())->setLanguages($this->languages);
+    }
+    
+    
+    /**
+     *
+     * @return type Repository
+     */
     protected function getRepository ()
     {
         return $this->documentManager->getRepository($this->getFullClassName())->setLanguages($this->languages);
+    }
+    
+    
+    /**
+     *
+     * @return type array
+     */
+    protected function getRelatedClassRequestData ($keyToBeReturned = FALSE)
+    {
+        $arrayRelated = array();
+        $arrayRelated['ownerType'] =  preg_replace('/__/', "\\\\", $this->request->get('ownerType'));
+        $arrayRelated['ownerId'] = $this->request->get('ownerId');
+        $arrayRelated['relatedType'] =  preg_replace('/__/', "\\\\", $this->request->get('relatedType'));
+        $arrayRelated['relationType'] =  $this->request->get('relationType');
+        $arrayRelated['getRelationFunction'] = $this->request->get('getRelationFunction');
+        $arrayRelated['setRelationFunction'] = $this->request->get('setRelationFunction');
+        
+        
+        if ($keyToBeReturned and array_key_exists($keyToBeReturned, $arrayRelated))
+        {
+            return $arrayRelated[$keyToBeReturned];
+        }
+        
+        return $arrayRelated;
     }
     
     /**
@@ -50,8 +85,8 @@ abstract class AbstractRestController
     protected function getLimitData ()
     {
         $arrayLimit = array();
-        $arrayLimit['limit'] = $this->request->query->get('limit', 20);
-        $arrayLimit['skip'] = $this->request->query->get('start', 0);
+        $arrayLimit['limit'] = $this->request->get('limit', 20);
+        $arrayLimit['skip'] = $this->request->get('start', 0);
         
         return $arrayLimit;
     }
@@ -70,6 +105,42 @@ abstract class AbstractRestController
         
     }
     
+    private function getReader ()
+    {
+    
+        $reader = new AnnotationReader();        
+        return $reader;
+    
+    
+    }
+    
+    
+     /**
+     * 
+     */
+    public function getTranslationRepository ($document)
+    {
+        $documentManager = $this->documentManager;
+        $classMetadata = $documentManager->getClassMetadata($document);                
+        $reflClass = $classMetadata->getReflectionClass();
+        
+        $translationRepositoryAnnotation = $this->getReader()->getClassAnnotation ($reflClass, '\Gedmo\Mapping\Annotation\TranslationEntity');
+        if ($translationRepositoryAnnotation)
+        {
+            return $documentManager->getRepository($translationRepositoryAnnotation->class);
+        }
+        
+        $parentClass = $reflClass->getParentClass();
+        
+        if ($parentClass)
+        {
+            return $this->getTranslationRepository ($parentClass->getName());
+        }
+        
+        return false;
+        
+    }
+    
     /**
      *
      * @param type $document
@@ -83,7 +154,7 @@ abstract class AbstractRestController
             return $document;
         }
         
-        $repository = $this->getRepository()->getTranslationRepository(get_class($document));
+        $repository = $this->getTranslationRepository(get_class($document));
         $useLocale = $this->languages->getUserLocale ();
         
         foreach ($data['Translations'] as $langKey=>$arrayFields)

@@ -12,7 +12,6 @@ Ext.define('Admin.ConfigBuilder', {
     },
     
     modelFactory: function (extraParams) {
-        console.log(extraParams);
         return Ext.define('ConfigurazioneModel', {
             extend: 'Admin.model.Config',
             id: 'ConfigurazioneModel',

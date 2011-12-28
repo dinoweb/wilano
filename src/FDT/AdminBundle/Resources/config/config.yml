@@ -31,6 +31,18 @@ fdt_admin:
                     useForColumn: true
                     useForModel: true
                     useForForm: true
+                ordine:
+                    name: ordine
+                    type: int
+                    text: Ordine
+                    flex: 1
+                    sortable: false
+                    hidden: false
+                    fieldXtype: numberfield
+                    anchor: 20%
+                    useForColumn: true
+                    useForModel: true
+                    useForForm: true
                 isNew:
                     name: isNew
                     type: boolean
@@ -38,8 +50,8 @@ fdt_admin:
                     useForColumn: false
                     useForModel: true
                     useForForm: false
-        Dataset:
-            document: Dataset
+        DataSet:
+            document: DataSet
             associazioni:
                 Options:
                     name: options
@@ -64,6 +76,7 @@ fdt_admin:
                     useForColumn: true
                     useForModel: true
                     useForForm: false
+                    useForSearch: true
                 uniqueName:
                     name: uniqueName
                     type: string
@@ -74,6 +87,7 @@ fdt_admin:
                     useForColumn: true
                     useForModel: true
                     useForForm: true
+                    useForSearch: true
                 uniqueSlug:
                     name: uniqueSlug
                     type: string
@@ -83,6 +97,7 @@ fdt_admin:
                     useForColumn: true
                     useForModel: true
                     useForForm: true
+                    useForSearch: true
                 isNew:
                     name: isNew
                     type: boolean
@@ -90,8 +105,9 @@ fdt_admin:
                     useForColumn: false
                     useForModel: true
                     useForForm: false
-        Attributi:
-            document: Attributi
+                    useForSearch: false
+        Attributo:
+            document: Attributo
             campi:
                 Traduzioni:
                     name:
@@ -121,6 +137,7 @@ fdt_admin:
                     useForColumn: true
                     useForModel: true
                     useForForm: true
+                    useForSearch: true
                 uniqueSlug:
                     name: uniqueSlug
                     type: string
@@ -154,6 +171,132 @@ fdt_admin:
                     hidden: false
                     fieldXtype: combo
                     store: Metadata.store.Attributi.Tipo
+                    anchor: 40%
+                    useForColumn: true
+                    useForModel: true
+                    useForForm: true
+                isNew:
+                    name: isNew
+                    type: boolean
+                    defaultValue: false
+                    useForColumn: false
+                    useForModel: true
+                    useForForm: false
+        Config:
+            document: Config
+            campi:
+                id:
+                    name: id
+                    type: string
+                    text: Id
+                    flex: 1
+                    sortable: false
+                    hidden: true
+                    useForColumn: true
+                    useForModel: true
+                    useForForm: false
+                relatedId:
+                    name: relatedId
+                    type: string
+                    text: relatedId
+                    flex: 1
+                    sortable: false
+                    hidden: true
+                    useForColumn: true
+                    useForModel: true
+                    useForForm: false
+                ordine:
+                    name: ordine
+                    type: int
+                    text: Ordine
+                    flex: 1
+                    sortable: false
+                    hidden: false
+                    fieldXtype: numberfield
+                    anchor: 20%
+                    useForColumn: true
+                    useForModel: true
+                    useForForm: true
+                isActive:
+                    name: isActive
+                    type: boolean
+                    defaultValue: true
+                    text: Attivo
+                    flex: 1
+                    sortable: false
+                    hidden: false
+                    fieldXtype: combo
+                    store: Admin.store.SiNo
+                    anchor: 40%
+                    useForColumn: true
+                    useForModel: true
+                    useForForm: true
+                isObligatory:
+                    name: isObligatory
+                    type: boolean
+                    defaultValue: true
+                    text: Obbligatorio
+                    flex: 1
+                    sortable: false
+                    hidden: false
+                    fieldXtype: combo
+                    store: Admin.store.SiNo
+                    anchor: 40%
+                    useForColumn: true
+                    useForModel: true
+                    useForForm: true
+                inSearch:
+                    name: inSearch
+                    type: boolean
+                    defaultValue: false
+                    text: Per ricerche
+                    flex: 1
+                    sortable: false
+                    hidden: false
+                    fieldXtype: combo
+                    store: Admin.store.SiNo
+                    anchor: 40%
+                    useForColumn: true
+                    useForModel: true
+                    useForForm: true
+                hasTranslation:
+                    name: hasTranslation
+                    type: boolean
+                    defaultValue: false
+                    text: Ha Traduzione
+                    flex: 1
+                    sortable: false
+                    hidden: false
+                    fieldXtype: combo
+                    store: Admin.store.SiNo
+                    anchor: 40%
+                    useForColumn: true
+                    useForModel: true
+                    useForForm: true
+                isPubblicable:
+                    name: isPubblicable
+                    type: boolean
+                    defaultValue: true
+                    text: Pubblicabile
+                    flex: 1
+                    sortable: false
+                    hidden: false
+                    fieldXtype: combo
+                    store: Admin.store.SiNo
+                    anchor: 40%
+                    useForColumn: true
+                    useForModel: true
+                    useForForm: true
+                isForConfiguration:
+                    name: isForConfiguration
+                    type: boolean
+                    defaultValue: false
+                    text: Per configurazioni
+                    flex: 1
+                    sortable: false
+                    hidden: false
+                    fieldXtype: combo
+                    store: Admin.store.SiNo
                     anchor: 40%
                     useForColumn: true
                     useForModel: true

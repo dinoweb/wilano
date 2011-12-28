@@ -19,12 +19,6 @@ Ext.define('Metadata.controller.Dataset', {
        )
     },
     
-    getSelectedRow: function (panel)
-    {
-        var selModel = panel.getSelectionModel();
-        return selModel.getLastSelected();        
-    },
-    
     manageOptions: function (panel)
     {
         var selectedRow = this.getSelectedRow (panel);
@@ -33,6 +27,7 @@ Ext.define('Metadata.controller.Dataset', {
         {
             var controller = Ext.create('Metadata.controller.Options', {
                                                             application: this.application,
+                                                            owner: selectedRow
                                                           });
             controller.init();
         }
@@ -42,7 +37,7 @@ Ext.define('Metadata.controller.Dataset', {
     
     getControllerName: function ()
     {
-        return 'Dataset';
+        return 'DataSet';
     },
     
     getRestUrl: function ()

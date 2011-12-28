@@ -24,7 +24,11 @@ Ext.application({
         'Admin.StoreBuilder',
         'Admin.PanelBuilder',
         'Admin.ConfigBuilder',
-        'Admin.FormBuilder'
+        'Admin.FormBuilder',
+        
+        //CONTROLLER
+        'Admin.controller.BaseCrudController',
+        'Admin.controller.BaseRelatedController'
         
         
     ],
@@ -56,18 +60,19 @@ Ext.application({
 
     },
     
-    resizeWindow: function (window)
+    resizeWindow: function (window, height, width)
     {
+        height = typeof(height) != 'undefined' ? height : 20;
+        width = typeof(width) != 'undefined' ? width : 1.5;
                              
         var bodyElement = Ext.getBody();
 		
-		var bodyHeight = bodyElement.getHeight ();
-		var bodyWidth = bodyElement.getWidth ();
+		var bodyHeight = Ext.Element.getViewportHeight ();
+		var bodyWidth = Ext.Element.getViewportWidth ();
 	
-		window.setHeight(bodyHeight-20);
-		window.setWidth(bodyWidth/1.5);
-		window.center();
-     
+		window.setHeight(bodyHeight-height);
+		window.setWidth(bodyWidth/width);
+		window.center();     
      
      },
      

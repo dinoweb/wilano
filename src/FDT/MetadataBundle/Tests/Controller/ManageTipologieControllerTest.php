@@ -6,7 +6,7 @@ use FDT\AdminBundle\Tests\TestCase\TestCase;
 
 
 
-class ManageControlleTipologie extends TestCase
+class ManageTipologieController extends TestCase
 {
 
 
@@ -21,7 +21,7 @@ class ManageControlleTipologie extends TestCase
     public function testGetRoots()
     {
 
-        $crawler = $this->getClient()->request('GET', '/admin/metadata/Prodotti/manageTipologie?node=idRootProdotti');
+        $crawler = $this->getClient()->request('GET', '/admin/metadata/Prodotti/manageTipologie?node=idRoot');
         
         $this->assertTrue($this->getClient()->getResponse()->headers->contains('Content-Type', 'application/json'));
         
@@ -79,7 +79,7 @@ class ManageControlleTipologie extends TestCase
 		
 		
 		
-		$crawler = $this->getClient()->request('GET', '/admin/metadata/Prodotti/manageTipologie?node=idRootProdotti');
+		$crawler = $this->getClient()->request('GET', '/admin/metadata/Prodotti/manageTipologie?node=idRoot');
     	$arrayTipologie = json_decode ($this->getClient()->getResponse()->getContent(), true);
     	$this->assertEquals (2, count($arrayTipologie['results']));
     	
@@ -112,7 +112,7 @@ class ManageControlleTipologie extends TestCase
 		);
     	
     	
-    	$crawler = $this->getClient()->request('GET', '/admin/metadata/Prodotti/manageTipologie?node=idRootProdotti');
+    	$crawler = $this->getClient()->request('GET', '/admin/metadata/Prodotti/manageTipologie?node=idRoot');
     	$arrayTipologie = json_decode ($this->getClient()->getResponse()->getContent(), true);
     	$this->assertEquals (1, count($arrayTipologie['results']));
     	    	

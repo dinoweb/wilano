@@ -134,7 +134,6 @@ class Languages
     public function prepareTranslationDataForForms($document, $repository)
     {
         $translations = $repository->findTranslations($document);
-        
         $arrayTranslation = array ();
         
         if (count ($translations) > 0)

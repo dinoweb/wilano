@@ -32,6 +32,22 @@ Ext.define('Admin.FormBuilder', {
             });
     },
     
+    addNumberfieldToCollection: function (collection, record)
+    {
+        collection.add({
+            name: record.get('name'),
+            xtype: record.get('fieldXtype'),
+            fieldLabel: record.get('text'),
+            allowBlank: record.get('allowBlank'),
+            anchor: record.get('anchor'),
+            minValue: record.get('minValue'),
+            hideTrigger: true,
+            allowDecimals: record.get('allowDecimals')
+        });
+        
+        
+    },
+    
     addNormalFieldsToCollection: function (collection, record)
     {
         collection.add({
@@ -57,6 +73,9 @@ Ext.define('Admin.FormBuilder', {
                 
         if (record.get('fieldXtype') == 'combo'){
             this.addComboToCollection (collection, record);
+        }
+        else if (record.get('fieldXtype') == 'numberfield'){
+            this.addNumberfieldToCollection (collection, record);
         }
         else{
             this.addNormalFieldsToCollection (collection, record);
@@ -96,9 +115,13 @@ Ext.define('Admin.FormBuilder', {
             
         configStore.filter('useForForm', true);
         configStore.filter('isTranslated', true);
-        configStore.each(this.addFieldToCollection, this);
+        if (configStore.count() > 0)
+        {
+            configStore.each(this.addFieldToCollection, this);
             
-        this.getFieldsCollection().add ('traduzioni', this.getPanelTraduzioni());
+            this.getFieldsCollection().add ('traduzioni', this.getPanelTraduzioni());
+        }
+        
         
         configStore.clearFilter();
     },
@@ -114,12 +137,38 @@ Ext.define('Admin.FormBuilder', {
         configStore.clearFilter();
     },
     
-    getItems: function ()
+    buildSearchFields: function (configStore)
+    {
+        
+        configStore.filter('useForSearch', true);
+        
+        this.setFieldsCollection(new Ext.util.MixedCollection(false, function(el){
+                                                                        return el.name;
+                                                                    }));
+        
+        configStore.filter('isTranslated', false);
+        configStore.each(this.addFieldToCollection, this);
+        configStore.clearFilter();
+    },
+
+        
+    getItems: function (formType)
     {
         
         var configStore = this.getConfigStore();
-        this.buildBaseFields(configStore);
-        this.buildTranslation(configStore);
+        
+        if (formType == 'search')
+        {
+            this.buildSearchFields(configStore);
+        }
+        else
+        {
+            this.buildBaseFields(configStore);
+            this.buildTranslation(configStore);
+            
+        }
+        
+        
             
         configStore.clearFilter();
         
@@ -129,18 +178,20 @@ Ext.define('Admin.FormBuilder', {
         
     },
     
-    formFactory: function () {
+    formFactory: function (formType) {
         return Ext.define(this.getIdString(), {
             extend: 'Admin.view.BaseFormPanel',
             id: this.getIdString(),
-            items: this.getItems()
+            items: this.getItems(formType)
         });
     },
     
-    getForm: function ()
+    getForm: function (formType)
     {
-        var baseForm = this.formFactory();        
-        var form = Ext.create(baseForm);
+        var baseForm = this.formFactory(formType);        
+        var form = Ext.create(baseForm, {
+                                            buttonForEnterKey: 'palla'
+                                        });
         return form;
         
     }

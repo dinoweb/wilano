@@ -88,6 +88,9 @@ Ext.define('Admin.PanelBuilder', {
             columnLines: true,
             title: this.getTitle(),
             store: this.getStore(),
+            margins: '0 0 0 0',
+			closable: true,
+			border: false,
             dockedItems: [{
                 xtype: 'pagingtoolbar',
                 store: this.getStore(),   // same store GridPanel is using
@@ -144,7 +147,11 @@ Ext.define('Admin.PanelBuilder', {
         {
              targhetPanel = arrayPanelById[0];
              targhetPanel.add(panel);
-             targhetPanel.setActiveTab(panel);
+             if (targhetPanel.getXType() == 'tabpanel')
+             {
+                 targhetPanel.setActiveTab(panel);
+             }
+             
         }
         else
         {
@@ -152,53 +159,10 @@ Ext.define('Admin.PanelBuilder', {
         }
     },
     
-    buildToolbar : function ()
-    {
-      var toolbar = Ext.create('Ext.toolbar.Toolbar', {
-                    dock: 'top',
-                    id: 'mainToolbar'+this.getIdString(),
-                    items: [
-                                {
-                                    text: 'Aggiungi',
-                                    scope: this,
-                                    icon: '/bundles/fdtadmin/images/icons/add.png',
-                                    cls: 'x-btn-text-icon',
-                                    id: 'aggiungi'+this.getIdString(),
-                                    handler: function (){
-                                        this.getCallerObject().aggiungi()
-                                    }
-                                },
-                                '-',
-                                {
-                                    text: 'Salva',
-                                    scope: this,
-                                    icon: '/bundles/fdtadmin/images/icons/accept.png',
-                                    cls: 'x-btn-text-icon',
-                                    id: 'salva'+this.getIdString(),
-                                    handler: function (){
-                                        this.getCallerObject().salva()
-                                    }
-                                },
-                                '-'
-                            ]
-                    });
-
-      return toolbar;
-        
-    },
-    
-    addToolbar: function (panel)
-    {
-        var toolbar = this.buildToolbar();
-        panel.addDocked(toolbar);
-        
-    },
-    
     buildPanel: function (tipo)
     {
         var panelConstruct = this.panelFactory(tipo);
         var panel = Ext.create(panelConstruct);
-    	this.addToolbar(panel);
         this.insertPanel (panel);
         return panel;
     }

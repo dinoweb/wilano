@@ -125,6 +125,10 @@ class DataSetTest extends TestCase
         
         $this->assertEquals ('Stati Uniti', $arrayOptions[0]->getName());
         
+        $repository = $this->getDm()->getRepository('FDT\MetadataBundle\Document\Attributi\OptionTranslation');
+        $translations = $repository->findTranslations($option2);
+        $this->assertEquals (1, count ($translations));
+        
         
         
         

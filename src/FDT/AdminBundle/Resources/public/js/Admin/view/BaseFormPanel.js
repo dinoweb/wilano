@@ -16,16 +16,7 @@ Ext.define('Admin.view.BaseFormPanel', {
         anchor:'100%',
         autoHeight:true,
         bodyStyle:'padding:10px',
-        enableKeyEvents:true,
-        listeners:{
-            specialKey: function(field, el)
-            {
-                if(el.getKey() == Ext.EventObject.ENTER)
-                {
-                    Ext.getCmp('buttonSave').fireEvent('click', Ext.getCmp('buttonSave'));
-            }
-        }
-  }
+        enableKeyEvents:true
         
         
         
@@ -33,8 +24,11 @@ Ext.define('Admin.view.BaseFormPanel', {
     focusFirstField: function (selectText)
     {
         var fields = this.getForm().getFields();
-        fields = fields.filter ('xtype', 'textfield');
-        fields.getAt(0).focus();
+        if (fields.getCount () > 0)
+        {
+           fields.getAt(0).focus(); 
+        }
+        
         if (selectText)
         {
            fields.getAt(0).selectText(); 

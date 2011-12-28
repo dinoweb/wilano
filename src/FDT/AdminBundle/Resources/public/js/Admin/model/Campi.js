@@ -27,12 +27,16 @@ Ext.define('Admin.model.Campi',
         {name: 'fieldXtype', type: 'string', defaultValue: 'textfield'},
         {name: 'allowBlank', type: 'boolean', defaultValue: false},
         {name: 'anchor', type: 'string', defaultValue: '100%'},
+        {name: 'minValue', type: 'int', defaultValue: 0},
+        {name: 'hideTrigger', type: 'boolean', defaultValue: true},
+        {name: 'allowDecimals', type: 'boolean', defaultValue: false},
         {name: 'store', type: 'string', defaultValue: null},
         {name: 'isTranslated', type: 'boolean', defaultValue: false},
         {name: 'queryMode', type: 'string', defaultValue: 'local'},
         {name: 'useForColumn', type: 'boolean', defaultValue: true},
         {name: 'useForModel', type: 'boolean', defaultValue: true},
-        {name: 'useForForm', type: 'boolean', defaultValue: false}
+        {name: 'useForForm', type: 'boolean', defaultValue: false},
+        {name: 'useForSearch', type: 'boolean', defaultValue: false}
         
     ]
 });

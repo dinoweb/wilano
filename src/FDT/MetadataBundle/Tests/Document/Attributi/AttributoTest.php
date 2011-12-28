@@ -235,6 +235,8 @@ class AttributoTest extends TestCase
         $repository = $this->getDm()->getRepository('FDT\MetadataBundle\Document\Attributi\AttributoTranslation');
         $translations = $repository->findTranslations($attributoSaved);
         
+        //print_r($translations);
+        
         
         $this->assertArrayHasKey('en_us', $translations);
         $this->assertArrayHasKey('it_it', $translations);

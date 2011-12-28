@@ -58,8 +58,11 @@ class DataSet implements Translatable
     private $locale;
     
     /**
-    * @MongoDB\EmbedMany(targetDocument="FDT\MetadataBundle\Document\Attributi\Option")
-    */
+     * @MongoDB\ReferenceMany(targetDocument="FDT\MetadataBundle\Document\Attributi\Option", cascade="all", sort={"ordine"="asc"})
+     *
+     * @var array|ArrayCollection
+     * @access protected
+     */
     protected $options = array();
     
     public function __construct()
@@ -165,7 +168,7 @@ class DataSet implements Translatable
     {
         if (count($this->options) <= 0) {
             //throw new DatasetNoOptionsException(sprintf('Il dataset %s non contine opzioni', $this->getName()));
-            return false;
+            return $this->options;
             
         }
         $optionsArrayCollection = $this->sortByOneKey($this->options, 'ordine', $asc = true);

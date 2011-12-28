@@ -5,6 +5,9 @@ parameters:
     contenuti.manageTipologieClass:     FDT\MetadataBundle\Services\Controller\ManageTipologie
     contenuti.manageAttributiClass:     FDT\MetadataBundle\Services\Controller\ManageAttributi
     contenuti.manageDatasetClass:       FDT\MetadataBundle\Services\Controller\ManageDataset
+    contenuti.manageOptionsClass:       FDT\MetadataBundle\Services\Controller\ManageOptions
+    contenuti.manageRelationsClass:     FDT\MetadataBundle\Services\Controller\ManageRelations
+    contenuti.manageSearchClass:        FDT\MetadataBundle\Services\Controller\ManageSearch
     contenuti.attributi.type:           
 
 services:
@@ -44,6 +47,21 @@ services:
         parent:       contenuti.abstractRest 
         class:        %contenuti.manageDatasetClass%
         scope:        request    
+    
+    contenuti.manageOptions:
+        parent:       contenuti.abstractRest 
+        class:        %contenuti.manageOptionsClass%
+        scope:        request
+    
+    contenuti.manageRelations:
+        parent:       contenuti.abstractRest 
+        class:        %contenuti.manageRelationsClass%
+        scope:        request
+    
+    contenuti.manageSearch:
+        parent:       contenuti.abstractRest 
+        class:        %contenuti.manageSearchClass%
+        scope:        request
     
     contenuti.form_builder:
         class:        %form_builder_class%

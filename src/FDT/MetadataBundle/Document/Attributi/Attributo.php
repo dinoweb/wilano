@@ -86,7 +86,6 @@ class Attributo implements Translatable
      * @Gedmo\Timestampable(on="update")
      */
     private $updated;
-      
 
     /**
      * Get id
@@ -231,7 +230,7 @@ class Attributo implements Translatable
         $this->dataSet = $dataSet;
     }
     
-    public function getDataSet()
+    public function getDataset()
     {
         return $this->dataSet;
     }
@@ -239,7 +238,7 @@ class Attributo implements Translatable
     public function getOptions($toArray = TRUE, $indexBy = 'slug')
     {
         if ($this->hasDataset()) {
-            return $this->getDataSet()->getOptions($toArray, $indexBy);
+            return $this->getDataset()->getOptions($toArray, $indexBy);
         }
     }
     

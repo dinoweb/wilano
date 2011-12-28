@@ -5,6 +5,13 @@ Ext.define('Metadata.controller.Tipologie', {
         tipologia: null
     },
     
+    getTipologiaType: function ()
+    {
+        
+        return this.getTipologia().get('tipologiaType');
+    
+    },
+    
     getControllerName: function ()
     {
         return 'Tipologie';
@@ -12,7 +19,7 @@ Ext.define('Metadata.controller.Tipologie', {
     
     getRestUrl: function ()
     {
-        return 'metadata/'+this.getTipologia().get('tipologiaType')+'/manageTipologie';
+        return 'metadata/'+this.getTipologiaType()+'/manageTipologie';
     },
     
     getPanelType: function ()
@@ -23,6 +30,49 @@ Ext.define('Metadata.controller.Tipologie', {
     getStoreType: function ()
     {
         return 'treeStore';
+    },
+    
+    addToolbarItems: function (panel)
+    {
+       var toolbar = panel.getDockedComponent('mainToolbar'+this.getControllerName());
+       
+       toolbar.add (
+            {
+                text: 'Attributi',
+                tooltip: 'Relaziona attributi',
+                scope: this,
+                icon: '/bundles/fdtadmin/images/icons/arrow_divide.png',
+                cls: 'x-btn-text-icon',
+                handler: function (){
+                    this.manageAttributi(panel)
+                }
+            }
+       
+       )
+    },
+    
+    
+    manageAttributi: function (panel)
+    {
+        var selectedRow = this.getSelectedRow (panel); 
+
+        var controller = Ext.create('Metadata.controller.Relation', {
+                                                        application: this.getApplication(),
+                                                        owner: selectedRow,
+                                                        ownerType: 'Tipologie__'+this.getTipologiaType(),
+                                                        relatedType: 'Attributi__Attributo',
+                                                        relationModel: 'Attributi__Config',
+                                                        relationType: 'manyWithConfig',
+                                                        setRelationFunction: 'addAttributi',
+                                                        getRelationFunction: 'getAttributiTree'
+                                                      });
+        controller.init();
+   
+    },
+    
+    addPanelListener: function (panel)
+    {
+        panel.addListener('itemmove', this.salva , this);
     },
     
     editAction: function(button) {
@@ -40,7 +90,7 @@ Ext.define('Metadata.controller.Tipologie', {
                    record.set ('leaf', false);
                    record.set ('expanded', true);
                    record.set ('loaded', true);
-                   
+                                      
                     
                    var tree = Ext.ComponentQuery.query('#'+this.getPanelId())[0];
                    var selModel = tree.getSelectionModel();
@@ -48,7 +98,10 @@ Ext.define('Metadata.controller.Tipologie', {
                    if (!node) {
                     var node = tree.getRootNode();
                    }
+                   node.set('leaf', false);
                    node.appendChild(record);
+                   record.phantom = true;
+                   tree.getView().refresh();
                    node.expand();
                    selModel.select(record);
 
@@ -56,7 +109,6 @@ Ext.define('Metadata.controller.Tipologie', {
 
                win.destroy();
                this.salva();
-               tree.getView().refresh();
             } else {
                 win.down('form').focusFirstField (true);
             }
