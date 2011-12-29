@@ -59,12 +59,14 @@ Ext.define('Metadata.controller.Tipologie', {
         var controller = Ext.create('Metadata.controller.Relation', {
                                                         application: this.getApplication(),
                                                         owner: selectedRow,
-                                                        ownerType: 'Tipologie__'+this.getTipologiaType(),
-                                                        relatedType: 'Attributi__Attributo',
+                                                        ownerModel: 'Tipologie__'+this.getTipologiaType(),
+                                                        relatedModel: 'Attributi__Attributo',
                                                         relationModel: 'Attributi__Config',
                                                         relationType: 'manyWithConfig',
                                                         setRelationFunction: 'addAttributi',
-                                                        getRelationFunction: 'getAttributiTree'
+                                                        getRelationFunction: 'getAttributiTree',
+                                                        setRelationToConfigFunction: 'addAttributo',
+                                                        getRelationToConfigFunction: 'getAttributo'
                                                       });
         controller.init();
    

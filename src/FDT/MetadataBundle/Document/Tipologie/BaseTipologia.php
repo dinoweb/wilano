@@ -202,9 +202,7 @@ class BaseTipologia implements BaseNode, Translatable
         }
         
         $this->addAttributiToTree ();
-        
-        
-        
+                
         return  $this->attributiTree;
     
     }
@@ -318,7 +316,7 @@ class BaseTipologia implements BaseNode, Translatable
      * @param mixed $attibutoConf una configurazione attributo associabile
      * @return void
      */
-    public function addAttributi ($attibutoConf)
+    public function addAttributi (\FDT\MetadataBundle\Document\Attributi\Config $attibutoConf)
     {            
         $this->attributi->add ($attibutoConf);
     

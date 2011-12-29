@@ -6,7 +6,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @MongoDB\Document(collection="attributi.config"))
+ * @MongoDB\Document(collection="attributi.config", repositoryClass="FDT\MetadataBundle\Document\Attributi\ConfigRepository"))
  */
  
 class Config

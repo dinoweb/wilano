@@ -32,8 +32,7 @@ abstract class AbstractRestController
     
     }
     
-    abstract protected function getFullClassName();
-    abstract protected function setDatiDocument($document, $data);
+    abstract protected function getOwnerClassName();
     
     /**
      *
@@ -41,7 +40,7 @@ abstract class AbstractRestController
      */
     protected function getRelatedRepository ()
     {
-        return $this->documentManager->getRepository($this->getFullRelatedClassName())->setLanguages($this->languages);
+        return $this->documentManager->getRepository($this->getRelatedClassName())->setLanguages($this->languages);
     }
     
     
@@ -51,7 +50,7 @@ abstract class AbstractRestController
      */
     protected function getRepository ()
     {
-        return $this->documentManager->getRepository($this->getFullClassName())->setLanguages($this->languages);
+        return $this->documentManager->getRepository($this->getOwnerClassName())->setLanguages($this->languages);
     }
     
     
@@ -62,13 +61,15 @@ abstract class AbstractRestController
     protected function getRelatedClassRequestData ($keyToBeReturned = FALSE)
     {
         $arrayRelated = array();
-        $arrayRelated['ownerType'] =  preg_replace('/__/', "\\\\", $this->request->get('ownerType'));
+        $arrayRelated['ownerModel'] =  preg_replace('/__/', "\\\\", $this->request->get('ownerModel'));
         $arrayRelated['ownerId'] = $this->request->get('ownerId');
-        $arrayRelated['relatedType'] =  preg_replace('/__/', "\\\\", $this->request->get('relatedType'));
+        $arrayRelated['relatedModel'] =  preg_replace('/__/', "\\\\", $this->request->get('relatedModel'));
+        $arrayRelated['relationModel'] =  preg_replace('/__/', "\\\\", $this->request->get('relationModel'));
         $arrayRelated['relationType'] =  $this->request->get('relationType');
         $arrayRelated['getRelationFunction'] = $this->request->get('getRelationFunction');
         $arrayRelated['setRelationFunction'] = $this->request->get('setRelationFunction');
-        
+        $arrayRelated['setRelationToConfigFunction'] = $this->request->get('setRelationToConfigFunction');
+        $arrayRelated['getRelationToConfigFunction'] = $this->request->get('getRelationToConfigFunction');
         
         if ($keyToBeReturned and array_key_exists($keyToBeReturned, $arrayRelated))
         {
@@ -91,6 +92,19 @@ abstract class AbstractRestController
         return $arrayLimit;
     }
     
+    
+    protected function getFilterData ()
+    {
+        $arrayFilter = array();
+        
+        if ($this->request->get('filter'))
+        {
+         $arrayFilter = json_decode($this->request->get('filter'), true);         
+        }        
+        return $arrayFilter;
+    }
+
+        
     /**
      * inizializza l'array con i dati passati fal form
      * @return void
@@ -207,7 +221,7 @@ abstract class AbstractRestController
     protected function executeAdd()
     {
         $requestData = $this->getData();
-        $className = $this->getFullClassName();
+        $className = $this->getOwnerClassName();
         $document = new $className;
         $document = $this->setDatiDocument ($document, $requestData);
         $documentOk = $this->saveDocument($document);
@@ -230,7 +244,7 @@ abstract class AbstractRestController
     
     protected function executeGet()
     {
-        $arrayResponse = $this->getRepository()->generateCursor ($this->getLimitData ())->returnAsArray();
+        $arrayResponse = $this->getRepository()->generateCursor ($this->getLimitData (), $this->getFilterData())->returnAsArray();
         return $arrayResponse;
         
     }
@@ -245,6 +259,24 @@ abstract class AbstractRestController
         $document = $this->documentSaver->save($document);            
             
         return $document;    
+    }
+    
+    protected function setDatiDocument ($document, $data)
+    {   
+        foreach ($data as $key=>$value)
+        {
+            $setFunction = 'set'.ucfirst($key);
+            
+            if (method_exists($document, $setFunction))
+            {
+                $document->$setFunction($value);
+            }
+            
+        }
+        
+        $document = $this->manageTranslationsData ($document, $data);
+        
+        return  $document; 
     }
     
     /**

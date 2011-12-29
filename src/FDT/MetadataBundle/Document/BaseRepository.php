@@ -104,8 +104,7 @@ class BaseRepository extends DocumentRepository
     }
     
     private function manageReferenceOne ($document, $getterMethodName)
-    {
-    
+    {    
         $refernceData = $document->$getterMethodName();
         $referencesArray = array ();
         if ($refernceData)
@@ -154,7 +153,7 @@ class BaseRepository extends DocumentRepository
     
     
     public function toArray ($document, $deep = false, $documentToWorkOn = false)
-    {
+    {        
         if ($documentToWorkOn)
         {
             $documentManager = $this->getDocumentManager();
@@ -228,20 +227,20 @@ class BaseRepository extends DocumentRepository
     {
         
         $document = $this->getByMyUniqueId ($requestConfig['ownerId'], 'id');
-        
+                
         $getRelatedRecordsFunction = $requestConfig['getRelationFunction'];
         
         $relatedRecords = $document->$getRelatedRecordsFunction();
-                
+        
+        //print_r(get_class($relatedRecords));
+                        
         if (!$relatedRecords)
         {
-            
             $collection = new ArrayCollection();
         
         }
-        else if ($relatedRecords and get_class($relatedRecords) != 'Doctrine\Common\Collections\ArrayCollection')
+        else if ($relatedRecords and get_class($relatedRecords) != 'Doctrine\Common\Collections\ArrayCollection' and get_class($relatedRecords) != 'Doctrine\ODM\MongoDB\PersistentCollection')
         {
-        
             $collection = new ArrayCollection();
             
             $collection->add ($relatedRecords);
@@ -252,10 +251,58 @@ class BaseRepository extends DocumentRepository
         }
         
         
+        
         $this->setCursor ($collection);
         
         return $this;
     
+    }
+    
+    private function getOperatorFromString($string)
+    {
+        preg_match('/-([A-Z]{2})-([a-zA-Z]+$)/', $string, $matches);
+        return ($matches);
+    }
+    
+    
+    public function getFiltersArray (array $filterFromRequest = array ())
+    {
+        if (count ($filterFromRequest) <= 0)
+        {
+        
+            return $filterFromRequest;
+        
+        }
+        
+        $arrayKeys = array_keys ($filterFromRequest);
+        $arrayFilters = array('Translation'=>array());
+        
+        $arrayFilterFilterKeys= array_filter ($arrayKeys, function ($key) use ($filterFromRequest){
+                                                                    $filterStringNumber =  preg_match('/^Search-/', $key);
+                                                                    
+                                                                    if ($filterStringNumber > 0)
+                                                                    {
+                                                                      return true; 
+                                                                    }
+   
+                                                                    return false;
+                                                                    
+                                                                }
+                                                    
+        );
+        
+        if (count ($arrayFilterFilterKeys) > 0)
+        {
+            foreach ($arrayFilterFilterKeys as $filterKey)
+            {
+                $arrayFilterString = $this->getOperatorFromString($filterKey);
+                $filterFromRequest[$arrayFilterString[1]][$arrayFilterString[2]] = $filterFromRequest[$filterKey];
+                unset ($filterFromRequest[$filterKey]);
+            }
+        }        
+        
+        return ($filterFromRequest);
+        
     }
     
  }

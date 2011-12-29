@@ -6,24 +6,9 @@ class ManageSearch extends AbstractRestController
 {
     
 
-    protected function getFullClassName ()
+    protected function getOwnerClassName ()
     {
-        return 'FDT\\MetadataBundle\\Document\\'.$this->getRelatedClassRequestData ('ownerType');       
+        return 'FDT\\MetadataBundle\\Document\\'.$this->getRelatedClassRequestData ('ownerModel');       
     }
                 
-    /**
-     *
-     * @param type $attributo
-     * @param type $data
-     * @return type FDT\Metadata\Document\Attributi\DataSet
-     */
-    protected function setDatiDocument ($dataset, $data)
-    {   
-        $dataset->setValue ($data['value']);
-        $dataset->setOrdine ($data['ordine']);
-        
-        $dataset = $this->manageTranslationsData ($dataset, $data);
-        
-        return  $dataset; 
-    }
 }

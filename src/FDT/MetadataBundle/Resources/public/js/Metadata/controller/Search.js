@@ -4,7 +4,7 @@ Ext.define('Metadata.controller.Search', {
     config: {
         application: false,
         owner: false,
-        ownerType: false,
+        ownerModel: false,
         callerController: false
     },    
     
@@ -12,7 +12,7 @@ Ext.define('Metadata.controller.Search', {
     {
         
         extraParams = {
-               ownerType: this.getOwnerType(),
+               ownerModel: this.getOwnerModel(),
                filter: {}            
         }
         
@@ -39,7 +39,7 @@ Ext.define('Metadata.controller.Search', {
             
     getControllerName: function ()
     {
-        var ownerTypeOj = new String(this.getOwnerType());
+        var ownerTypeOj = new String(this.getOwnerModel());
         
         arrayOwnerType = ownerTypeOj.split ('__');        
         return arrayOwnerType[1];
@@ -77,7 +77,7 @@ Ext.define('Metadata.controller.Search', {
     addListenerToPanel: function (panel)
     {
         
-        panel.addListener ('itemdblclick', this.getCallerController().aggiungi, this.getCallerController());
+        panel.addListener ('itemdblclick', this.getCallerController().creaAssociazione, this.getCallerController());
         this.addPanelListener (panel);
     
     },
@@ -141,7 +141,6 @@ Ext.define('Metadata.controller.Search', {
     
     searchAction: function(button) {
         var win = button.up('window');
-        console.log(win);
         if (win) {
             form   = win.down('form').getForm();
             var values = form.getValues();
@@ -152,7 +151,14 @@ Ext.define('Metadata.controller.Search', {
             store.load();
         }
 
-    },    
+    },
+    
+    getTitle: function (title)
+    {
+    
+        return 'Risultati ricerca';
+    
+    },   
     
     getRestUrl: function ()
     {

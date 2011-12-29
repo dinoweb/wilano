@@ -5,22 +5,43 @@ namespace FDT\MetadataBundle\Services\Controller;
 class ManageRelations extends AbstractRestController
 {
     
+    
+    protected function getOwnerClassName ()
+    {
+        return 'FDT\\MetadataBundle\\Document\\'.$this->getRelatedClassRequestData ('ownerModel');       
+    }
+    
+    protected function getRelatedClassName ()
+    {
+        return 'FDT\\MetadataBundle\\Document\\'.$this->getRelatedClassRequestData ('relatedModel');       
+    }
+    
+    
+    protected function getRelationClassName ()
+    {
+        return 'FDT\\MetadataBundle\\Document\\'.$this->getRelatedClassRequestData ('relationModel');       
+    }
+    
+    
+    protected function getOwnerRepository ()
+    {
+        return $this->documentManager->getRepository($this->getOwnerClassName())->setLanguages($this->languages);
+    }
+    
+    protected function getRelatedRepository ()
+    {
+        return $this->documentManager->getRepository($this->getRelatedClassName())->setLanguages($this->languages);
+    }
+    
+    protected function getRelationRepository ()
+    {
+        return $this->documentManager->getRepository($this->getRelationClassName())->setLanguages($this->languages);
+    }
 
-    protected function getFullClassName ()
-    {
-        return 'FDT\\MetadataBundle\\Document\\'.$this->getRelatedClassRequestData ('relatedType');       
-    }
-    
-    
-    protected function getFullRelatedClassName ()
-    {
-        return 'FDT\\MetadataBundle\\Document\\'.$this->getRelatedClassRequestData ('ownerType');       
-    }
-    
     
     protected function executeGet()
     {
-        $arrayResponse = $this->getRelatedRepository()->generateRelatedData ($this->getLimitData (), $this->getRelatedClassRequestData())->returnAsArray(false, $this->getFullClassName());
+        $arrayResponse = $this->getOwnerRepository()->generateRelatedData ($this->getLimitData (), $this->getRelatedClassRequestData())->returnAsArray(true, $this->getRelationClassName());
         return $arrayResponse;
         
     }
@@ -28,17 +49,37 @@ class ManageRelations extends AbstractRestController
     protected function getOwnerDocument ()
     {
     
-        return $this->getRelatedRepository()->getByMyUniqueId ($this->getRelatedClassRequestData('ownerId'), 'id');
+        return $this->getOwnerRepository()->getByMyUniqueId ($this->getRelatedClassRequestData('ownerId'), 'id');
     
     }
+    
+    protected function getRelationDocument ()
+    {
+    
+        $repository = $this->getRelationRepository();
+        $requestData = $this->getData();
+
+        $document = $repository->getByMyUniqueId ($requestData['id'], 'id');
+        
+        return $document;
+        
+    }
+    
     
     protected function getRelatedDocument ()
     {
     
-        $repository = $this->getRepository();
+        $repository = $this->getRelatedRepository();
         $requestData = $this->getData();
-        $document = $repository->getByMyUniqueId ($requestData['id'], 'id');
+        if ($this->getRelatedClassRequestData('relationType') == 'one')
+        {
+            $document = $repository->getByMyUniqueId ($requestData['id'], 'id');
+        }
         
+        if ($this->getRelatedClassRequestData('relationType') == 'manyWithConfig')
+        {
+            $document = $repository->getByMyUniqueId ($requestData['relatedId'], 'id');
+        }
         return $document;
         
     }
@@ -46,14 +87,23 @@ class ManageRelations extends AbstractRestController
     protected function executeAdd()
     {
         $requestData = $this->getData();
-        $className = $this->getFullClassName();
-        $document = new $className;
-        $document = $this->setDatiDocument ($document, $requestData);
+        $ownerDocuument = $this->getOwnerDocument();
+        $relatedDocument = $this->getRelatedDocument();
         
-        $relatedDocument = $this->getRelatedDocument ();
-        $relatedDocument = $relatedDocument->addOption ($document);
+        //CREO LA CONFIGURAZIONE
+        $relationClassName = $this->getRelationClassName ();        
+        $relationDocument = new $relationClassName;
+        $relationDocument = $this->setDatiDocument ($relationDocument, $requestData);
         
-        $documentOk = $this->saveDocument($relatedDocument);
+        //AGGIUNGO IL DOCUMENTO RELAZIONATO ALLA CONFIGURAZIONE
+        $setRelationToConfigFunction = $this->getRelatedClassRequestData('setRelationToConfigFunction');
+        $relationDocument->$setRelationToConfigFunction ($relatedDocument);
+        
+        //AGGIUNGO LA CONFIGURAZIONE DELLA RELAZIONE AL DOCUMENTO OWNER
+        $setRelationFunction = $this->getRelatedClassRequestData('setRelationFunction');
+        $ownerDocuument->$setRelationFunction ($relationDocument);
+                
+        $documentOk = $this->saveDocument($ownerDocuument);
         $response = array ('success'=>true, 'message'=>'Record aggiunto con successo');
         return $response;   
     }
@@ -63,43 +113,34 @@ class ManageRelations extends AbstractRestController
     {
         if ($this->getRelatedClassRequestData('relationType') == 'one')
         {
-            $ownerDocument = $this->getOwnerDocument ();
+            $document = $this->getOwnerDocument ();
             
             $relatedDocument = $this->getRelatedDocument ();
             
             $setRelationFunction = $this->getRelatedClassRequestData('setRelationFunction');
             
-            $ownerDocument->$setRelationFunction ($relatedDocument);
+            $document->$setRelationFunction ($relatedDocument);
             
             
             
         }
-        else
+        
+        if ($this->getRelatedClassRequestData('relationType') == 'manyWithConfig')
         {
         
-            
+            $requestData = $this->getData();
+            $document = $this->getRelationDocument ();
+            $document = $this->setDatiDocument ($document, $requestData);
         
         }
         
-        $documentOk = $this->saveDocument($ownerDocument);
+        
+        $documentOk = $this->saveDocument($document);
 
         $response = array ('success'=>true, 'message'=>'Record aggiornato con successo');
         return $response;
+        
+        
     }
     
-    /**
-     *
-     * @param type $attributo
-     * @param type $data
-     * @return type FDT\Metadata\Document\Attributi\DataSet
-     */
-    protected function setDatiDocument ($dataset, $data)
-    {   
-        //$dataset->setValue ($data['value']);
-        //$dataset->setOrdine ($data['ordine']);
-        
-        //$dataset = $this->manageTranslationsData ($dataset, $data);
-        
-        return  $dataset; 
-    }
 }

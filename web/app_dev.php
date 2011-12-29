@@ -10,7 +10,7 @@ if (!in_array(@$_SERVER['REMOTE_ADDR'], array(
     '151.66.86.120', //CASA LORENZO
     '93.62.205.10', //SETT ENIGMISTICA
     '151.3.89.234', //SETT ENIGMISTICA
-    '109.53.113.125', //TELEFONINO
+    '109.54.251.145', //TELEFONINO
     '::1',
 ))) {
     header('HTTP/1.0 403 Forbidden');

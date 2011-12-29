@@ -6,21 +6,21 @@ class ManageOptions extends AbstractRestController
 {
     
 
-    protected function getFullClassName ()
+    protected function getOwnerClassName ()
     {
         return 'FDT\\MetadataBundle\\Document\\Attributi\\Option';       
     }
     
     
-    protected function getFullRelatedClassName ()
+    protected function getRelatedClassName ()
     {
-        return 'FDT\\MetadataBundle\\Document\\'.$this->getRelatedClassRequestData ('ownerType');       
+        return 'FDT\\MetadataBundle\\Document\\'.$this->getRelatedClassRequestData ('ownerModel');       
     }
     
     
     protected function executeGet()
     {
-        $arrayResponse = $this->getRelatedRepository()->generateRelatedData ($this->getLimitData (), $this->getRelatedClassRequestData())->returnAsArray(false, $this->getFullClassName());
+        $arrayResponse = $this->getRelatedRepository()->generateRelatedData ($this->getLimitData (), $this->getRelatedClassRequestData())->returnAsArray(false, $this->getOwnerClassName());
         return $arrayResponse;
         
     }
@@ -35,7 +35,7 @@ class ManageOptions extends AbstractRestController
     protected function executeAdd()
     {
         $requestData = $this->getData();
-        $className = $this->getFullClassName();
+        $className = $this->getOwnerClassName();
         $document = new $className;
         $document = $this->setDatiDocument ($document, $requestData);
         
@@ -47,19 +47,4 @@ class ManageOptions extends AbstractRestController
         return $response;   
     }
     
-    /**
-     *
-     * @param type $attributo
-     * @param type $data
-     * @return type FDT\Metadata\Document\Attributi\DataSet
-     */
-    protected function setDatiDocument ($dataset, $data)
-    {   
-        $dataset->setValue ($data['value']);
-        $dataset->setOrdine ($data['ordine']);
-        
-        $dataset = $this->manageTranslationsData ($dataset, $data);
-        
-        return  $dataset; 
-    }
 }

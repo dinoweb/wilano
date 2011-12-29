@@ -74,6 +74,37 @@ class GetConfigController extends Controller
                 
     }
     
+    private function manageSearchFields (array $arrayConfig)
+    {
+        
+        
+        if (array_key_exists('Search', $arrayConfig))
+        {
+          
+        
+            $fieldsForSearch = $arrayConfig['Search'];
+            unset ($arrayConfig['Search']);
+        
+            foreach ($fieldsForSearch as $fieldConfig)
+            {
+                $fieldConfigOk =  $fieldConfig;
+                $nameField = 'Search-'.$fieldConfig['operator'].'-'.$fieldConfig['name'];
+                $labelField = $fieldConfig['text'];
+                
+                $fieldConfigOk['name'] = $nameField;
+                $fieldConfigOk['text'] = $labelField;
+                $fieldConfigOk['useForSearch'] = true; 
+                
+                $arrayConfig[$nameField] = $fieldConfigOk;
+                             
+            
+            }
+        }
+        
+        return $arrayConfig;
+                
+    }
+    
     private function getConfigOk ($arrayConfig)
     {
         $arrayConfigOk = array ();
@@ -98,6 +129,7 @@ class GetConfigController extends Controller
         }
         
         $arrayConfig = $this->manageTranslations($arrayConfig);
+        $arrayConfig = $this->manageSearchFields($arrayConfig);
         
         return $this->getConfigOk ($arrayConfig);
         

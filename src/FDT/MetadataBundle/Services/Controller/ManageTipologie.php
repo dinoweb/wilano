@@ -27,7 +27,7 @@ class ManageTipologie extends AbstractRestController
     
     }
         
-    protected function getFullClassName ()
+    protected function getOwnerClassName ()
     {
         
         return 'FDT\\MetadataBundle\\Document\\Tipologie\\'.$this->getTipologia();

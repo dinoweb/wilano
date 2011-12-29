@@ -66,6 +66,12 @@ fdt_admin:
                         useForColumn: true
                         useForModel: true
                         useForForm: true
+                Search:
+                    uniqueName:
+                        name: uniqueName
+                        type: string
+                        text: Nome
+                        operator: CN
                 id:
                     name: id
                     type: string
@@ -76,7 +82,6 @@ fdt_admin:
                     useForColumn: true
                     useForModel: true
                     useForForm: false
-                    useForSearch: true
                 uniqueName:
                     name: uniqueName
                     type: string
@@ -87,7 +92,6 @@ fdt_admin:
                     useForColumn: true
                     useForModel: true
                     useForForm: true
-                    useForSearch: true
                 uniqueSlug:
                     name: uniqueSlug
                     type: string
@@ -97,7 +101,6 @@ fdt_admin:
                     useForColumn: true
                     useForModel: true
                     useForForm: true
-                    useForSearch: true
                 isNew:
                     name: isNew
                     type: boolean
@@ -105,7 +108,6 @@ fdt_admin:
                     useForColumn: false
                     useForModel: true
                     useForForm: false
-                    useForSearch: false
         Attributo:
             document: Attributo
             campi:
@@ -192,6 +194,16 @@ fdt_admin:
                     flex: 1
                     sortable: false
                     hidden: true
+                    useForColumn: true
+                    useForModel: true
+                    useForForm: false
+                uniqueName:
+                    name: attributo.uniqueName
+                    type: string
+                    text: Attributo
+                    flex: 1
+                    sortable: false
+                    hidden: false
                     useForColumn: true
                     useForModel: true
                     useForForm: false

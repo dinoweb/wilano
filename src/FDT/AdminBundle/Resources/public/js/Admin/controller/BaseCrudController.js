@@ -94,13 +94,20 @@ Ext.define('Admin.controller.BaseCrudController', {
         
     },
     
+    getTitle: function (title)
+    {
+    
+        return 'Configurazione '+title;
+    
+    },
+    
     getPanelBuilder: function (id, campiStore, plugins)
     {
         
         //INIZIALIZZO IL PANNELLO
         var panelBuilder = Ext.create ('Admin.PanelBuilder', {
             idString: this.getNamespace()+id,
-            title: 'Configurazione '+id,
+            title: this.getTitle(id),
             store:  this.createStore(id, campiStore),
             idTargetPanel: this.getIdTargetPanel(),
             plugins: plugins,

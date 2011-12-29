@@ -43,9 +43,9 @@ class ManageOptionsController extends TestCase
         $crawler = $this->getClient()->request(
     		'GET',
 			$this->getRestPath(),
-			array('relatedClass'=>'Attributi__DataSet', 
-			      'relatedId'=>$arrayDataset['id'], 
-			      'relatedGetFunction'=>'getOptions'
+			array('ownerModel'=>'Attributi__DataSet', 
+			      'ownerId'=>$arrayDataset['id'], 
+			      'getRelationFunction'=>'getOptions'
 			     )
 		);
 		
@@ -65,9 +65,9 @@ class ManageOptionsController extends TestCase
         $crawler = $this->getClient()->request(
     		'GET',
 			$this->getRestPath(),
-			array('relatedClass'=>'Attributi__DataSet', 
-			      'relatedId'=>$arrayDataset['id'], 
-			      'relatedGetFunction'=>'getOptions'
+			array('ownerModel'=>'Attributi__DataSet', 
+			      'ownerId'=>$arrayDataset['id'], 
+			      'getRelationFunction'=>'getOptions'
 			     )
 		);
         
@@ -100,9 +100,9 @@ class ManageOptionsController extends TestCase
     	$crawler = $this->getClient()->request(
     		'POST',
 			$this->getRestPath(),
-			array('relatedClass'=>'Attributi__DataSet', 
-			      'relatedId'=>$arrayDataset['id'], 
-			      'relatedGetFunction'=>'getOptions'
+			array('ownerModel'=>'Attributi__DataSet', 
+			      'ownerId'=>$arrayDataset['id'], 
+			      'getRelationFunction'=>'getOptions'
 			     ),
 			array(),
 			array(),
@@ -139,9 +139,9 @@ class ManageOptionsController extends TestCase
     	$crawler = $this->getClient()->request(
     		'PUT',
 			$this->getRestPath(),
-			array('relatedClass'=>'Attributi__DataSet', 
-			      'relatedId'=>$arrayDataset['id'], 
-			      'relatedGetFunction'=>'getOptions'
+			array('ownerModel'=>'Attributi__DataSet', 
+			      'ownerId'=>$arrayDataset['id'], 
+			      'getRelationFunction'=>'getOptions'
 			     ),
 			array(),
 			array(),

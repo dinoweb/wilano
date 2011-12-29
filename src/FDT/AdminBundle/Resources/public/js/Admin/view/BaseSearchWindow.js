@@ -7,7 +7,7 @@ Ext.define('Admin.view.BaseSearchWindow', {
     shadow: false,
     autoDestroy: true,
     collapsible: true,
-    modal: false,
+    modal: true,
     layout: 'border',
     border: false,
     defaults: {autoHeight:true},
@@ -53,9 +53,9 @@ Ext.define('Admin.view.BaseSearchWindow', {
 					deferredRender: false,
 					margins: '0 2 2 2',
 					cmargins: '0 0 0 0',
-					autoTabs: false,
+					autoTabs: true,
 					autoDestroy: true,
-					border:true
+					border: true
 				}
 	]
 });

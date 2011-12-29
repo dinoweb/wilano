@@ -3,12 +3,14 @@ Ext.define('Metadata.controller.Relation', {
     
     config: {
         owner: false,
-        ownerType: false,
-        relatedType: false,
+        ownerModel: false,
+        relatedModel: false,
         relationModel: false,
         relationType: 'one',
         setRelationFunction: false,
-        getRelationFunction: false
+        getRelationFunction: false,
+        setRelationToConfigFunction: false,
+        getRelationToConfigFunction: false
     },
     
     getExtraParams: function ()
@@ -19,12 +21,15 @@ Ext.define('Metadata.controller.Relation', {
         if (owner)
         {
            extraParams = {
-               ownerType: this.getOwnerType(),
+               ownerModel: this.getOwnerModel(),
                ownerId: owner.get('id'),
-               relatedType: this.getRelatedType(),
+               relatedModel: this.getRelatedModel(),
+               relationModel: this.getRelationModel(),
                relationType: this.getRelationType(),
-               getRelationFunction: this.getGetRelationFunction(),
                setRelationFunction: this.getSetRelationFunction(),
+               getRelationFunction: this.getGetRelationFunction(),
+               setRelationToConfigFunction: this.getSetRelationToConfigFunction(),
+               getRelationToConfigFunction: this.getGetRelationToConfigFunction()
                              
            }
         }
@@ -46,6 +51,7 @@ Ext.define('Metadata.controller.Relation', {
                                 {
                                     text: 'Aggiungi relazione',
                                     scope: this,
+                                    tooltip: 'Relaziona '+this.getRelatedName()+' a '+this.getOwnerName(),
                                     icon: '/bundles/fdtadmin/images/icons/add.png',
                                     cls: 'x-btn-text-icon',
                                     id: 'aggiungi'+this.getControllerName(),
@@ -81,12 +87,13 @@ Ext.define('Metadata.controller.Relation', {
                     items: [
                                 {
                                     text: 'Scegli',
+                                    tooltip: 'Relaziona il '+this.getRelatedName()+' selezionato a '+this.getOwnerName(),
                                     scope: this,
                                     icon: '/bundles/fdtadmin/images/icons/add.png',
                                     cls: 'x-btn-text-icon',
                                     id: 'scegliFromSearch'+this.getControllerName(),
                                     handler: function (button){
-                                        this.aggiungi(button)
+                                        this.creaAssociazione(button)
                                     }
                                 }
                             ]
@@ -96,7 +103,7 @@ Ext.define('Metadata.controller.Relation', {
         
     },
     
-    aggiungi : function (button)
+    creaAssociazione : function (button)
     {
         var searchResultPanel = button.up('panel');
         
@@ -118,15 +125,11 @@ Ext.define('Metadata.controller.Relation', {
         
         if (selectedRow && this.getRelationType() == 'manyWithConfig')
         {
-        
-            var form = this.callParent(button);
-            
+            var form = this.aggiungi(button);
             var record = form.getRecord();
             
             record.set ('relatedId', selectedRow.get ('id'));
-            
-            console.log (record);
-        
+                    
         }
         
         
@@ -150,7 +153,7 @@ Ext.define('Metadata.controller.Relation', {
 
             var controller = Ext.create('Metadata.controller.Search', {
                                                             namespace: 'searchWindow',
-                                                            ownerType: this.getRelatedType(),
+                                                            ownerModel: this.getRelatedModel(),
                                                             application: this.getApplication(),
                                                             callerController: this
                                                           });
@@ -167,10 +170,36 @@ Ext.define('Metadata.controller.Relation', {
         
     },
     
+    getOwnerName: function ()
+    {
+        var ownerModelOj = new String(this.getOwnerModel());
+        
+        arrayOwnerModel = ownerModelOj.split ('__');        
+        return arrayOwnerModel[1];
+        
+    },
+    
+    
+    getRelatedName: function ()
+    {
+        var modelOj = new String(this.getRelatedModel());
+        
+        arrayModel = modelOj.split ('__');        
+        return arrayModel[1];
+        
+    },
+    
     
     getRestUrl: function ()
     {
         return 'metadata/manageRelations';
+    },
+    
+    getTitle: function (title)
+    {
+    
+        return 'Relazioni: '+this.getOwner().get('uniqueName')+' > '+this.getRelatedName();
+    
     }  
 
 });

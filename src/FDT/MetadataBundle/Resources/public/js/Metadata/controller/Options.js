@@ -14,10 +14,10 @@ Ext.define('Metadata.controller.Options', {
         if (relatedRecord)
         {
            extraParams = {
-               ownerType: 'Attributi__DataSet',
+               ownerModel: 'Attributi__DataSet',
                ownerId: relatedRecord.get('id'),
-               relatedType: 'Attributi__Options',
-               relatedGetFunction: 'getOptions'
+               relatedModel: 'Attributi__Options',
+               getRelationFunction: 'getOptions'
            }
         }
         return extraParams;

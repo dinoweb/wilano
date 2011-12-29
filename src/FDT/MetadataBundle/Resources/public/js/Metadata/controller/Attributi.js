@@ -35,12 +35,13 @@ Ext.define('Metadata.controller.Attributi', {
             var controller = Ext.create('Metadata.controller.Relation', {
                                                             application: this.application,
                                                             owner: selectedRow,
-                                                            ownerType: 'Attributi__Attributo',
-                                                            relatedType: 'Attributi__DataSet',
+                                                            ownerModel: 'Attributi__Attributo',
+                                                            relatedModel: 'Attributi__DataSet',
                                                             relationModel: 'Attributi__DataSet',
                                                             relationType: 'one',
                                                             setRelationFunction: 'addDataset',
                                                             getRelationFunction: 'getDataset'
+                                                            
                                                           });
             controller.init();
         }
